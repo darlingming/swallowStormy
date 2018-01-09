@@ -1,4 +1,4 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
 object 模式匹配 {
   def main(args: Array[String]) {

@@ -1,4 +1,4 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
 object 变量 {
   def main(args: Array[String]): Unit = {

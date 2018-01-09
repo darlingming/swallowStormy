@@ -1,4 +1,4 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
 object 提取器 {
   def main(args: Array[String]) {

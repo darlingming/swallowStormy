@@ -1,4 +1,4 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
 import java.io._
 import scala.io.Source

@@ -1,4 +1,4 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
 class 伴生类 private(val color: String) {
 

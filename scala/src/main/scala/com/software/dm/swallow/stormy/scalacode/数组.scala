@@ -1,5 +1,4 @@
-package com.software.dm.swallow.stormy
-
+package com.software.dm.swallow.stormy.scalacode
 
 /**
   * Scala 语言中提供的数组是用来存储固定大小的同类型元素，

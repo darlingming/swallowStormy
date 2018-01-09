@@ -1,5 +1,4 @@
-package com.software.dm.swallow.stormy
-
+package com.software.dm.swallow.stormy.scalacode
 
 /**
   * Byte	8位有符号补码整数。数值区间为 -128 到 127

@@ -1,7 +1,6 @@
-package com.software.dm.swallow.stormy
+package com.software.dm.swallow.stormy.scalacode
 
-package   page {
- class HelloWorld{
+class HelloWorld{
 
  }
   object HelloWorld{
@@ -9,4 +8,3 @@ package   page {
       println("Hello,World")
     }
   }
-}
