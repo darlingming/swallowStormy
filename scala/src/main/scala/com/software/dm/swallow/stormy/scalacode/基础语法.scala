@@ -8,7 +8,7 @@ package com.software.dm.swallow.stormy.scalacode
   */
 object 基础语法 {
 
-  """区分大小写 -  Scala是大小写敏感的，这意味着标识Hello 和 hello在Scala中会有不同的含义。
+  val a = """区分大小写 -  Scala是大小写敏感的，这意味着标识Hello 和 hello在Scala中会有不同的含义。
     |类名 - 对于所有的类名的第一个字母要大写。
     |
     |如果需要使用几个单词来构成一个类的名称，每个单词的第一个字母要大写。

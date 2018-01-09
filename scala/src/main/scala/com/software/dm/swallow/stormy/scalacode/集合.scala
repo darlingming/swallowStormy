@@ -54,7 +54,7 @@ object ListObject {
     }
   }
 
-object ListObject {
+object ListObject1 {
     // 字符串列表
     val site: List[String] = List("Runoob", "Google", "Baidu")
 
