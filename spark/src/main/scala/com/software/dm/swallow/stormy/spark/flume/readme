@@ -1,0 +1,22 @@
+
+ agent.sinks = spark
+ agent.sinks.spark.type = org.apache.spark.streaming.flume.sink.SparkSink
+ agent.sinks.spark.hostname = <hostname of the local machine>
+ agent.sinks.spark.port = <port to listen on for connection from Spark>
+ agent.sinks.spark.channel = memoryChannel
+
+ agent.sinks = avroSink
+ agent.sinks.avroSink.type = avro
+ agent.sinks.avroSink.channel = memoryChannel
+ agent.sinks.avroSink.hostname = <chosen machine's hostname>
+ agent.sinks.avroSink.port = <chosen port on the machine>
+
+ flume-ng.cmd  agent    -conf-file D:/DearM/dm/apache-flume-1.8.0-bin/conf/flume-spark-conf.properties  -name agent  -property flume.root.logger=INFO,console
+
+
+
+
+
+
+
+
