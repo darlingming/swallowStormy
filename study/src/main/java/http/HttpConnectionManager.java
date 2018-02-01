@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author darlingming@126.com
  * @since HttpClinetConnection
- *
  */
 public final class HttpConnectionManager {
 
@@ -269,26 +268,33 @@ public final class HttpConnectionManager {
      * 上传文件
      */
     public void upload(String url, String filePath) {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        //CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpClient httpclient = getHttpCilent();
         try {
-            HttpPost httppost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(url);
             FileBody bin = new FileBody(new File(filePath));
             StringBody comment = new StringBody("A binary file  of some kind", ContentType.TEXT_PLAIN);
             HttpEntity reqEntity = MultipartEntityBuilder.create().addPart("bin", bin).addPart("comment", comment).build();
-            httppost.setEntity(reqEntity);
-            System.out.println("executing  request " + httppost.getRequestLine());
-            CloseableHttpResponse response = httpclient.execute(httppost);
-            try {
-                System.out.println("----------------------------------------");
-                System.out.println(response.getStatusLine());
-                HttpEntity resEntity = response.getEntity();
-                if (resEntity != null) {
-                    System.out.println("Response  content length: " + resEntity.getContentLength());
+            httpPost.setEntity(reqEntity);
+            logger.info("executing  request " + httpPost.getRequestLine());
+            String strResult = null;
+            int StatusCode = 404;
+            CloseableHttpResponse httpResponse = getHttpCilent().execute(httpPost);
+            if (httpResponse != null) {
+                StatusCode = httpResponse.getStatusLine().getStatusCode();
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    strResult = EntityUtils.toString(httpResponse.getEntity());
+                    logger.info("post/" + StatusCode + ":" + strResult);
+                } else {
+                    strResult = "Error  Response: " + httpResponse.getStatusLine().toString();
+                    logger.info("post/" + StatusCode + ":" + strResult);
                 }
-                EntityUtils.consume(resEntity);
-            } finally {
-                response.close();
+                EntityUtils.consume(httpResponse.getEntity());
+                httpResponse.close();
+            } else {
+
             }
+
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
