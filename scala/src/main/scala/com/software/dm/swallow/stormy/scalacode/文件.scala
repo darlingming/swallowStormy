@@ -12,7 +12,7 @@ object 文件 {
     writer.close()
     println("文件内容为:")
 
-    Source.fromFile("scala/src/main/resources/test.txt").foreach {
+    Source.fromFile("scala/src/main/resources/test.txt","utf8").foreach {
       print
     }
   }
