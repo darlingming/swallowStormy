@@ -96,14 +96,11 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void createTable(String tableName, String[] columnFamilys) throws IOException {
-        // 建立一个数据库的连接
-        ////Connection conn = ConnectionFactory.createConnection(conf);
         // 创建一个数据库管理员
         HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
         if (hAdmin.tableExists(tableName)) {
             logger.info(tableName + "表已存在");
-            //getConnection().close();
-            System.exit(0);
+
         } else {
             // 新建一个表描述
             HTableDescriptor tableDesc = new HTableDescriptor(TableName.valueOf(tableName));
@@ -115,7 +112,37 @@ public class HbaseOpertion {
             hAdmin.createTable(tableDesc);
             logger.info("创建" + tableName + "表成功");
         }
-        //getConnection().close();
+    }
+
+
+    /**
+     * 批量添加数据
+     *
+     * @param tableName
+     * @param dataPutEntityList
+     * @throws IOException
+     */
+    public void bathInsert(String tableName, List<DataPutEntity> dataPutEntityList)
+            throws IOException {
+        // 获取表
+        HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
+        List<Put> putList = new ArrayList<Put>();
+        for (DataPutEntity dataPutEntity : dataPutEntityList) {
+            for (ColumnFamilyEntity columnFamilyEntity : dataPutEntity.getColumnFamilyList() ) {
+                // 通过rowkey创建一个put对象
+                Put put = new Put(Bytes.toBytes(dataPutEntity.getRowKey()));
+                for (ColumnEntity columnEntity:columnFamilyEntity.getColumnList() ) {
+                    // 在put对象中设置列族、列、值
+                    put.addColumn(Bytes.toBytes(columnFamilyEntity.getColumnFamily()), Bytes.toBytes(columnEntity.getColumn()), Bytes.toBytes(columnEntity.getValue()));
+                }
+                putList.add(put);
+            }
+        }
+        // 插入数据,可通过put(List<Put>)批量插入
+        table.put(putList);
+        // 关闭资源
+        table.close();
+
     }
 
 
@@ -131,21 +158,19 @@ public class HbaseOpertion {
      */
     public void addRow(String tableName, String rowKey, String columnFamily, String column, String value)
             throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
         // 获取表
-        HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
+        HTable updtable = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 通过rowkey创建一个put对象
-        Put put = new Put(Bytes.toBytes(rowKey));
+        Put putData = new Put(Bytes.toBytes(rowKey));
         // 在put对象中设置列族、列、值
-        put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(column), Bytes.toBytes(value));
+        putData.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(column), Bytes.toBytes(value));
         // 插入数据,可通过put(List<Put>)批量插入
-        table.put(put);
+        updtable.put(putData);
+
         // 关闭资源
-        table.close();
+        updtable.close();
 
     }
-
 
     /**
      * 通过rowkey获取一条数据
@@ -155,8 +180,7 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void getRow(String tableName, String rowKey) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 通过rowkey创建一个get对象
@@ -173,7 +197,6 @@ public class HbaseOpertion {
         }
         // 关闭资源
         table.close();
-        //getConnection().close();
     }
 
 
@@ -184,8 +207,7 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void scanTable(String tableName) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 创建一个扫描对象
@@ -202,10 +224,11 @@ public class HbaseOpertion {
                                 "时间戳:" + cell.getTimestamp());
             }
         }
+
         // 关闭资源
         results.close();
         table.close();
-        //getConnection().close();
+
     }
 
 
@@ -217,8 +240,7 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void delRow(String tableName, String rowKey) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 删除数据
@@ -226,7 +248,6 @@ public class HbaseOpertion {
         table.delete(delete);
         // 关闭资源
         table.close();
-        //getConnection().close();
     }
 
 
@@ -238,8 +259,7 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void delRows(String tableName, String[] rows) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 删除多条数据
@@ -251,7 +271,6 @@ public class HbaseOpertion {
         table.delete(list);
         // 关闭资源
         table.close();
-        //getConnection().close();
     }
 
 
@@ -263,14 +282,11 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void delColumnFamily(String tableName, String columnFamily) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 创建一个数据库管理员
         HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
         // 删除一个表的指定列族
         hAdmin.deleteColumn(tableName, columnFamily);
-        // 关闭资源
-        //getConnection().close();
     }
 
 
@@ -281,8 +297,6 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public void deleteTable(String tableName) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
         // 创建一个数据库管理员
         HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
         if (hAdmin.tableExists(tableName)) {
@@ -312,8 +326,6 @@ public class HbaseOpertion {
      */
     public void appendData(String tableName, String rowKey, String columnFamily, String column, String value)
             throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 通过rowkey创建一个append对象
@@ -324,7 +336,6 @@ public class HbaseOpertion {
         table.append(append);
         // 关闭资源
         table.close();
-        //getConnection().close();
     }
 
 
@@ -343,8 +354,7 @@ public class HbaseOpertion {
      * @throws IOException
      */
     public boolean checkAndPut(String tableName, String rowKey, String columnFamilyCheck, String columnCheck, String valueCheck, String columnFamily, String column, String value) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
+
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 设置需要添加的数据
@@ -355,7 +365,6 @@ public class HbaseOpertion {
                 Bytes.toBytes(columnCheck), Bytes.toBytes(valueCheck), put);
         // 关闭资源
         table.close();
-        //getConnection().close();
 
         return result;
     }
@@ -376,8 +385,6 @@ public class HbaseOpertion {
      */
     public boolean checkAndDelete(String tableName, String rowKey, String columnFamilyCheck, String columnCheck,
                                   String valueCheck, String columnFamily, String column) throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 设置需要刪除的delete对象
@@ -388,7 +395,6 @@ public class HbaseOpertion {
                 Bytes.toBytes(valueCheck), delete);
         // 关闭资源
         table.close();
-        //getConnection().close();
 
         return result;
     }
@@ -407,15 +413,12 @@ public class HbaseOpertion {
      */
     public long incrementColumnValue(String tableName, String rowKey, String columnFamily, String column, long amount)
             throws IOException {
-        // 建立一个数据库的连接
-        //Connection conn = ConnectionFactory.createConnection(conf);
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 计数器
         long result = table.incrementColumnValue(Bytes.toBytes(rowKey), Bytes.toBytes(columnFamily), Bytes.toBytes(column), amount);
         // 关闭资源
         table.close();
-        //getConnection().close();
 
         return result;
     }
