@@ -31,7 +31,7 @@ public class Test {
             //hbaseOpertion.delRow(tableName, rowKey);
 
 
-            List<DataPutEntity> dataPutEntityList = new ArrayList<>();
+            List<HbaseDataEntity> hbaseDataEntityList = new ArrayList<>();
             List<ColumnFamilyEntity> columnFamilyList = new ArrayList<>();
 
             List<ColumnEntity> columnList = new ArrayList<>();
@@ -41,13 +41,28 @@ public class Test {
 
             columnFamilyList.add(new ColumnFamilyEntity("key", columnList));
 
-            dataPutEntityList.add(new DataPutEntity("13804511234", columnFamilyList));
-            dataPutEntityList.add(new DataPutEntity("13804510000", columnFamilyList));
-            hbaseOpertion.bathInsert(tableName, dataPutEntityList);
+            hbaseDataEntityList.add(new HbaseDataEntity("13804511234", columnFamilyList));
+            hbaseDataEntityList.add(new HbaseDataEntity("13804510000", columnFamilyList));
+            hbaseOpertion.bathInsert(tableName, hbaseDataEntityList);
 
             logger.info(" hbaseOpertion.bathInsert(");
             hbaseOpertion.scanTable(tableName);
+            List<HbaseDataEntity> hbasedataList = hbaseOpertion.scanTableData(tableName);
+            for (HbaseDataEntity hbaseDataEntity : hbasedataList) {
+                for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()
+                        ) {
+                    for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()
+                            ) {
+                        logger.info(
+                                "行键:" + hbaseDataEntity.getRowKey() + "\t" +
+                                        "列族:" + columnFamilyEntity.getColumnFamily() + "\t" +
+                                        "列名:" + columnEntity.getColumn() + "\t" +
+                                        "值:" + columnEntity.getValue() + "\t" +
+                                        "时间戳:" + columnEntity.getTimestamp());
+                    }
 
+                }
+            }
 
         } catch (Exception e) {
             logger.error("HbaseOpertion Exception ", e);

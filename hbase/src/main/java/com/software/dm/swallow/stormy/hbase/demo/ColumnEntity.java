@@ -7,6 +7,7 @@ package com.software.dm.swallow.stormy.hbase.demo;
 public class ColumnEntity {
     private String column;
     private String value;
+    private long timestamp;
 
     public ColumnEntity(String column, String value) {
         this.column = column;
@@ -27,6 +28,14 @@ public class ColumnEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }
 
