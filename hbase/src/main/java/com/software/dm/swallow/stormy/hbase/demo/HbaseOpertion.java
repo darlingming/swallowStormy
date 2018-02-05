@@ -10,9 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * HbaseOpertion
@@ -119,19 +117,19 @@ public class HbaseOpertion {
      * 批量添加数据
      *
      * @param tableName
-     * @param dataPutEntityList
+     * @param hbaseDataEntitySet
      * @throws IOException
      */
-    public void bathInsert(String tableName, List<DataPutEntity> dataPutEntityList)
+    public void bathInsert(String tableName, List<HbaseDataEntity> hbaseDataEntitySet)
             throws IOException {
         // 获取表
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         List<Put> putList = new ArrayList<Put>();
-        for (DataPutEntity dataPutEntity : dataPutEntityList) {
-            for (ColumnFamilyEntity columnFamilyEntity : dataPutEntity.getColumnFamilyList() ) {
+        for (HbaseDataEntity hbaseDataEntity : hbaseDataEntitySet) {
+            for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()) {
                 // 通过rowkey创建一个put对象
-                Put put = new Put(Bytes.toBytes(dataPutEntity.getRowKey()));
-                for (ColumnEntity columnEntity:columnFamilyEntity.getColumnList() ) {
+                Put put = new Put(Bytes.toBytes(hbaseDataEntity.getRowKey()));
+                for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()) {
                     // 在put对象中设置列族、列、值
                     put.addColumn(Bytes.toBytes(columnFamilyEntity.getColumnFamily()), Bytes.toBytes(columnEntity.getColumn()), Bytes.toBytes(columnEntity.getValue()));
                 }
@@ -231,6 +229,67 @@ public class HbaseOpertion {
 
     }
 
+    /**
+     * 全表扫描
+     *
+     * @param tableName
+     * @throws IOException
+     */
+    public List<HbaseDataEntity> scanTableData(String tableName) throws IOException {
+        List<HbaseDataEntity> hbaseDataEntityList = new ArrayList<HbaseDataEntity>();
+        // 获取表
+        HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
+        // 创建一个扫描对象
+        Scan scan = new Scan();
+        // 扫描全表输出结果
+        ResultScanner results = table.getScanner(scan);
+
+
+        for (Result result : results) {
+            for (Cell cell : result.rawCells()) {
+                String rowKey = new String(CellUtil.cloneRow(cell));
+                String columnFamily = new String(CellUtil.cloneFamily(cell));
+
+                String column = new String(CellUtil.cloneQualifier(cell));
+                String value = new String(CellUtil.cloneValue(cell));
+                long timestamp = cell.getTimestamp();
+
+                Object hbaseDataEntity = HbaseCommonUtils.get(hbaseDataEntityList, rowKey);
+                if (null != hbaseDataEntity) {
+                    List<ColumnFamilyEntity> columnFamilyList = ((HbaseDataEntity) hbaseDataEntity).getColumnFamilyList();
+                    Object columnFamilyEntity = HbaseCommonUtils.get(columnFamilyList, columnFamily);
+
+                    if (null != columnFamilyEntity) {
+                        ((ColumnFamilyEntity) columnFamilyEntity).getColumnList().add(new ColumnEntity(column, value));
+                    } else {
+                        List<ColumnEntity> columnList = new ArrayList<ColumnEntity>() {
+                            {
+                                this.add(new ColumnEntity(column, value));
+                            }
+                        };
+
+                        columnFamilyList.add(new ColumnFamilyEntity(columnFamily, columnList));
+                    }
+                } else {
+                    List<ColumnFamilyEntity> columnFamilyList = new ArrayList<>();
+                    hbaseDataEntityList.add(new HbaseDataEntity(rowKey, columnFamilyList));
+                    List<ColumnEntity> columnList = new ArrayList<>();
+                    ColumnEntity columnEntity = new ColumnEntity(column, value);
+                    columnEntity.setTimestamp(timestamp);
+                    columnList.add(columnEntity);
+                    ColumnFamilyEntity columnFamilyEntity = new ColumnFamilyEntity(columnFamily, columnList);
+                    columnFamilyList.add(columnFamilyEntity);
+                }
+            }
+        }
+
+
+        // 关闭资源
+        results.close();
+        table.close();
+        return hbaseDataEntityList;
+
+    }
 
     /**
      * 删除一条数据
