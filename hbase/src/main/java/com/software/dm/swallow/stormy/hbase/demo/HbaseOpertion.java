@@ -111,7 +111,43 @@ public class HbaseOpertion {
             logger.info("创建" + tableName + "表成功");
         }
     }
+    /**
+     * 添加列族
+     *
+     * @param tableName
+     * @param columnFamilys
+     * @throws IOException
+     */
+    public void alterTable(String tableName, String[] columnFamilys) throws IOException {
+        // 创建一个数据库管理员
+        HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
+        if (hAdmin.tableExists(tableName)) {
+           if(hAdmin.isTableEnabled(tableName))
+            hAdmin.disableTable(tableName);
+            // 获取一个表描述
+            HTableDescriptor tableDesc = hAdmin.getTableDescriptor(TableName.valueOf(tableName));
+            // 在表描述里添加列族
+            for (String columnFamily : columnFamilys) {
 
+                if(tableDesc.hasFamily(columnFamily.getBytes())){
+                    HColumnDescriptor family = new HColumnDescriptor(columnFamily);
+
+                    //tableDesc.modifyFamily(family);
+                }else{
+                    tableDesc.addFamily(new HColumnDescriptor(columnFamily));
+                }
+
+            }
+
+            // 根据配置好的表描述建表
+            hAdmin.modifyTable(tableName,tableDesc);
+            hAdmin.enableTable(tableName);
+            logger.info("添加" + tableName + "表成功");
+
+        }
+
+
+    }
 
     /**
      * 批量添加数据
@@ -476,6 +512,7 @@ public class HbaseOpertion {
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 计数器
         long result = table.incrementColumnValue(Bytes.toBytes(rowKey), Bytes.toBytes(columnFamily), Bytes.toBytes(column), amount);
+
         // 关闭资源
         table.close();
 
