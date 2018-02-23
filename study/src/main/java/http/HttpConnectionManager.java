@@ -210,7 +210,7 @@ public final class HttpConnectionManager {
                 StatusCode = httpResponse.getStatusLine().getStatusCode();
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
                     strResult = EntityUtils.toString(httpResponse.getEntity());
-                    logger.info("post/" + StatusCode + ":" + strResult);
+                    //logger.info("post/" + StatusCode + ":" + strResult);
                     return strResult;
                 } else {
                     strResult = "Error  Response: " + httpResponse.getStatusLine().toString();
