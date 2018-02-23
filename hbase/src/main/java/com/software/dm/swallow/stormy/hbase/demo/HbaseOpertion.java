@@ -25,6 +25,7 @@ public class HbaseOpertion {
     // 单例类
     private static HbaseOpertion hbaseOpertion = null;
 
+
     /**
      * @throws IOException
      */
@@ -96,6 +97,8 @@ public class HbaseOpertion {
     public void createTable(String tableName, String[] columnFamilys) throws IOException {
         // 创建一个数据库管理员
         HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
+
+
         if (hAdmin.tableExists(tableName)) {
             logger.info(tableName + "表已存在");
 
@@ -111,6 +114,7 @@ public class HbaseOpertion {
             logger.info("创建" + tableName + "表成功");
         }
     }
+
     /**
      * 添加列族
      *
@@ -121,26 +125,37 @@ public class HbaseOpertion {
     public void alterTable(String tableName, String[] columnFamilys) throws IOException {
         // 创建一个数据库管理员
         HBaseAdmin hAdmin = (HBaseAdmin) getConnection().getAdmin();
+
+        ClusterStatus clusterStatus = hAdmin.getClusterStatus();
+        for (ServerName serverName : clusterStatus.getServers()) {
+            ServerLoad serverLoad = clusterStatus.getLoad(serverName);
+            for (Map.Entry<byte[], RegionLoad> regionload : serverLoad.getRegionsLoad().entrySet()) {
+                String regionName = Bytes.toString(regionload.getKey());
+                logger.info(regionName + "====" + regionload.getValue());
+                //result.put(regionName, regionload.getValue());
+            }
+        }
+
         if (hAdmin.tableExists(tableName)) {
-           if(hAdmin.isTableEnabled(tableName))
-            hAdmin.disableTable(tableName);
+            if (hAdmin.isTableEnabled(tableName))
+                hAdmin.disableTable(tableName);
             // 获取一个表描述
             HTableDescriptor tableDesc = hAdmin.getTableDescriptor(TableName.valueOf(tableName));
             // 在表描述里添加列族
             for (String columnFamily : columnFamilys) {
 
-                if(tableDesc.hasFamily(columnFamily.getBytes())){
+                if (tableDesc.hasFamily(columnFamily.getBytes())) {
                     HColumnDescriptor family = new HColumnDescriptor(columnFamily);
 
                     //tableDesc.modifyFamily(family);
-                }else{
+                } else {
                     tableDesc.addFamily(new HColumnDescriptor(columnFamily));
                 }
 
             }
 
             // 根据配置好的表描述建表
-            hAdmin.modifyTable(tableName,tableDesc);
+            hAdmin.modifyTable(tableName, tableDesc);
             hAdmin.enableTable(tableName);
             logger.info("添加" + tableName + "表成功");
 
@@ -219,6 +234,7 @@ public class HbaseOpertion {
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 通过rowkey创建一个get对象
         Get get = new Get(Bytes.toBytes(rowKey));
+        get.addFamily(Bytes.toBytes("student"));
         // 输出结果
         Result result = table.get(get);
         for (Cell cell : result.rawCells()) {
@@ -233,6 +249,72 @@ public class HbaseOpertion {
         table.close();
     }
 
+    /**
+     * 通过rowkey获取一条数据
+     *
+     * @param tableName
+     * @param rowKey
+     * @throws IOException
+     */
+    public CellData getRowByKey(String tableName, String rowKey) throws IOException {
+        CellData cd = null;
+        // 获取表
+        HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
+        // 通过rowkey创建一个get对象
+        Get get = new Get(Bytes.toBytes(rowKey));
+
+        // 输出结果
+        Result result = table.get(get);
+        for (Cell cell : result.rawCells()) {
+            logger.info(
+                    "行键:" + new String(CellUtil.cloneRow(cell)) + "\t" +
+                            "列族:" + new String(CellUtil.cloneFamily(cell)) + "\t" +
+                            "列名:" + new String(CellUtil.cloneQualifier(cell)) + "\t" +
+                            "值:" + new String(CellUtil.cloneValue(cell)) + "\t" +
+                            "时间戳:" + cell.getTimestamp());
+            cd = new CellData(cell);
+        }
+        // 关闭资源
+        table.close();
+        return cd;
+    }
+
+    /**
+     * 通过rowkey获取一条数据
+     *
+     * @param tableName
+     * @param rowKey
+     * @throws IOException
+     */
+    public List<CellData> getRow(String tableName, String rowKey, String familyName, String qualifier) throws IOException {
+        List<CellData> listCD = null;
+        // 获取表
+        HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
+        // 通过rowkey创建一个get对象
+        Get get = new Get(Bytes.toBytes(rowKey));
+        //get.addFamily(Bytes.toBytes(familyName));
+        get.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(qualifier));
+
+        // 输出结果
+        Result result = table.get(get);
+        if (!result.isEmpty()) {
+            listCD = new ArrayList<CellData>();
+            for (Cell cell : result.rawCells()) {
+                listCD.add(new CellData(cell));
+                logger.info(
+                        "行键:" + new String(CellUtil.cloneRow(cell)) + "\t" +
+                                "列族:" + new String(CellUtil.cloneFamily(cell)) + "\t" +
+                                "列名:" + new String(CellUtil.cloneQualifier(cell)) + "\t" +
+                                "值:" + new String(CellUtil.cloneValue(cell)) + "\t" +
+                                "时间戳:" + cell.getTimestamp());
+            }
+        }
+
+        // 关闭资源
+        table.close();
+
+        return listCD;
+    }
 
     /**
      * 全表扫描

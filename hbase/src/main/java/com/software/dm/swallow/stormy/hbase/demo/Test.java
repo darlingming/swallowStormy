@@ -13,18 +13,19 @@ public class Test {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         String tableName = "dm:t_test";
-        String[] columnFamilys = {"key", "value"};
+        String[] columnFamilys = {"student","school","user"};
         HbaseOpertion hbaseOpertion = null;
         try {
             hbaseOpertion = HbaseOpertion.getInstance();
 
             //HbaseOpertion.createTable(tableName, columnFamilys);
 
-            String rowKey = "138";
-            String columnFamily = "key";
-            String column = "a4";
-            String value = "456";
-            //hbaseOpertion.addRow(tableName, rowKey, columnFamily, column, value);
+            hbaseOpertion.alterTable(tableName,columnFamilys);
+            String rowKey = "admin";
+            String columnFamily = "user";
+            String column = "passwd";
+            String value = "123456";
+            hbaseOpertion.addRow(tableName, rowKey, columnFamily, column, value);
             hbaseOpertion.getRow(tableName, rowKey);
             logger.info(" hbaseOpertion.getRow(");
             //hbaseOpertion.scanTable(tableName);
@@ -39,31 +40,32 @@ public class Test {
             columnList.add(new ColumnEntity("sex", "男"));
             columnList.add(new ColumnEntity("jg", "中国"));
 
-            columnFamilyList.add(new ColumnFamilyEntity("key", columnList));
+            columnFamilyList.add(new ColumnFamilyEntity(columnFamily, columnList));
 
             hbaseDataEntityList.add(new HbaseDataEntity("13804511234", columnFamilyList));
+            hbaseDataEntityList.add(new HbaseDataEntity("13804510000", columnFamilyList));
             hbaseDataEntityList.add(new HbaseDataEntity("13804510000", columnFamilyList));
             hbaseOpertion.bathInsert(tableName, hbaseDataEntityList);
 
             logger.info(" hbaseOpertion.bathInsert(");
-            hbaseOpertion.scanTable(tableName);
+
             List<HbaseDataEntity> hbasedataList = hbaseOpertion.scanTableData(tableName);
             for (HbaseDataEntity hbaseDataEntity : hbasedataList) {
-                for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()
-                        ) {
-                    for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()
-                            ) {
-                        logger.info(
-                                "行键:" + hbaseDataEntity.getRowKey() + "\t" +
-                                        "列族:" + columnFamilyEntity.getColumnFamily() + "\t" +
-                                        "列名:" + columnEntity.getColumn() + "\t" +
-                                        "值:" + columnEntity.getValue() + "\t" +
-                                        "时间戳:" + columnEntity.getTimestamp());
-                    }
+                for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()  ) {
 
+                    for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()  ) {
+                        logger.info( "行键:" + hbaseDataEntity.getRowKey() + "\t" +
+                                "列族:" + columnFamilyEntity.getColumnFamily() + "\t" +
+                                "列名:" + columnEntity.getColumn() + "\t" +
+                                "值:" + columnEntity.getValue() + "\t" +
+                                "时间戳:" + columnEntity.getTimestamp());
+                    }
                 }
             }
-
+            column="js";
+            long reslong = hbaseOpertion.incrementColumnValue(  tableName,   rowKey,   columnFamily,   column, 1);
+            logger.info("计数器值："+reslong);
+            hbaseOpertion.getRow(tableName, rowKey);
         } catch (Exception e) {
             logger.error("HbaseOpertion Exception ", e);
         } finally {
