@@ -36,8 +36,10 @@ public class HbaseOpertion {
         is.close();
         logger.info(prop.values().toString());
         conf = HBaseConfiguration.create();
-        //conf.set("hbase.zookeeper.quorum", "localhost");
-        //conf.set("hbase.zookeeper.property.clientPort", "2181");
+
+        conf.set("hbase.zookeeper.quorum", prop.getProperty("hbase.zookeeper.quorum"));
+        conf.set("hbase.zookeeper.property.clientPort", prop.getProperty("hbase.zookeeper.property.clientPort"));
+        conf.set("hive.exec.submitviachild", prop.getProperty("hive.exec.submitviachild"));
         // 建立一个数据库的连接
         conn = getConnection();
     }
@@ -234,7 +236,7 @@ public class HbaseOpertion {
         HTable table = (HTable) getConnection().getTable(TableName.valueOf(tableName));
         // 通过rowkey创建一个get对象
         Get get = new Get(Bytes.toBytes(rowKey));
-        get.addFamily(Bytes.toBytes("student"));
+        //get.addFamily(Bytes.toBytes("student"));
         // 输出结果
         Result result = table.get(get);
         for (Cell cell : result.rawCells()) {
@@ -368,8 +370,8 @@ public class HbaseOpertion {
                 String rowKey = new String(CellUtil.cloneRow(cell));
                 String columnFamily = new String(CellUtil.cloneFamily(cell));
 
-                String column = new String(CellUtil.cloneQualifier(cell));
-                String value = new String(CellUtil.cloneValue(cell));
+                final String column = new String(CellUtil.cloneQualifier(cell));
+                final String value = new String(CellUtil.cloneValue(cell));
                 long timestamp = cell.getTimestamp();
 
                 Object hbaseDataEntity = HbaseCommonUtils.get(hbaseDataEntityList, rowKey);
