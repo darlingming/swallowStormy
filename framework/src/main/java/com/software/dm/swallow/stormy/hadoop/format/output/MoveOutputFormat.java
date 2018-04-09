@@ -11,21 +11,19 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import com.software.dm.swallow.stormy.hadoop.common.HadoopConstants;
 
 /**
- * 
- * @Description
  * @author DM
- * @date 2016
  * @version v1.0.0.1
- * 
+ * @Description
+ * @date 2016
  */
 public class MoveOutputFormat extends TextOutputFormat<Text, Text> {
 
-	public MoveOutputFormat() {
-		// TODO Auto-generated constructor stub
-	}
+    public MoveOutputFormat() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public OutputCommitter getOutputCommitter(TaskAttemptContext tac) throws IOException {
-		return new MoveFileOutputCommitter(new Path(tac.getConfiguration().get(HadoopConstants.OUTPUT_PATH_MOVE)), tac);
-	}
+    public OutputCommitter getOutputCommitter(TaskAttemptContext tac) throws IOException {
+        return new MoveFileOutputCommitter(new Path(tac.getConfiguration().get(HadoopConstants.OUTPUT_PATH_MOVE)), tac);
+    }
 
 }

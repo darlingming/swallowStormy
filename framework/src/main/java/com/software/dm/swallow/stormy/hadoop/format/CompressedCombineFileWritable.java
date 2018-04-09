@@ -14,60 +14,60 @@ import org.apache.hadoop.io.WritableComparable;
 @SuppressWarnings("rawtypes")
 public class CompressedCombineFileWritable implements WritableComparable {
 
-	public long offset;
-	public String fileName;
+    public long offset;
+    public String fileName;
 
-	public CompressedCombineFileWritable() {
-		super();
-	}
+    public CompressedCombineFileWritable() {
+        super();
+    }
 
-	public CompressedCombineFileWritable(long offset, String fileName) {
-		super();
-		this.offset = offset;
-		this.fileName = fileName;
-	}
+    public CompressedCombineFileWritable(long offset, String fileName) {
+        super();
+        this.offset = offset;
+        this.fileName = fileName;
+    }
 
-	public void readFields(DataInput in) throws IOException {
-		this.offset = in.readLong();
-		this.fileName = Text.readString(in);
-	}
+    public void readFields(DataInput in) throws IOException {
+        this.offset = in.readLong();
+        this.fileName = Text.readString(in);
+    }
 
-	public void write(DataOutput out) throws IOException {
-		out.writeLong(offset);
-		Text.writeString(out, fileName);
-	}
+    public void write(DataOutput out) throws IOException {
+        out.writeLong(offset);
+        Text.writeString(out, fileName);
+    }
 
-	public int compareTo(Object o) {
-		CompressedCombineFileWritable that = (CompressedCombineFileWritable) o;
+    public int compareTo(Object o) {
+        CompressedCombineFileWritable that = (CompressedCombineFileWritable) o;
 
-		int f = this.fileName.compareTo(that.fileName);
-		if (f == 0) {
-			return (int) Math.signum((double) (this.offset - that.offset));
-		}
-		return f;
-	}
+        int f = this.fileName.compareTo(that.fileName);
+        if (f == 0) {
+            return (int) Math.signum((double) (this.offset - that.offset));
+        }
+        return f;
+    }
 
-	 
-	public boolean equals(Object obj) {
-		if (obj instanceof CompressedCombineFileWritable)
-			return this.compareTo(obj) == 0;
-		return false;
-	}
 
-	 
-	public int hashCode() {
+    public boolean equals(Object obj) {
+        if (obj instanceof CompressedCombineFileWritable)
+            return this.compareTo(obj) == 0;
+        return false;
+    }
 
-		final int hashPrime = 47;
-		int hash = 13;
-		hash = hashPrime * hash + (this.fileName != null ? this.fileName.hashCode() : 0);
-		hash = hashPrime * hash + (int) (this.offset ^ (this.offset >>> 16));
 
-		return hash;
-	}
+    public int hashCode() {
 
-	 
-	public String toString() {
-		return this.fileName + "-" + this.offset;
-	}
+        final int hashPrime = 47;
+        int hash = 13;
+        hash = hashPrime * hash + (this.fileName != null ? this.fileName.hashCode() : 0);
+        hash = hashPrime * hash + (int) (this.offset ^ (this.offset >>> 16));
+
+        return hash;
+    }
+
+
+    public String toString() {
+        return this.fileName + "-" + this.offset;
+    }
 
 }

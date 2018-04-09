@@ -3,49 +3,47 @@ package com.software.dm.swallow.stormy.algoac.pojo;
 import java.util.Arrays;
 
 /**
- * 
- * @Description
  * @author DM
- * @date 2017
  * @version v1.0.0.1
- * 
+ * @Description
+ * @date 2017
  */
 public final class ResultSetEntity {
 
-	private int regnum = 1;
-	private String keyWord;
-	private String[] values;
-	private int type;
-	private Object source;
+    private int regnum = 1;
+    private String keyWord;
+    private String[] values;
+    private int type;
+    private Object source;
 
-	public ResultSetEntity(int regnum, String keyWord, String[] values, int type, Object source) {
+    public ResultSetEntity(int regnum, String keyWord, String[] values, int type, Object source) {
 
-		this.regnum = regnum;
-		this.keyWord = keyWord;
-		this.values = values;
-		this.type = type;
-		this.source = source;
-	}
+        this.regnum = regnum;
+        this.keyWord = keyWord;
+        this.values = values;
+        this.type = type;
+        this.source = source;
+    }
 
-	public Object getSource() {
-		return source;
-	}
+    public Object getSource() {
+        return source;
+    }
 
-	public int getRegnum() {
-		return regnum;
-	}
+    public int getRegnum() {
+        return regnum;
+    }
 
-	public String getKeyWord() {
-		return keyWord;
-	}
+    public String getKeyWord() {
+        return keyWord;
+    }
 
-	public String[] getValues() {
-		return values;
-	}
+    public String[] getValues() {
+        return values;
+    }
 
-	public int getType() {
-		return type;
-	}
+    public int getType() {
+        return type;
+    }
 
 //	@Override
 //	public int hashCode() {
@@ -75,9 +73,9 @@ public final class ResultSetEntity {
 //		return true;
 //	}
 
-	@Override
-	public String toString() {
-		return "ResultSetEntity [regnum=" + regnum + ", keyWord=" + keyWord + ", values=" + Arrays.toString(values) + ", type=" + type + "]";
-	}
+    @Override
+    public String toString() {
+        return "ResultSetEntity [regnum=" + regnum + ", keyWord=" + keyWord + ", values=" + Arrays.toString(values) + ", type=" + type + "]";
+    }
 
 }

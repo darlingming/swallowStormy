@@ -1,7 +1,7 @@
 package com;
 
 interface Formula {
-	
-	double calculate(int a);
-	 
+
+    double calculate(int a);
+
 }

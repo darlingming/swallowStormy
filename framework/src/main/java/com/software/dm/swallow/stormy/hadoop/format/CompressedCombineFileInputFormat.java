@@ -15,17 +15,17 @@ import org.apache.hadoop.mapreduce.lib.input.CombineFileSplit;
 
 public class CompressedCombineFileInputFormat extends CombineFileInputFormat<CompressedCombineFileWritable, Text> {
 
-	public CompressedCombineFileInputFormat() {
-		super();
-	}
+    public CompressedCombineFileInputFormat() {
+        super();
+    }
 
-	public RecordReader<CompressedCombineFileWritable, Text> createRecordReader(InputSplit split, TaskAttemptContext context) throws IOException {
-		return new CombineFileRecordReader<CompressedCombineFileWritable, Text>((CombineFileSplit) split, context, CompressedCombineFileRecordReader.class);
-	}
+    public RecordReader<CompressedCombineFileWritable, Text> createRecordReader(InputSplit split, TaskAttemptContext context) throws IOException {
+        return new CombineFileRecordReader<CompressedCombineFileWritable, Text>((CombineFileSplit) split, context, CompressedCombineFileRecordReader.class);
+    }
 
-	 
-	protected boolean isSplitable(JobContext context, Path file) {
-		return false;
-	}
+
+    protected boolean isSplitable(JobContext context, Path file) {
+        return false;
+    }
 
 }

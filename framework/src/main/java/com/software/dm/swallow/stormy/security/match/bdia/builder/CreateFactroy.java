@@ -32,567 +32,553 @@ import com.software.dm.swallow.stormy.security.match.bdia.common.ApplicationCont
 import com.software.dm.swallow.stormy.security.match.bdia.common.RepoConstant;
 
 /**
- * 
- * @Description
  * @author DM
- * @date 2017
  * @version v1.0.0.1
- * 
+ * @Description
+ * @date 2017
  */
 public final class CreateFactroy {
 
-	public CreateFactroy() {
-		// TODO Auto-generated constructor stub
-	}
+    public CreateFactroy() {
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	private Properties getProperties(String filePath) throws IOException {
-		InputStream inputStream = null;
-		if (null != filePath) {
-			File f = new File(filePath);
-			if (f.exists() && f.isFile()) {
-				inputStream = new FileInputStream(f);
-			}
+    /**
+     * @return
+     * @throws IOException
+     */
+    private Properties getProperties(String filePath) throws IOException {
+        InputStream inputStream = null;
+        if (null != filePath) {
+            File f = new File(filePath);
+            if (f.exists() && f.isFile()) {
+                inputStream = new FileInputStream(f);
+            }
 
-		} else {
-			inputStream = CreateFactroy.class.getResourceAsStream(RepoConstant.REPO_NAME);
-		}
+        } else {
+            inputStream = CreateFactroy.class.getResourceAsStream(RepoConstant.REPO_NAME);
+        }
 
-		Properties prop = new Properties();
-		prop.load(inputStream);
-		inputStream.close();
-		this.println(prop.toString().replaceAll(", ", "\r\n"));
-		return prop;
-	}
+        Properties prop = new Properties();
+        prop.load(inputStream);
+        inputStream.close();
+        this.println(prop.toString().replaceAll(", ", "\r\n"));
+        return prop;
+    }
 
-	/**
-	 * BASICAndApp
-	 * 
-	 * @param urlRulePath
-	 * @param basicRefPath
-	 * @param btrMap
-	 * @param urlRuleList
-	 * @throws IOException
-	 */
-	private void initUrlRule(String urlRulePath, String basicRefPath, Map<Long, List<T_basic_type_rel>> btrMap, List<T_url_rule> urlRuleList) throws IOException {
+    /**
+     * BASICAndApp
+     *
+     * @param urlRulePath
+     * @param basicRefPath
+     * @param btrMap
+     * @param urlRuleList
+     * @throws IOException
+     */
+    private void initUrlRule(String urlRulePath, String basicRefPath, Map<Long, List<T_basic_type_rel>> btrMap, List<T_url_rule> urlRuleList) throws IOException {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(basicRefPath), "utf8"));
-		String line = null;
-		String[] values = null;
-		while (null != (line = br.readLine())) {
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			try {
-				this.trim(values);
-				long nid = Long.valueOf(values[0]);
-				T_basic_type_rel tbtr = new T_basic_type_rel(nid, values[1], values[2]);
-				List<T_basic_type_rel> btrSet = btrMap.get(nid);
-				if (null == btrSet) {
-					btrSet = new ArrayList<T_basic_type_rel>();
-					btrSet.add(tbtr);
-					btrMap.put(nid, btrSet);
-				} else {
-					btrSet.add(tbtr);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(basicRefPath), "utf8"));
+        String line = null;
+        String[] values = null;
+        while (null != (line = br.readLine())) {
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            try {
+                this.trim(values);
+                long nid = Long.valueOf(values[0]);
+                T_basic_type_rel tbtr = new T_basic_type_rel(nid, values[1], values[2]);
+                List<T_basic_type_rel> btrSet = btrMap.get(nid);
+                if (null == btrSet) {
+                    btrSet = new ArrayList<T_basic_type_rel>();
+                    btrSet.add(tbtr);
+                    btrMap.put(nid, btrSet);
+                } else {
+                    btrSet.add(tbtr);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
 
-		br = new BufferedReader(new InputStreamReader(new FileInputStream(urlRulePath), "utf8"));
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(urlRulePath), "utf8"));
 
-		while (null != (line = br.readLine())) {
-			if (line.isEmpty())
-				continue;
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			try {
-				this.trim(values);
-				long nid = Long.valueOf(values[0]);
-				T_url_rule tbtr = new T_url_rule(//
-						Long.valueOf(nid), //
-						values[1], //
-						values[2], //
-						values[3], //
-						values[4], //
-						values[5], //
-						values[6].isEmpty() ? -1 : Integer.valueOf(values[6]), //
-						values[7].isEmpty() ? -1 : Integer.valueOf(values[7]), //
-						values[8].isEmpty() ? -1 : Integer.valueOf(values[8]), //
-						values[9], //
-						values[10], //
-						btrMap.get(nid));
-				urlRuleList.add(tbtr);
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
-	}
+        while (null != (line = br.readLine())) {
+            if (line.isEmpty())
+                continue;
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            try {
+                this.trim(values);
+                long nid = Long.valueOf(values[0]);
+                T_url_rule tbtr = new T_url_rule(//
+                        Long.valueOf(nid), //
+                        values[1], //
+                        values[2], //
+                        values[3], //
+                        values[4], //
+                        values[5], //
+                        values[6].isEmpty() ? -1 : Integer.valueOf(values[6]), //
+                        values[7].isEmpty() ? -1 : Integer.valueOf(values[7]), //
+                        values[8].isEmpty() ? -1 : Integer.valueOf(values[8]), //
+                        values[9], //
+                        values[10], //
+                        btrMap.get(nid));
+                urlRuleList.add(tbtr);
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
+    }
 
-	/**
-	 * theme
-	 * 
-	 * @param themeRulePath
-	 * @param themeRefPath
-	 * @param tbtrMap
-	 * @param themeUrlRuleList
-	 * @throws IOException
-	 */
-	private void initThemeRule(String themeRulePath, String themeRefPath, Map<Long, List<T_theme_basic_type_rel>> tbtrMap, List<T_theme_url_rule> themeUrlRuleList) throws IOException {
+    /**
+     * theme
+     *
+     * @param themeRulePath
+     * @param themeRefPath
+     * @param tbtrMap
+     * @param themeUrlRuleList
+     * @throws IOException
+     */
+    private void initThemeRule(String themeRulePath, String themeRefPath, Map<Long, List<T_theme_basic_type_rel>> tbtrMap, List<T_theme_url_rule> themeUrlRuleList) throws IOException {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(themeRefPath), "utf8"));
-		String line = null;
-		String[] values = null;
-		while (null != (line = br.readLine())) {
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			try {
-				this.trim(values);
-				long nid = Long.valueOf(values[1]);
-				T_theme_basic_type_rel tbtr = new T_theme_basic_type_rel(values[0], nid, values[2], values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), values[4]);
-				List<T_theme_basic_type_rel> tbtrSet = tbtrMap.get(nid);
-				if (null == tbtrSet) {
-					tbtrSet = new ArrayList<T_theme_basic_type_rel>();
-					tbtrSet.add(tbtr);
-					tbtrMap.put(nid, tbtrSet);
-				} else {
-					tbtrSet.add(tbtr);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(themeRefPath), "utf8"));
+        String line = null;
+        String[] values = null;
+        while (null != (line = br.readLine())) {
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            try {
+                this.trim(values);
+                long nid = Long.valueOf(values[1]);
+                T_theme_basic_type_rel tbtr = new T_theme_basic_type_rel(values[0], nid, values[2], values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), values[4]);
+                List<T_theme_basic_type_rel> tbtrSet = tbtrMap.get(nid);
+                if (null == tbtrSet) {
+                    tbtrSet = new ArrayList<T_theme_basic_type_rel>();
+                    tbtrSet.add(tbtr);
+                    tbtrMap.put(nid, tbtrSet);
+                } else {
+                    tbtrSet.add(tbtr);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
 
-		br = new BufferedReader(new InputStreamReader(new FileInputStream(themeRulePath), "utf8"));
-		while (null != (line = br.readLine())) {
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			try {
-				this.trim(values);
-				Long nid = Long.valueOf(values[0]);
-				List<T_theme_basic_type_rel> tbtrSet = tbtrMap.get(nid);
-				if (null == tbtrSet || tbtrSet.isEmpty()) {
-					this.println("T_theme_url_rule is not ref :" + line);
-					continue;
-				}
-				T_theme_url_rule ttur = new T_theme_url_rule(//
-						nid, //
-						values[1], //
-						values[2], //
-						values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), //
-						tbtrSet);
-				themeUrlRuleList.add(ttur);
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
-	}
+        br = new BufferedReader(new InputStreamReader(new FileInputStream(themeRulePath), "utf8"));
+        while (null != (line = br.readLine())) {
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            try {
+                this.trim(values);
+                Long nid = Long.valueOf(values[0]);
+                List<T_theme_basic_type_rel> tbtrSet = tbtrMap.get(nid);
+                if (null == tbtrSet || tbtrSet.isEmpty()) {
+                    this.println("T_theme_url_rule is not ref :" + line);
+                    continue;
+                }
+                T_theme_url_rule ttur = new T_theme_url_rule(//
+                        nid, //
+                        values[1], //
+                        values[2], //
+                        values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), //
+                        tbtrSet);
+                themeUrlRuleList.add(ttur);
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
+    }
 
-	/**
-	 * 
-	 * @param iPRulePath
-	 * @param iPMap
-	 * @throws IOException
-	 */
-	private void initIPRule(String iPRulePath, Map<String, T_ip_rule> iPMap) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(iPRulePath), "utf8"));
-		String line = null;
-		String[] values = null;
-		while (null != (line = br.readLine())) {
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			this.trim(values);
-			try {
-				if (!values[1].isEmpty() && !values[2].isEmpty()) {
-					long nid = Long.valueOf(values[0]);
-					T_ip_rule tipr = new T_ip_rule(nid, values[1], values[2], values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), values[4], values[5]);
-					iPMap.put(values[1] + values[2], tipr);
-				} else {
-					this.println("T_IP_RULE is error:" + line);
-				}
+    /**
+     * @param iPRulePath
+     * @param iPMap
+     * @throws IOException
+     */
+    private void initIPRule(String iPRulePath, Map<String, T_ip_rule> iPMap) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(iPRulePath), "utf8"));
+        String line = null;
+        String[] values = null;
+        while (null != (line = br.readLine())) {
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            this.trim(values);
+            try {
+                if (!values[1].isEmpty() && !values[2].isEmpty()) {
+                    long nid = Long.valueOf(values[0]);
+                    T_ip_rule tipr = new T_ip_rule(nid, values[1], values[2], values[3].isEmpty() ? -1 : Integer.valueOf(values[3]), values[4], values[5]);
+                    iPMap.put(values[1] + values[2], tipr);
+                } else {
+                    this.println("T_IP_RULE is error:" + line);
+                }
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param msg
-	 */
-	private void println(String msg) {
-		System.out.println(msg);
-	}
+    /**
+     * @param msg
+     */
+    private void println(String msg) {
+        System.out.println(msg);
+    }
 
-	/**
-	 * 
-	 * @param extractPath
-	 * @param extractRuleList
-	 * @throws IOException
-	 */
-	private void initExtract(String extractPath, List<T_extract_rule> extractRuleList) throws IOException {
+    /**
+     * @param extractPath
+     * @param extractRuleList
+     * @throws IOException
+     */
+    private void initExtract(String extractPath, List<T_extract_rule> extractRuleList) throws IOException {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(extractPath), "utf8"));
-		String line = null;
-		String[] values = null;
-		while (null != (line = br.readLine())) {
-			values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
-			try {
-				this.trim(values);
-				T_extract_rule extract = new T_extract_rule(//
-						values[0].isEmpty() ? -1 : Integer.valueOf(values[0]), //
-						values[1].isEmpty() ? -1 : Integer.valueOf(values[1]), //
-						values[2].isEmpty() ? -1 : Integer.valueOf(values[2]), //
-						values[3], //
-						values[4].isEmpty() ? -1 : Integer.valueOf(values[4]), //
-						values[5], //
-						values[6], //
-						values[7], //
-						values[8], //
-						values[9], //
-						values[10], //
-						values[11].isEmpty() ? -1 : Integer.valueOf(values[11])
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(extractPath), "utf8"));
+        String line = null;
+        String[] values = null;
+        while (null != (line = br.readLine())) {
+            values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1);
+            try {
+                this.trim(values);
+                T_extract_rule extract = new T_extract_rule(//
+                        values[0].isEmpty() ? -1 : Integer.valueOf(values[0]), //
+                        values[1].isEmpty() ? -1 : Integer.valueOf(values[1]), //
+                        values[2].isEmpty() ? -1 : Integer.valueOf(values[2]), //
+                        values[3], //
+                        values[4].isEmpty() ? -1 : Integer.valueOf(values[4]), //
+                        values[5], //
+                        values[6], //
+                        values[7], //
+                        values[8], //
+                        values[9], //
+                        values[10], //
+                        values[11].isEmpty() ? -1 : Integer.valueOf(values[11])
 
-				);
-				if (!extract.getContent_rule().isEmpty() && !extract.getUncode().isEmpty()) {
-					String[] rules = extract.getContent_rule().split(Constant.PUB_FIELD_STR, -1);
-					String[] uncodes = extract.getUncode().split(Constant.PUB_COMMA, -1);
-					if (uncodes.length != rules.length) {
-						this.println("rules:" + rules.length + "uncodes:" + uncodes.length + " not equals " + line);
-						continue;
-					}
-					Pattern[] ps = new Pattern[rules.length];
-					Map<Integer, Integer[]> uncodesMap = new HashMap<Integer, Integer[]>();
-					for (int j = 0; j < rules.length; j++) {
-						if (!rules[j].isEmpty())
-							ps[j] = Pattern.compile(rules[j], Pattern.CASE_INSENSITIVE);
-						String[] codes = uncodes[j].split(RepoConstant.DECODING_REPEAT_SEPARATOR);
-						Integer[] ints = new Integer[codes.length];
-						for (int i = 0; i < codes.length; i++) {
-							ints[i] = Integer.valueOf(codes[i]);
-						}
-						uncodesMap.put(j, ints);
-					}
+                );
+                if (!extract.getContent_rule().isEmpty() && !extract.getUncode().isEmpty()) {
+                    String[] rules = extract.getContent_rule().split(Constant.PUB_FIELD_STR, -1);
+                    String[] uncodes = extract.getUncode().split(Constant.PUB_COMMA, -1);
+                    if (uncodes.length != rules.length) {
+                        this.println("rules:" + rules.length + "uncodes:" + uncodes.length + " not equals " + line);
+                        continue;
+                    }
+                    Pattern[] ps = new Pattern[rules.length];
+                    Map<Integer, Integer[]> uncodesMap = new HashMap<Integer, Integer[]>();
+                    for (int j = 0; j < rules.length; j++) {
+                        if (!rules[j].isEmpty())
+                            ps[j] = Pattern.compile(rules[j], Pattern.CASE_INSENSITIVE);
+                        String[] codes = uncodes[j].split(RepoConstant.DECODING_REPEAT_SEPARATOR);
+                        Integer[] ints = new Integer[codes.length];
+                        for (int i = 0; i < codes.length; i++) {
+                            ints[i] = Integer.valueOf(codes[i]);
+                        }
+                        uncodesMap.put(j, ints);
+                    }
 
-					extract.setParamRegexPatternArray(ps);
-					extract.setUncodes(uncodesMap);
-				}
+                    extract.setParamRegexPatternArray(ps);
+                    extract.setUncodes(uncodesMap);
+                }
 
-				extractRuleList.add(extract);
+                extractRuleList.add(extract);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.println(line);
-			}
-		}
-		br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.println(line);
+            }
+        }
+        br.close();
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 * @param domain
-	 * @param obj
-	 */
-	private void loadDomainEquals(ApplicationContainer ac, String domain, Object obj) {
-		List<Object> setObj = ac.getDomainEqualsMap().get(domain);
-		if (null == setObj) {
-			setObj = new ArrayList<Object>();
-			setObj.add(obj);
-			ac.getDomainEqualsMap().put(domain, setObj);
-		} else {
-			setObj.add(obj);
-		}
-	}
+    /**
+     * @param ac
+     * @param domain
+     * @param obj
+     */
+    private void loadDomainEquals(ApplicationContainer ac, String domain, Object obj) {
+        List<Object> setObj = ac.getDomainEqualsMap().get(domain);
+        if (null == setObj) {
+            setObj = new ArrayList<Object>();
+            setObj.add(obj);
+            ac.getDomainEqualsMap().put(domain, setObj);
+        } else {
+            setObj.add(obj);
+        }
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 * @param type
-	 * @param domain
-	 * @param obj
-	 */
-	private void loadAfDomain(ApplicationContainer ac, int type, String domain, Object obj) {
-		Param pDomain = new Param(type, domain, obj);
-		ac.getAfDomain().addParam(pDomain);
-	}
+    /**
+     * @param ac
+     * @param type
+     * @param domain
+     * @param obj
+     */
+    private void loadAfDomain(ApplicationContainer ac, int type, String domain, Object obj) {
+        Param pDomain = new Param(type, domain, obj);
+        ac.getAfDomain().addParam(pDomain);
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 * @param type
-	 * @param rule
-	 * @param obj
-	 */
-	private void loadAfRule(ApplicationContainer ac, int type, String rule, Object obj) {
-		Param pRule = new Param(type, rule, obj);
-		ac.getAfRule().addParam(pRule);
-	}
+    /**
+     * @param ac
+     * @param type
+     * @param rule
+     * @param obj
+     */
+    private void loadAfRule(ApplicationContainer ac, int type, String rule, Object obj) {
+        Param pRule = new Param(type, rule, obj);
+        ac.getAfRule().addParam(pRule);
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 */
-	private void builderBasicAndApp(ApplicationContainer ac) {
-		// basicAndApp
-		List<T_url_rule> urlRuleList = ac.getUrlRuleList();
-		for (T_url_rule t_url_rule : urlRuleList) {
-			int ruleType = t_url_rule.getRule_type();
-			// 1¡¢ÓòÃûÖµµÈÆ¥Åä £¨¹æÔò²»Æ¥Åä£©
-			// 2¡¢ÓòÃûÄ£ºýÆ¥Åä £¨¹æÔò²»Æ¥Åä£©
-			// 3¡¢¹æÔòÄ£ºýÆ¥Åä £¨ÓòÃû²»Æ¥Åä£©
-			// 4¡¢ÓòÃûÖµµÈ£¬¹æÔòÄ£ºýÆ¥Åä
-			// 5¡¢ÓòÃûÄ£ºý£¬¹æÔòÄ£ºýÆ¥Åä
+    /**
+     * @param ac
+     */
+    private void builderBasicAndApp(ApplicationContainer ac) {
+        // basicAndApp
+        List<T_url_rule> urlRuleList = ac.getUrlRuleList();
+        for (T_url_rule t_url_rule : urlRuleList) {
+            int ruleType = t_url_rule.getRule_type();
+            // 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+            // 5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
 
-			switch (ruleType) {
-			case 1:
-				this.loadDomainEquals(ac, t_url_rule.getDomain_comp(), t_url_rule);
-				break;
-			case 2:
-				this.loadAfDomain(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp(), t_url_rule);
-				break;
-			case 3:
-				this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
-				break;
-			case 4:
-				this.loadDomainEquals(ac, t_url_rule.getDomain_comp(), t_url_rule);
-				this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
-				break;
-			case 5:
-				this.loadAfDomain(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp(), t_url_rule);
-				this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
-				break;
-			}
-		}
-	}
+            switch (ruleType) {
+                case 1:
+                    this.loadDomainEquals(ac, t_url_rule.getDomain_comp(), t_url_rule);
+                    break;
+                case 2:
+                    this.loadAfDomain(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp(), t_url_rule);
+                    break;
+                case 3:
+                    this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
+                    break;
+                case 4:
+                    this.loadDomainEquals(ac, t_url_rule.getDomain_comp(), t_url_rule);
+                    this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
+                    break;
+                case 5:
+                    this.loadAfDomain(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp(), t_url_rule);
+                    this.loadAfRule(ac, T_url_rule.ACTION_BASIC_APP, t_url_rule.getRule(), t_url_rule);
+                    break;
+            }
+        }
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 */
-	private void builderTheme(ApplicationContainer ac) {
-		List<T_theme_url_rule> themeUrlRuleList = ac.getThemeUrlRuleList();
-		for (T_theme_url_rule t_theme_url_rule : themeUrlRuleList) {
-			int ruleType = t_theme_url_rule.getRule_type();
-			// 1¡¢ÓòÃûÖµµÈÆ¥Åä £¨¹æÔò²»Æ¥Åä£©
-			// 2¡¢ÓòÃûÄ£ºýÆ¥Åä £¨¹æÔò²»Æ¥Åä£©
-			// 3¡¢¹æÔòÄ£ºýÆ¥Åä £¨ÓòÃû²»Æ¥Åä£©
-			// 4¡¢ÓòÃûÖµµÈ£¬¹æÔòÄ£ºýÆ¥Åä
-			// 5¡¢ÓòÃûÄ£ºý£¬¹æÔòÄ£ºýÆ¥Åä
-			switch (ruleType) {
-			case 1:
-				this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
-				break;
-			case 2:
-				this.loadAfDomain(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
-				break;
-			case 3:
-				this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
-				break;
-			case 4:
-				this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
-				this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
-				break;
-			case 5:
-				this.loadAfDomain(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
-				this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
-				break;
-			}
-		}
+    /**
+     * @param ac
+     */
+    private void builderTheme(ApplicationContainer ac) {
+        List<T_theme_url_rule> themeUrlRuleList = ac.getThemeUrlRuleList();
+        for (T_theme_url_rule t_theme_url_rule : themeUrlRuleList) {
+            int ruleType = t_theme_url_rule.getRule_type();
+            // 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+            // 5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+            switch (ruleType) {
+                case 1:
+                    this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
+                    break;
+                case 2:
+                    this.loadAfDomain(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
+                    break;
+                case 3:
+                    this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
+                    break;
+                case 4:
+                    this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
+                    this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
+                    break;
+                case 5:
+                    this.loadAfDomain(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
+                    this.loadAfRule(ac, T_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule(), t_theme_url_rule);
+                    break;
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * 1¡¢ÕýÔòÆ¥Åä£¬£¨ÓòÃû²»Æ¥Åä£© 2¡¢Ä£ºýÆ¥Åä£¨ÓòÃû²»Æ¥Åä£© 3¡¢ÓòÃûÄ£ºý£¬ÕýÔòÆ¥Åä 4¡¢ÓòÃûÄ£ºý£¬Ä£ºýÆ¥Åä 5¡¢ÓòÃûÖµµÈÕýÔòÆ¥Åä
-	 * 6¡¢ÓòÃûÖµµÈÄ£ºýÆ¥Åä
-	 * 
-	 * @param ac
-	 */
-	private void builderExtract(ApplicationContainer ac) {
-		List<T_extract_rule> extractRuleList = ac.getExtractRuleList();
-		for (T_extract_rule t_extract_rule : extractRuleList) {
-			int ruleType = t_extract_rule.getRule_type();
-			// 1¡¢ÕýÔòÆ¥Åä£¬£¨ÓòÃû²»Æ¥Åä£©
-			// 2¡¢Ä£ºýÆ¥Åä£¨ÓòÃû²»Æ¥Åä£©
-			// 3¡¢ÓòÃûÄ£ºý£¬ÕýÔòÆ¥Åä
-			// 4¡¢ÓòÃûÄ£ºý£¬Ä£ºýÆ¥Åä
-			// 5¡¢ÓòÃûÖµµÈÕýÔòÆ¥Åä
-			// 6¡¢ÓòÃûÖµµÈÄ£ºýÆ¥Åä
-			String rule = t_extract_rule.getRule();
+    /**
+     * 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£© 2ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ä£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£© 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+     * 6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+     *
+     * @param ac
+     */
+    private void builderExtract(ApplicationContainer ac) {
+        List<T_extract_rule> extractRuleList = ac.getExtractRuleList();
+        for (T_extract_rule t_extract_rule : extractRuleList) {
+            int ruleType = t_extract_rule.getRule_type();
+            // 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 2ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ä£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ä£©
+            // 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+            // 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+            // 5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+            // 6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ä£ï¿½ï¿½Æ¥ï¿½ï¿½
+            String rule = t_extract_rule.getRule();
 
-			// String context_rule = t_extract_rule.getContent_rule();
-			// if (!context_rule.isEmpty()) {
-			// try {
-			// String[] rules = context_rule.split("\u0001");
-			// for (String string : rules) {
-			// Pattern.compile(string);
-			// }
-			// t_extract_rule.setParamRegexs(rules);
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// System.out.println(t_extract_rule);
-			// continue;
-			// }
-			// }
-			switch (ruleType) {
-			case 1:
-				Pattern ruleP = null;
-				try {
-					ruleP = Pattern.compile(rule);
-				} catch (Exception e) {
-					e.printStackTrace();
-					this.println(t_extract_rule.toString());
-					continue;
-				}
-				ac.getExtractPatternRuleMap().put(t_extract_rule, ruleP);
-				break;
-			case 2:
-				this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, rule, t_extract_rule);
-				break;
-			case 3:
-				try {
-					ruleP = Pattern.compile(rule);
-				} catch (Exception e) {
-					e.printStackTrace();
-					this.println(t_extract_rule.toString());
-					continue;
-				}
-				this.loadAfDomain(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain(), t_extract_rule);
-				ac.getExtractDoMainPatternRuleMap().put(t_extract_rule, ruleP);
-				break;
-			case 4:
-				this.loadAfDomain(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain(), t_extract_rule);
-				this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getRule(), t_extract_rule);
-				break;
-			case 5:
-				try {
-					ruleP = Pattern.compile(rule);
-				} catch (Exception e) {
-					e.printStackTrace();
-					this.println(t_extract_rule.toString());
-					continue;
-				}
-				this.loadDomainEquals(ac, t_extract_rule.getFullDomain(), t_extract_rule);
-				ac.getExtractDoMainPatternRuleMap().put(t_extract_rule, ruleP);
-				break;
-			case 6:
-				this.loadDomainEquals(ac, t_extract_rule.getFullDomain(), t_extract_rule);
-				this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, rule, t_extract_rule);
-				break;
+            // String context_rule = t_extract_rule.getContent_rule();
+            // if (!context_rule.isEmpty()) {
+            // try {
+            // String[] rules = context_rule.split("\u0001");
+            // for (String string : rules) {
+            // Pattern.compile(string);
+            // }
+            // t_extract_rule.setParamRegexs(rules);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // System.out.println(t_extract_rule);
+            // continue;
+            // }
+            // }
+            switch (ruleType) {
+                case 1:
+                    Pattern ruleP = null;
+                    try {
+                        ruleP = Pattern.compile(rule);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        this.println(t_extract_rule.toString());
+                        continue;
+                    }
+                    ac.getExtractPatternRuleMap().put(t_extract_rule, ruleP);
+                    break;
+                case 2:
+                    this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, rule, t_extract_rule);
+                    break;
+                case 3:
+                    try {
+                        ruleP = Pattern.compile(rule);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        this.println(t_extract_rule.toString());
+                        continue;
+                    }
+                    this.loadAfDomain(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain(), t_extract_rule);
+                    ac.getExtractDoMainPatternRuleMap().put(t_extract_rule, ruleP);
+                    break;
+                case 4:
+                    this.loadAfDomain(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain(), t_extract_rule);
+                    this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, t_extract_rule.getRule(), t_extract_rule);
+                    break;
+                case 5:
+                    try {
+                        ruleP = Pattern.compile(rule);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        this.println(t_extract_rule.toString());
+                        continue;
+                    }
+                    this.loadDomainEquals(ac, t_extract_rule.getFullDomain(), t_extract_rule);
+                    ac.getExtractDoMainPatternRuleMap().put(t_extract_rule, ruleP);
+                    break;
+                case 6:
+                    this.loadDomainEquals(ac, t_extract_rule.getFullDomain(), t_extract_rule);
+                    this.loadAfRule(ac, T_extract_rule.ACTION_EXTRACT, rule, t_extract_rule);
+                    break;
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	/**
-	 * 
-	 * @param ac
-	 */
-	private void builder(ApplicationContainer ac) {
-		// basicAndApp
-		this.builderBasicAndApp(ac);
-		// theme
-		this.builderTheme(ac);
-		// extract
-		this.builderExtract(ac);
-	}
+    /**
+     * @param ac
+     */
+    private void builder(ApplicationContainer ac) {
+        // basicAndApp
+        this.builderBasicAndApp(ac);
+        // theme
+        this.builderTheme(ac);
+        // extract
+        this.builderExtract(ac);
+    }
 
-	/**
-	 * 
-	 */
-	public void exec(String configFilePath, String serialName) {
+    /**
+     *
+     */
+    public void exec(String configFilePath, String serialName) {
 
-		ApplicationContainer ac = new ApplicationContainer();
-		try {
-			Properties prop = getProperties(configFilePath);
-			// basicAndApp
-			String urlRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_URL_RULE_PATCH);
-			String basicRefPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_BASIC_TYPE_REL_PATCH);
-			this.initUrlRule(urlRulePath, basicRefPath, ac.getBasicTypeRelMap(), ac.getUrlRuleList());
-			// IP
-			String iPRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_IP_RULE_PATCH);
-			this.initIPRule(iPRulePath, ac.getiPMap());
-			// theme
-			String themeRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_THEME_URL_RULE_PATCH);
-			String themeRefPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_THEME_BASIC_TYPE_REL_PATCH);
-			this.initThemeRule(themeRulePath, themeRefPath, ac.getThemeBasicTypeRelMap(), ac.getThemeUrlRuleList());
-			// extract
-			String extractPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_EXTRACT_RULE_PATCH);
-			this.initExtract(extractPath, ac.getExtractRuleList());
+        ApplicationContainer ac = new ApplicationContainer();
+        try {
+            Properties prop = getProperties(configFilePath);
+            // basicAndApp
+            String urlRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_URL_RULE_PATCH);
+            String basicRefPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_BASIC_TYPE_REL_PATCH);
+            this.initUrlRule(urlRulePath, basicRefPath, ac.getBasicTypeRelMap(), ac.getUrlRuleList());
+            // IP
+            String iPRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_IP_RULE_PATCH);
+            this.initIPRule(iPRulePath, ac.getiPMap());
+            // theme
+            String themeRulePath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_THEME_URL_RULE_PATCH);
+            String themeRefPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_THEME_BASIC_TYPE_REL_PATCH);
+            this.initThemeRule(themeRulePath, themeRefPath, ac.getThemeBasicTypeRelMap(), ac.getThemeUrlRuleList());
+            // extract
+            String extractPath = prop.getProperty(RepoConstant.REPO_ROOT_PATCH) + File.separatorChar + prop.getProperty(RepoConstant.REPO_EXTRACT_RULE_PATCH);
+            this.initExtract(extractPath, ac.getExtractRuleList());
 
-			this.builder(ac);
-			ac.getAfDomain().init();
-			ac.getAfRule().init();
-			println("BasicUrlRule size is " + ac.getUrlRuleList().size());
-			println("AppIPRule size is " + ac.getiPMap().size());
-			println("ThemeUrlRule size is " + ac.getThemeUrlRuleList().size());
-			println("ExtractUrlRule size is " + ac.getExtractRuleList().size());
-			println("ExtractPatternRule size is " + ac.getExtractPatternRuleMap().size());
-			println("ExtractDoMainPatternRule size is " + ac.getExtractDoMainPatternRuleMap().size());
+            this.builder(ac);
+            ac.getAfDomain().init();
+            ac.getAfRule().init();
+            println("BasicUrlRule size is " + ac.getUrlRuleList().size());
+            println("AppIPRule size is " + ac.getiPMap().size());
+            println("ThemeUrlRule size is " + ac.getThemeUrlRuleList().size());
+            println("ExtractUrlRule size is " + ac.getExtractRuleList().size());
+            println("ExtractPatternRule size is " + ac.getExtractPatternRuleMap().size());
+            println("ExtractDoMainPatternRule size is " + ac.getExtractDoMainPatternRuleMap().size());
 
-			ac.clear();
-			this.serial(prop, ac, serialName);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
-	}
+            ac.clear();
+            this.serial(prop, ac, serialName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
 
-	/**
-	 * 
-	 * @param prop
-	 * @param ac
-	 * @throws Exception
-	 */
-	private void serial(Properties prop, ApplicationContainer ac, String serialName) throws Exception {
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-		Kryo kryo = ApplicationContainer.getKryo();
-		serialName = serialName == null ? df.format(new Date()) + ".serial" : serialName;
-		File file = new File(prop.getProperty(RepoConstant.REPO_SERIAL_PATCH), serialName);
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-		}
-		OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
-		Output out = new Output(os, 10240);
-		kryo.writeObject(out, ac);
-		out.flush();
-		os.close();
+    /**
+     * @param prop
+     * @param ac
+     * @throws Exception
+     */
+    private void serial(Properties prop, ApplicationContainer ac, String serialName) throws Exception {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        Kryo kryo = ApplicationContainer.getKryo();
+        serialName = serialName == null ? df.format(new Date()) + ".serial" : serialName;
+        File file = new File(prop.getProperty(RepoConstant.REPO_SERIAL_PATCH), serialName);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+        Output out = new Output(os, 10240);
+        kryo.writeObject(out, ac);
+        out.flush();
+        os.close();
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param trims
-	 */
-	private void trim(String[] values) {
-		if (null != values)
-			for (int i = 0; i < values.length; i++) {
-				//
-				int len = values[i].length();
-				int st = 0;
-				char[] val = values[i].toCharArray();
+    /**
+     * @param trims
+     */
+    private void trim(String[] values) {
+        if (null != values)
+            for (int i = 0; i < values.length; i++) {
+                //
+                int len = values[i].length();
+                int st = 0;
+                char[] val = values[i].toCharArray();
 
-				while ((st < len) && (val[st] <= ' ') && (val[st] != '\001')) {
-					st++;
-				}
-				while ((st < len) && (val[len - 1] <= ' ') && (val[len - 1] != '\001')) {
-					len--;
-				}
-				values[i] = ((st > 0) || (len < val.length)) ? values[i].substring(st, len) : values[i];
-			}
-	}
+                while ((st < len) && (val[st] <= ' ') && (val[st] != '\001')) {
+                    st++;
+                }
+                while ((st < len) && (val[len - 1] <= ' ') && (val[len - 1] != '\001')) {
+                    len--;
+                }
+                values[i] = ((st > 0) || (len < val.length)) ? values[i].substring(st, len) : values[i];
+            }
+    }
 
 }

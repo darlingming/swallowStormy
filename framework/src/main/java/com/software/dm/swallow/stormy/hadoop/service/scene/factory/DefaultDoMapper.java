@@ -7,89 +7,87 @@ import com.software.dm.swallow.stormy.hadoop.service.scene.bean.basic.ExtractRes
 import com.software.dm.swallow.stormy.hadoop.service.scene.bean.basic.ThemeResultEntity;
 
 /**
- * 
- * @Description  
  * @author DearM
+ * @version v1.0.0.1
+ * @Description
  * @date 2016-3-21
- * @version v1.0.0.1 
- *
  */
 public class DefaultDoMapper extends AbstractDoMapper {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
 
-	public DefaultDoMapper(MaperdTools maperdTools) {
-		super(maperdTools);
-	}
+    public DefaultDoMapper(MaperdTools maperdTools) {
+        super(maperdTools);
+    }
 
-	
-	public void fusionid(ClearResultEntity clearResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.fusionid(clearResult);
-	}
 
-	
-	public void fusionid(ExtractResultEntity fusionid) throws Exception {
-		// TODO Auto-generated method stub
-		super.fusionid(fusionid);
-	}
+    public void fusionid(ClearResultEntity clearResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.fusionid(clearResult);
+    }
 
-	
-	public void lonlat(ExtractResultEntity lonlatExtract) throws Exception {
-		// TODO Auto-generated method stub
-		super.lonlat(lonlatExtract);
-	}
 
-	
-	public void uaidhis(ClearResultEntity uaClearResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.uaidhis(uaClearResult);
-	}
+    public void fusionid(ExtractResultEntity fusionid) throws Exception {
+        // TODO Auto-generated method stub
+        super.fusionid(fusionid);
+    }
 
-	
-	public void subject(ExtractResultEntity subjectExtractResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.subject(subjectExtractResult);
-	}
 
-	
-	public void theme(ThemeResultEntity themeResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.theme(themeResult);
-	}
+    public void lonlat(ExtractResultEntity lonlatExtract) throws Exception {
+        // TODO Auto-generated method stub
+        super.lonlat(lonlatExtract);
+    }
 
-	
-	public void app(BasisResultEntity appResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.app(appResult);
-	}
 
-	
-	public void basic(BasisResultEntity basisResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.basic(basisResult);
-	}
+    public void uaidhis(ClearResultEntity uaClearResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.uaidhis(uaClearResult);
+    }
 
-	
-	public void lacci(ClearResultEntity lacciClearResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.lacci(lacciClearResult);
-	}
 
-	
-	public void sword(ExtractResultEntity swordExtractResult) throws Exception {
-		// TODO Auto-generated method stub
-		super.sword(swordExtractResult);
-	}
+    public void subject(ExtractResultEntity subjectExtractResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.subject(subjectExtractResult);
+    }
 
-	
-	public AbstractMapperScene getScene(String sceneCode) {
-		// TODO Auto-generated method stub
-		return super.getScene(sceneCode);
-	}
+
+    public void theme(ThemeResultEntity themeResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.theme(themeResult);
+    }
+
+
+    public void app(BasisResultEntity appResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.app(appResult);
+    }
+
+
+    public void basic(BasisResultEntity basisResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.basic(basisResult);
+    }
+
+
+    public void lacci(ClearResultEntity lacciClearResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.lacci(lacciClearResult);
+    }
+
+
+    public void sword(ExtractResultEntity swordExtractResult) throws Exception {
+        // TODO Auto-generated method stub
+        super.sword(swordExtractResult);
+    }
+
+
+    public AbstractMapperScene getScene(String sceneCode) {
+        // TODO Auto-generated method stub
+        return super.getScene(sceneCode);
+    }
 
 }

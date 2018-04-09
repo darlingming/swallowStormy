@@ -12,126 +12,120 @@ import com.software.dm.swallow.stormy.hadoop.service.scene.bean.analysisBean.Abs
 import com.software.dm.swallow.stormy.hadoop.service.scene.factory.Scene;
 
 /**
- * 
- * @Description
  * @author DearM
- * @date 2016-3-21
  * @version v1.0.0.1
- * 
+ * @Description
+ * @date 2016-3-21
  */
 public abstract class AbstractDtoMapperScene implements Scene {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private MaperdTools maperdTools;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private MaperdTools maperdTools;
 
-	public abstract void doAction(AbstractDtoEntity entity) throws Exception;
+    public abstract void doAction(AbstractDtoEntity entity) throws Exception;
 
-	public void doAction(String[] datas) throws Exception {
-	};
+    public void doAction(String[] datas) throws Exception {
+    }
 
-	public MaperdTools getMaperdTools() {
-		return maperdTools;
-	}
+    ;
 
-	public void setMaperdTools(MaperdTools maperdTools) {
-		this.maperdTools = maperdTools;
-	}
+    public MaperdTools getMaperdTools() {
+        return maperdTools;
+    }
 
-	/**
-	 * 
-	 * @param flagPathName
-	 * @param midPathName
-	 * @param fileName
-	 * @param content
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public void mosWrite(String namedOutput, String baseOutputPath, String fileName, String content) throws IOException, InterruptedException {
-		if (baseOutputPath == null || baseOutputPath.isEmpty()) {
-			this.maperdTools.getMos().write(namedOutput, content, NullWritable.get(), fileName);
-		} else {
-			this.maperdTools.getMos().write(namedOutput, content, NullWritable.get(), baseOutputPath + AbstractConstants.FILE_SEPARATOR + fileName);
-		}
-	}
+    public void setMaperdTools(MaperdTools maperdTools) {
+        this.maperdTools = maperdTools;
+    }
 
-	/**
-	 * 
-	 * @param namedOutput
-	 * @param baseOutputPath
-	 * @param content
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public void mosWrite(String namedOutput, String baseOutputPath, String content) throws IOException, InterruptedException {
-		this.mosWrite(namedOutput, baseOutputPath, HadoopConstants.MULTIPLE_OUTPUTS_FILENAME, content);
-	}
+    /**
+     * @param flagPathName
+     * @param midPathName
+     * @param fileName
+     * @param content
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void mosWrite(String namedOutput, String baseOutputPath, String fileName, String content) throws IOException, InterruptedException {
+        if (baseOutputPath == null || baseOutputPath.isEmpty()) {
+            this.maperdTools.getMos().write(namedOutput, content, NullWritable.get(), fileName);
+        } else {
+            this.maperdTools.getMos().write(namedOutput, content, NullWritable.get(), baseOutputPath + AbstractConstants.FILE_SEPARATOR + fileName);
+        }
+    }
 
-	/**
-	 * 
-	 * @param namedOutput
-	 * @param midPathName
-	 * @param fileName
-	 * @param key
-	 * @param value
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public void mosWrite(String namedOutput, String baseOutputPath, String fileName, Object key, Object value) throws IOException, InterruptedException {
-		if (baseOutputPath == null || baseOutputPath.isEmpty()) {
-			this.maperdTools.getMos().write(namedOutput, key, value, fileName);
-		} else {
-			this.maperdTools.getMos().write(namedOutput, key, value, baseOutputPath + AbstractConstants.FILE_SEPARATOR + fileName);
-		}
-	}
+    /**
+     * @param namedOutput
+     * @param baseOutputPath
+     * @param content
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void mosWrite(String namedOutput, String baseOutputPath, String content) throws IOException, InterruptedException {
+        this.mosWrite(namedOutput, baseOutputPath, HadoopConstants.MULTIPLE_OUTPUTS_FILENAME, content);
+    }
 
-	/**
-	 * 
-	 * @param namedOutput
-	 * @param baseOutputPath
-	 * @param key
-	 * @param value
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public void mosWrite(String namedOutput, String baseOutputPath, Object key, Object value) throws IOException, InterruptedException {
-		this.mosWrite(namedOutput, baseOutputPath, HadoopConstants.MULTIPLE_OUTPUTS_FILENAME, key, value);
-	}
+    /**
+     * @param namedOutput
+     * @param midPathName
+     * @param fileName
+     * @param key
+     * @param value
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void mosWrite(String namedOutput, String baseOutputPath, String fileName, Object key, Object value) throws IOException, InterruptedException {
+        if (baseOutputPath == null || baseOutputPath.isEmpty()) {
+            this.maperdTools.getMos().write(namedOutput, key, value, fileName);
+        } else {
+            this.maperdTools.getMos().write(namedOutput, key, value, baseOutputPath + AbstractConstants.FILE_SEPARATOR + fileName);
+        }
+    }
 
-	/**
-	 * 
-	 * @param groupName
-	 * @param counterName
-	 */
-	public void addCounterMapper(String groupName, final String counterName) {
-		if (null == groupName)
-			groupName = AbstractConstants.TotalCountEnum.TOTAL_COUNT.name();
-		this.maperdTools.addCounterMapper(groupName, counterName, 1);
-	}
+    /**
+     * @param namedOutput
+     * @param baseOutputPath
+     * @param key
+     * @param value
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void mosWrite(String namedOutput, String baseOutputPath, Object key, Object value) throws IOException, InterruptedException {
+        this.mosWrite(namedOutput, baseOutputPath, HadoopConstants.MULTIPLE_OUTPUTS_FILENAME, key, value);
+    }
 
-	/**
-	 * 
-	 * @param counterName
-	 */
-	public void addCounterMapper(final String counterName) {
-		this.addCounterMapper(null, counterName);
-	}
+    /**
+     * @param groupName
+     * @param counterName
+     */
+    public void addCounterMapper(String groupName, final String counterName) {
+        if (null == groupName)
+            groupName = AbstractConstants.TotalCountEnum.TOTAL_COUNT.name();
+        this.maperdTools.addCounterMapper(groupName, counterName, 1);
+    }
 
-	public void init() throws Exception {
-		// TODO Auto-generated method stub
+    /**
+     * @param counterName
+     */
+    public void addCounterMapper(final String counterName) {
+        this.addCounterMapper(null, counterName);
+    }
 
-	}
+    public void init() throws Exception {
+        // TODO Auto-generated method stub
 
-	public void destroy() throws Exception {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    public void destroy() throws Exception {
+        // TODO Auto-generated method stub
 
-	public void service(String key, Map<Object, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    public void service(String key, Map<Object, Object> map) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
 
 }
