@@ -1,10 +1,7 @@
 package com.software.dm.swallow.stormy.scala.algoac.inter
 
-import java.util
-import java.util.Collection
 
-
-
+import scala.collection.Iterable
 
 /**
   * @author darlingming@126.com
@@ -18,7 +15,7 @@ trait State[T, D] {
 
   def nextStateIgnoreRootState(c: T): D
 
-  def getValues: util.Collection[T]
+  def getValues: Iterable[T]
 
-  def getStates: util.Collection[D]
+  def getStates: Iterable[D]
 }

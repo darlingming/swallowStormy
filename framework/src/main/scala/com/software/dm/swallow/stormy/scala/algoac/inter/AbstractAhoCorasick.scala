@@ -1,8 +1,8 @@
 package com.software.dm.swallow.stormy.scala.algoac.inter
 
-import java.util
-import java.util.concurrent.LinkedBlockingQueue
 
+import java.util.concurrent.LinkedBlockingQueue
+import scala.collection.mutable._
 
 /**
   * @author darlingming@#126.com
@@ -22,15 +22,13 @@ abstract class AbstractAhoCorasick[T](val rootState: AbstractState[T]) {
     */
   private def prepareFailTransitions(): Unit = {
     val queue = new LinkedBlockingQueue[AbstractState[T]]
-    import scala.collection.JavaConversions._
     for (abstractState <- this.rootState.getStates) {
       queue.add(abstractState)
       abstractState.setFailure(this.rootState)
     }
     this.prepared = true
-    while ( !queue.isEmpty ) {
-      val currentstate :AbstractState[T] = queue.remove
-      import scala.collection.JavaConversions._
+    while (!queue.isEmpty) {
+      val currentstate: AbstractState[T] = queue.remove
       for (c <- currentstate.getValues) {
         val targetState = currentstate.nextState(c)
         queue.add(targetState)
@@ -65,7 +63,6 @@ abstract class AbstractAhoCorasick[T](val rootState: AbstractState[T]) {
   protected def getStateIgnore(c: T, currentState: AbstractState[T]): AbstractState[T] = {
     var newState = currentState.nextStateIgnoreRootState(c)
     if (newState == null) {
-      import scala.collection.JavaConversions._
       for (tmp <- currentState.getStates) {
         newState = this.getStateIgnore(c, tmp)
         if (newState != null) return newState
@@ -86,12 +83,12 @@ abstract class AbstractAhoCorasick[T](val rootState: AbstractState[T]) {
     * @param keys
     * @return
     */
-  def search(keys: Any): util.Collection[Any]
+  def search(keys: Any): Iterable[Any]
 
   /**
     *
     * @param keys
     * @param set
     */
-  def search(keys: Any, set: util.Set[Any]): Unit
+  def search(keys: Any, set: Set[Any]): Unit
 }

@@ -1,11 +1,9 @@
 package com.software.dm.swallow.stormy.scala.algoac.inter
 
 import com.software.dm.swallow.stormy.scala.algoac.pojo.VagueResultEntity
-import java.util
-import java.util.{ArrayList, HashMap, List, Map}
 
-import org.apache.commons.lang.ObjectUtils.Null
 
+import scala.collection.mutable._
 
 /**
   *
@@ -13,7 +11,7 @@ import org.apache.commons.lang.ObjectUtils.Null
   * @version v1.0.0.1
   * @tparam T
   */
-abstract class AbstractVagueState[T](var nextNormalStateMap: util.Map[T, VagueState[T]], var nextVagueStateMap: util.Map[T, VagueState[T]], value: Char) extends  VagueState[T] {
+abstract class AbstractVagueState[T](var nextNormalStateMap: Map[T, VagueState[T]], var nextVagueStateMap: Map[T, VagueState[T]], value: Char) extends VagueState[T] {
 
   def this(value: Char) {
     this(null, null, value)
@@ -28,33 +26,33 @@ abstract class AbstractVagueState[T](var nextNormalStateMap: util.Map[T, VagueSt
   /**
     *
     */
-  private var vagueResultEntityList: util.ArrayList[VagueResultEntity] = null
+  private var vagueResultEntityList: ListBuffer[VagueResultEntity] = null
 
-  def getVagueResultEntityList: util.ArrayList[VagueResultEntity] = vagueResultEntityList
+  def getVagueResultEntityList: ListBuffer[VagueResultEntity] = vagueResultEntityList
 
   def addVagueResultEntityList(vagueResultEntityList: VagueResultEntity): Unit = {
     if (this.vagueResultEntityList == null)
-      this.vagueResultEntityList = new util.ArrayList[VagueResultEntity]
-    this.vagueResultEntityList.add(vagueResultEntityList)
+      this.vagueResultEntityList = new ListBuffer[VagueResultEntity]
+    this.vagueResultEntityList.append(vagueResultEntityList)
   }
 
   //  protected var value: Char
   //  //
-  //  protected var nextNormalStateMap: util.Map[T, Nothing] = null
+  //  protected var nextNormalStateMap: Map[T, Nothing] = null
   //  //
-  //  protected var nextVagueStateMap: util.Map[T, Nothing] = null
+  //  protected var nextVagueStateMap: Map[T, Nothing] = null
 
-  def getNextNormalStateMap: util.Map[T, VagueState[T]] = this.nextNormalStateMap
+  def getNextNormalStateMap: Map[T, VagueState[T]] = this.nextNormalStateMap
 
   def addNextNormalStateMap(t: T, nextNormalState: VagueState[T]): Unit = {
-    if (null == this.nextNormalStateMap) this.nextNormalStateMap = new util.HashMap[T, VagueState[T]]
+    if (null == this.nextNormalStateMap) this.nextNormalStateMap = new HashMap[T, VagueState[T]]
     this.nextNormalStateMap.put(t, nextNormalState)
   }
 
-  def getNextVagueStateMap: util.Map[T, VagueState[T]] = this.nextVagueStateMap
+  def getNextVagueStateMap: Map[T, VagueState[T]] = this.nextVagueStateMap
 
   def addNextVagueStateMap(t: T, nextVagueState: VagueState[T]): Unit = {
-    if (null == this.nextVagueStateMap) this.nextVagueStateMap = new util.HashMap[T, VagueState[T]]
+    if (null == this.nextVagueStateMap) this.nextVagueStateMap = new HashMap[T, VagueState[T]]
     this.nextVagueStateMap.put(t, nextVagueState)
   }
 

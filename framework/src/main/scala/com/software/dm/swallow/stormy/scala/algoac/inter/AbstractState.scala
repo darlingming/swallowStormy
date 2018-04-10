@@ -1,7 +1,8 @@
 package com.software.dm.swallow.stormy.scala.algoac.inter
 
-import java.util._
-import java.util
+
+import scala.collection.mutable.{HashMap, HashSet, Set}
+import scala.collection.Iterable
 
 
 /**
@@ -15,7 +16,7 @@ abstract class AbstractState[T](val depth: Int) extends State[T, AbstractState[T
 
   private var failure: AbstractState[T] = null
   private var output: Set[Any] = null
-  protected var success = new util.HashMap[T, AbstractState[T]]
+  protected var success = new HashMap[T, AbstractState[T]]
   protected var prepared = false
 
 
@@ -24,29 +25,29 @@ abstract class AbstractState[T](val depth: Int) extends State[T, AbstractState[T
   def nextStateIgnoreRootState(c: T): AbstractState[T] = this.nextState(c, true)
 
   def nextState(c: T, ignoreroot: Boolean): AbstractState[T] = {
-    val currentState = this.success.get(c)
+    val currentState = this.success.get(c).getOrElse(null)
     if (!ignoreroot && currentState == null && this.rootState != null) return this.rootState
     currentState
   }
 
-  def getValues: util.Collection[T] = this.success.keySet
+  def getValues: Iterable[T] = this.success.keys
 
-  def getStates: util.Collection[AbstractState[T]] = this.success.values
+  def getStates: Iterable[AbstractState[T]] = this.success.values
 
   def addOutput(output: Any): Unit = {
-    if (this.output == null) this.output = new util.HashSet[Any]
+    if (this.output == null) this.output = new HashSet[Any]
     this.output.add(output)
   }
 
-  def addAllOutput(output: util.Set[Any]): Unit = {
+  def addAllOutput(output: Set[Any]): Unit = {
     if (output == null || output.isEmpty) return
     if (this.output == null) { //			return;
-      this.output = new util.HashSet[Any]
+      this.output = new HashSet[Any]
     }
-    this.output.addAll(output)
+    this.output.add(output)
   }
 
-  def getOutput: util.Set[Any] = { //		return this.output == null ? new HashSet<Object>() : this.output;
+  def getOutput: Set[Any] = { //		return this.output == null ? new HashSet<Object>() : this.output;
     this.output
   }
 

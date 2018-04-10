@@ -1,15 +1,15 @@
 package com.software.dm.swallow.stormy.scala.algoac.inter
 
 import com.software.dm.swallow.stormy.scala.algoac.pojo.VagueResultEntity
-import java.util
-import java.util.{HashMap, List, Map, Set}
+
+import scala.collection.mutable._
 
 
 /**
   *
   *
   * @author DM
-  *  e 2017
+  *          2017
   * @version v1.0.0.1
   *
   *
@@ -19,7 +19,7 @@ object VagueState {
     *
     */
   val STAR_CHAR = '*'
-  val patternMap = new util.HashMap[String, util.List[Any]]
+  val patternMap = new HashMap[String, List[Any]]
 }
 
 /**
@@ -39,15 +39,15 @@ trait VagueState[T] {
     * @param t
     * @param nextVagueState
     */
-  def addNextVagueStateMap(t: T, nextVagueState:  VagueState[T]): Unit
+  def addNextVagueStateMap(t: T, nextVagueState: VagueState[T]): Unit
 
   /**
     *
     * @return
     */
-  def getNextVagueStateMap: util.Map[T, VagueState[T]]
+  def getNextVagueStateMap: Map[T, VagueState[T]]
 
-  def getNextNormalStateMap: util.Map[T,  VagueState[T]]
+  def getNextNormalStateMap: Map[T, VagueState[T]]
 
   /**
     *
@@ -55,7 +55,7 @@ trait VagueState[T] {
     */
   def addVagueResultEntityList(vagueResultEntityList: VagueResultEntity): Unit
 
-  def getVagueResultEntityList: util.List[VagueResultEntity]
+  def getVagueResultEntityList: ListBuffer[VagueResultEntity]
 
   /**
     *
@@ -69,5 +69,5 @@ trait VagueState[T] {
     * @param patterns
     * @param resultDataSet
     */
-  def serachVagueResult(patterns: String, resultDataSet: util.Set[Any]): Unit
+  def serachVagueResult(patterns: String, resultDataSet: Set[Any]): Unit
 }

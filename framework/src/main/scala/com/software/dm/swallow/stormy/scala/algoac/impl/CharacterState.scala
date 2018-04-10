@@ -5,9 +5,9 @@ import com.software.dm.swallow.stormy.scala.algoac.inter.AbstractState
 
 /**
   *
-  * @Description
-  * @author DearM
-  * @date 2016
+  * Description
+  * author DearM
+  * date 2016
   * @version v1.0.0.1
   *
   */

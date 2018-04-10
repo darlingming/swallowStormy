@@ -1,9 +1,11 @@
 package com.software.dm.swallow.stormy.scala.algoac.impl
 
-import java.util
+
 
 import com.software.dm.swallow.stormy.scala.algoac.inter.AbstractAhoCorasick
 import com.software.dm.swallow.stormy.scala.algoac.pojo.ResultSetEntity
+import scala.collection.mutable._
+import scala.collection.mutable.Iterable
 
 
 /**
@@ -18,9 +20,9 @@ class AhoCorasickCharacterTree() extends AbstractAhoCorasick[Character](new Char
   /**
     *
     */
-  override def search(keys: Any): util.Collection[Any] = {
+  override def search(keys: Any): Iterable [Any] = {
     if (!this.prepared) throw new IllegalStateException("can't start search until prepare()")
-    val set = new util.HashSet[Any]
+    val set = new HashSet[Any]
     this.search(keys, set)
     set
   }
@@ -53,7 +55,7 @@ class AhoCorasickCharacterTree() extends AbstractAhoCorasick[Character](new Char
     * @param keys
     * @param set
     */
-  def search(keys: Any, set: util.Set[Any]): Unit = {
+  def search(keys: Any, set:  Set[Any]): Unit = {
     if (!this.prepared) throw new IllegalStateException("can't start search until prepare()")
     var currentState = this.rootState
     for (c <- keys.toString.toCharArray) {
@@ -64,8 +66,8 @@ class AhoCorasickCharacterTree() extends AbstractAhoCorasick[Character](new Char
         currentState = this.getState(c, currentState)
       }
 
-
-      if (null != currentState.getOutput) set.addAll(currentState.getOutput)
+//).addAll(
+      if (null != currentState.getOutput) set.add(currentState.getOutput)
     }
   }
 

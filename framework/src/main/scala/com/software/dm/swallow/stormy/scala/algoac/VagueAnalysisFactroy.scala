@@ -1,24 +1,22 @@
 package com.software.dm.swallow.stormy.scala.algoac
 
-import java.util
-import java.util._
 
 import com.software.dm.swallow.stormy.scala.algoac.impl.VagueStateCharacter
 import com.software.dm.swallow.stormy.scala.algoac.inter.VagueState
 import com.software.dm.swallow.stormy.scala.algoac.pojo.VagueResultEntity
-
+import scala.collection.mutable._
 
 /**
   *
   *
   * @author darlingming@126.com
-  *   2017
+  *         2017
   * @version v1.0.0.1
   *
   *
   */
 final class VagueAnalysisFactroy() {
-  final private val vagueState = new VagueStateCharacter(new util.HashMap[Character, VagueState[Character]], new util.HashMap[Character, VagueState[Character]])
+  final private val vagueState = new VagueStateCharacter(new HashMap[Character, VagueState[Character]], new HashMap[Character, VagueState[Character]])
 
   /**
     *
@@ -36,10 +34,13 @@ final class VagueAnalysisFactroy() {
     * HashSet
     *
     */
-  final private val resultDataSet = new util.HashSet[Any]
+  final private val resultDataSet = new HashSet[Any]
 
-  @SuppressWarnings(Array("unused")) private def print(vagueState: VagueState[Character]): Unit = {
-    if (vagueState.getVagueResultEntityList != null) System.out.println(util.Arrays.toString(vagueState.getVagueResultEntityList.toArray))
+  @SuppressWarnings(Array("unused"))
+  private def print(vagueState: VagueState[Character]): Unit = {
+    if (vagueState.getVagueResultEntityList != null)
+
+      println(vagueState.getVagueResultEntityList.toArray)
     var vaguestateMap = vagueState.getNextNormalStateMap
     if (null != vaguestateMap) {
       import scala.collection.JavaConversions._
@@ -61,9 +62,9 @@ final class VagueAnalysisFactroy() {
     * @param value
     * @return Set<Object>
     */
-  def serachResult(value: String): util.Set[Any] = {
+  def serachResult(value: String): Set[Any] = {
     resultDataSet.clear()
-//     this.print(vagueState);
+    //     this.print(vagueState);
     this.vagueState.serachVagueResult(value, resultDataSet)
     resultDataSet
   }

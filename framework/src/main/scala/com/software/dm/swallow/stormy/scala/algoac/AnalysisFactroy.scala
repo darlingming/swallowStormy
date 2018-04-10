@@ -4,8 +4,8 @@ import com.software.dm.swallow.stormy.scala.algoac.impl.AhoCorasickCharacterTree
 import com.software.dm.swallow.stormy.scala.algoac.pojo.Param
 import com.software.dm.swallow.stormy.scala.algoac.pojo.ResultSetEntity
 import com.software.dm.swallow.stormy.hadoop.tools.AbstractCommonUtils
-import java.util._
 
+import scala.collection.mutable._
 
 /**
   *
@@ -22,7 +22,7 @@ final class AnalysisFactroy() {
     *
     */
   final private val rootAc = new AhoCorasickCharacterTree
-  private val paramList = new ArrayList[Param]
+  private val paramList = new ListBuffer[Param]
 
   /**
     *
@@ -30,7 +30,7 @@ final class AnalysisFactroy() {
     */
   def addParam(param: Param): Unit = {
 
-    paramList.add(param)
+    paramList.append(param)
   }
 
   /**
@@ -78,7 +78,7 @@ final class AnalysisFactroy() {
       val regLen: Int = reg.getValues.length
       if (regLen == 1) resultDataSet.add(reg.getSource.asInstanceOf[Param])
       else {
-        var rrde: Int = tempDataMap.get(reg.getSource)
+        var rrde: Int = tempDataMap.get(reg.getSource).get
         if (null != rrde) {
           rrde = rrde + reg.getRegnum
           if (rrde == ((regLen * (regLen + 1)) >> 1)) {
