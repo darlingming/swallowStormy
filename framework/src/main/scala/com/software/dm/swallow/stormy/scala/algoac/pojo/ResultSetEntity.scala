@@ -1,11 +1,10 @@
-package com.software.dm.swallow.stormy.scala.algoac.pojo
-
-
-
+package com.software.dm.swallow.stormy.scala
+package algoac
+package pojo
 
 
 /**
-  *@author darlingming@126.com
+  * @author darlingming@126.com
   * @param regnum
   * @param keyWord
   * @param values
@@ -13,8 +12,7 @@ package com.software.dm.swallow.stormy.scala.algoac.pojo
   * @param source
   * @version v1.0.0.1
   */
-final class ResultSetEntity(val regnum: Int, var keyWord: String, var values: Array[String], var `type`: Int, var source: Any ) {
-
+final class ResultSetEntity(val regnum: Int, var keyWord: String, var values: Array[String], var `type`: Int, var source: Any) {
 
 
   def getSource: Any = source
@@ -27,6 +25,6 @@ final class ResultSetEntity(val regnum: Int, var keyWord: String, var values: Ar
 
   def getType: Int = `type`
 
-  override def toString: String = "ResultSetEntity [regnum=" + regnum + ", keyWord=" + keyWord + ", values=" +values  + ", type=" + `type` + "]"
+  override def toString: String = "ResultSetEntity [regnum=" + regnum + ", keyWord=" + keyWord + ", values=" + values + ", type=" + `type` + "]"
 }
 

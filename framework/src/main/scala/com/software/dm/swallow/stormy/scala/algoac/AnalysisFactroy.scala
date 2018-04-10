@@ -1,9 +1,9 @@
-package com.software.dm.swallow.stormy.scala.algoac
+package com.software.dm.swallow.stormy.scala
+package algoac
 
-import com.software.dm.swallow.stormy.scala.algoac.impl.AhoCorasickCharacterTree
-import com.software.dm.swallow.stormy.scala.algoac.pojo.Param
-import com.software.dm.swallow.stormy.scala.algoac.pojo.ResultSetEntity
-import com.software.dm.swallow.stormy.hadoop.tools.AbstractCommonUtils
+import impl.AhoCorasickCharacterTree
+import pojo.Param
+import pojo.ResultSetEntity
 
 import scala.collection.mutable._
 
@@ -29,33 +29,49 @@ final class AnalysisFactroy() {
     * @param param
     */
   def addParam(param: Param): Unit = {
-
     paramList.append(param)
+  }
+
+  /**
+    * @param value
+    * @return null?"":val
+    */
+  def trimAsterisk(value: String): String = {
+
+    if (value == null)
+      return "";
+    val tca = value.toCharArray();
+    var i = 0
+    var j = tca.length - 1;
+    while (i <= j && tca(i) == '*') {
+      i += 1;
+    }
+    while (j > i && tca(j) == '*') {
+      j -= 1;
+    }
+    if (i == 0 && j == tca.length - 1) value else value.substring(i, {
+      j += 1; j
+    });
   }
 
   /**
     *
     */
   def init(): Unit = {
-    import scala.collection.JavaConversions._
-    for (param <- paramList) {
-      val value = AbstractCommonUtils.trimAsterisk(param.getText)
-      val v = value.split("\\*")
-      var i = 0
-      while ( {
-        i < v.length
-      }) {
-        val reg = new ResultSetEntity(v.length - i, v(i), v, param.getType, param)
-        rootAc.addKeyWord(reg)
 
-        {
-          i += 1;
-          i - 1
-        }
+    for (param <- paramList) {
+      val value = trimAsterisk(param.getText)
+      val v = value.split("\\*")
+      for (i <- 0 until v.length) {
+        val reg = new ResultSetEntity(v.length - i, v(i), v, param.getType, param);
+        rootAc.addKeyWord(reg)
       }
+
     }
     paramList.clear()
     rootAc.prepare()
+
+
   }
 
   final private val resultDataSet = new HashSet[Param]

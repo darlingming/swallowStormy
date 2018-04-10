@@ -1,9 +1,11 @@
-package com.software.dm.swallow.stormy.scala.algoac.impl
+package com.software.dm.swallow.stormy.scala
+package algoac
+package impl
 
 
 
-import com.software.dm.swallow.stormy.scala.algoac.inter.AbstractAhoCorasick
-import com.software.dm.swallow.stormy.scala.algoac.pojo.ResultSetEntity
+import inter.AbstractAhoCorasick
+import pojo.ResultSetEntity
 import scala.collection.mutable._
 import scala.collection.mutable.Iterable
 

@@ -1,11 +1,12 @@
-package com.software.dm.swallow.stormy.scala.algoac.pojo
-
+package com.software.dm.swallow.stormy.scala
+package algoac
+package pojo
 
 /**
   * @author darlingming@126.com
   * @param obj
   * @param mustEqual
-  *  2017
+  * 2017
   * @version v1.0.0.1
   */
 final class VagueResultEntity(var obj: Any, var mustEqual: Boolean) {

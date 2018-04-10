@@ -1,17 +1,20 @@
-package com.software.dm.swallow.stormy.scala.algoac.impl
+package com.software.dm.swallow.stormy.scala
+package algoac
+package impl
 
-import com.software.dm.swallow.stormy.scala.algoac.inter.AbstractState
+import inter.AbstractState
 
 
 /**
   *
   * Description
+  *
   * @author DearM
-  * date 2016
+  *         date 2016
   * @version v1.0.0.1
   *
   */
-class ByteState(  depth: Int) extends AbstractState[Byte]( depth: Int)  {
+class ByteState(depth: Int) extends AbstractState[Byte](depth: Int) {
 
 
   override def addState(c: Byte): AbstractState[Byte] = {

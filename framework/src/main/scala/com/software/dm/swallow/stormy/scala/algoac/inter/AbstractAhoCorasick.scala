@@ -1,4 +1,6 @@
-package com.software.dm.swallow.stormy.scala.algoac.inter
+package com.software.dm.swallow.stormy.scala
+package algoac
+package inter
 
 
 import java.util.concurrent.LinkedBlockingQueue

@@ -1,6 +1,8 @@
-package com.software.dm.swallow.stormy.scala.algoac.inter
+package com.software.dm.swallow.stormy.scala
+package algoac
+package inter
 
-import com.software.dm.swallow.stormy.scala.algoac.pojo.VagueResultEntity
+import pojo.VagueResultEntity
 
 import scala.collection.mutable._
 
@@ -9,7 +11,7 @@ import scala.collection.mutable._
   *
   *
   * @author DM
-  *          2017
+  *         2017
   * @version v1.0.0.1
   *
   *

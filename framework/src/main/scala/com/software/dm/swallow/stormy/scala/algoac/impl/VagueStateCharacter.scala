@@ -1,8 +1,10 @@
-package com.software.dm.swallow.stormy.scala.algoac.impl
+package com.software.dm.swallow.stormy.scala
+package algoac
+package impl
 
 
-import com.software.dm.swallow.stormy.scala.algoac.inter.{AbstractVagueState, VagueState}
-import com.software.dm.swallow.stormy.scala.algoac.pojo.VagueResultEntity
+import inter.{AbstractVagueState, VagueState}
+import pojo.VagueResultEntity
 import scala.collection.mutable._
 import scala.util.control.Breaks._
 

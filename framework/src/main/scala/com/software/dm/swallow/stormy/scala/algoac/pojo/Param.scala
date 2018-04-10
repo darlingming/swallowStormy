@@ -1,4 +1,6 @@
-package com.software.dm.swallow.stormy.scala.algoac.pojo
+package com.software.dm.swallow.stormy.scala
+package algoac
+package pojo
 
 
 /**
