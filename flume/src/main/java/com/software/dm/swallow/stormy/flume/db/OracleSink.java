@@ -130,10 +130,8 @@ public class OracleSink extends AbstractSink implements Configurable {
             for (int i = 0; i < batchSize; i++) {
                 event = channel.take();
                 if (event != null) {//对事件进行处理
-                    //logger.info("---读取数据---");
-
                     if (conn.isClosed()) {
-                        logger.info("--数据库连接是否关闭--" + conn.isClosed());
+                        logger.warn("--数据库连接已关闭--" + conn.isClosed());
                         createConnect();
                     }
                     content = new String(event.getBody());
