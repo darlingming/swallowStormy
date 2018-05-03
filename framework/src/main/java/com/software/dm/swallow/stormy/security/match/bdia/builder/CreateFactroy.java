@@ -1,35 +1,17 @@
 package com.software.dm.swallow.stormy.security.match.bdia.builder;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.regex.Pattern;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
 import com.software.dm.swallow.stormy.algoac.pojo.Param;
 import com.software.dm.swallow.stormy.hadoop.tools.Constant;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_extract_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_ip_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_url_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
+import com.software.dm.swallow.stormy.security.match.bdia.bean.*;
 import com.software.dm.swallow.stormy.security.match.bdia.common.ApplicationContainer;
 import com.software.dm.swallow.stormy.security.match.bdia.common.RepoConstant;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author DM
@@ -340,11 +322,7 @@ public final class CreateFactroy {
         List<T_url_rule> urlRuleList = ac.getUrlRuleList();
         for (T_url_rule t_url_rule : urlRuleList) {
             int ruleType = t_url_rule.getRule_type();
-            // 1������ֵ��ƥ�� ������ƥ�䣩
-            // 2������ģ��ƥ�� ������ƥ�䣩
-            // 3������ģ��ƥ�� ��������ƥ�䣩
-            // 4������ֵ�ȣ�����ģ��ƥ��
-            // 5������ģ��������ģ��ƥ��
+
 
             switch (ruleType) {
                 case 1:
@@ -375,11 +353,11 @@ public final class CreateFactroy {
         List<T_theme_url_rule> themeUrlRuleList = ac.getThemeUrlRuleList();
         for (T_theme_url_rule t_theme_url_rule : themeUrlRuleList) {
             int ruleType = t_theme_url_rule.getRule_type();
-            // 1������ֵ��ƥ�� ������ƥ�䣩
-            // 2������ģ��ƥ�� ������ƥ�䣩
-            // 3������ģ��ƥ�� ��������ƥ�䣩
-            // 4������ֵ�ȣ�����ģ��ƥ��
-            // 5������ģ��������ģ��ƥ��
+            // 1???????????? ?????????
+            // 2???????????? ?????????
+            // 3???????????? ???????????
+            // 4????????????????????
+            // 5?????????????????????
             switch (ruleType) {
                 case 1:
                     this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp(), t_theme_url_rule);
@@ -404,8 +382,8 @@ public final class CreateFactroy {
     }
 
     /**
-     * 1������ƥ�䣬��������ƥ�䣩 2��ģ��ƥ�䣨������ƥ�䣩 3������ģ��������ƥ�� 4������ģ����ģ��ƥ�� 5������ֵ������ƥ��
-     * 6������ֵ��ģ��ƥ��
+     * 1???????????????????? 2????????????????? 3?????????????????? 4????????????????? 5????????????????
+     * 6???????????????
      *
      * @param ac
      */
@@ -413,12 +391,12 @@ public final class CreateFactroy {
         List<T_extract_rule> extractRuleList = ac.getExtractRuleList();
         for (T_extract_rule t_extract_rule : extractRuleList) {
             int ruleType = t_extract_rule.getRule_type();
-            // 1������ƥ�䣬��������ƥ�䣩
-            // 2��ģ��ƥ�䣨������ƥ�䣩
-            // 3������ģ��������ƥ��
-            // 4������ģ����ģ��ƥ��
-            // 5������ֵ������ƥ��
-            // 6������ֵ��ģ��ƥ��
+            // 1????????????????????
+            // 2?????????????????
+            // 3??????????????????
+            // 4?????????????????
+            // 5????????????????
+            // 6???????????????
             String rule = t_extract_rule.getRule();
 
             // String context_rule = t_extract_rule.getContent_rule();
@@ -561,7 +539,7 @@ public final class CreateFactroy {
     }
 
     /**
-     * @param trims
+     * @param values
      */
     private void trim(String[] values) {
         if (null != values)

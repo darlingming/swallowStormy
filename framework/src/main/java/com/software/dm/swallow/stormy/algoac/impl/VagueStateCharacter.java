@@ -1,18 +1,19 @@
 package com.software.dm.swallow.stormy.algoac.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.software.dm.swallow.stormy.algoac.inter.AbstractVagueState;
 import com.software.dm.swallow.stormy.algoac.inter.VagueState;
 import com.software.dm.swallow.stormy.algoac.pojo.VagueResultEntity;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author DM
  * @version v1.0.0.1
  * @Description
  * @date 2017
+ *
  */
 public class VagueStateCharacter extends AbstractVagueState<Character> {
 
@@ -92,7 +93,7 @@ public class VagueStateCharacter extends AbstractVagueState<Character> {
     }
 
     /**
-     * @param vaguestate
+     * @param serachVaguestate
      * @param c_patterns
      * @param poi
      * @param resultDataSet

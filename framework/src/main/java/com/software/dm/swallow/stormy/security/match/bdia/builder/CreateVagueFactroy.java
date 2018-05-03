@@ -1,34 +1,16 @@
 package com.software.dm.swallow.stormy.security.match.bdia.builder;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.regex.Pattern;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
 import com.software.dm.swallow.stormy.hadoop.tools.Constant;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_extract_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_ip_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_url_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
+import com.software.dm.swallow.stormy.security.match.bdia.bean.*;
 import com.software.dm.swallow.stormy.security.match.bdia.common.ApplicationVagueContainer;
 import com.software.dm.swallow.stormy.security.match.bdia.common.RepoConstant;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author DM
@@ -558,7 +540,7 @@ public final class CreateVagueFactroy {
     }
 
     /**
-     * @param trims
+     * @param
      */
     private void trim(String[] values) {
         if (null != values)

@@ -1,24 +1,16 @@
 package com.software.dm.swallow.stormy.security.match.bdia.common;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.software.dm.swallow.stormy.algoac.VagueAnalysisFactroy;
 import com.software.dm.swallow.stormy.algoac.impl.VagueStateCharacter;
 import com.software.dm.swallow.stormy.algoac.inter.AbstractVagueState;
 import com.software.dm.swallow.stormy.algoac.inter.VagueState;
 import com.software.dm.swallow.stormy.algoac.pojo.VagueResultEntity;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_extract_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_ip_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_basic_type_rel;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_url_rule;
-import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
+import com.software.dm.swallow.stormy.security.match.bdia.bean.*;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author DM
@@ -26,7 +18,7 @@ import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
  * @Description
  * @date 2017
  */
-public final class ApplicationVagueContainer {
+public final class ApplicationVagueContainer implements Serializable {
 
     private final Map<String, List<Object>> domainEqualsMap = new HashMap<String, List<Object>>();
     private final VagueAnalysisFactroy afDomain = new VagueAnalysisFactroy();

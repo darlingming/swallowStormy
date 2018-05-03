@@ -40,20 +40,17 @@ final class VagueAnalysisFactroy() {
   @SuppressWarnings(Array("unused"))
   private def print(vagueState: VagueState[Character]): Unit = {
     if (vagueState.getVagueResultEntityList != null)
-
       println(vagueState.getVagueResultEntityList.toArray)
     var vaguestateMap = vagueState.getNextNormalStateMap
     if (null != vaguestateMap) {
-      import scala.collection.JavaConversions._
-      for (iterable_element <- vaguestateMap.entrySet) {
-        print(iterable_element.getValue)
+      for ((k,v)<- vaguestateMap ) {
+        print(v)
       }
     }
     vaguestateMap = vagueState.getNextVagueStateMap
     if (null != vaguestateMap) {
-      import scala.collection.JavaConversions._
-      for (iterable_element <- vaguestateMap.entrySet) {
-        print(iterable_element.getValue)
+      for ((k,v) <- vaguestateMap ) {
+        print(v)
       }
     }
   }

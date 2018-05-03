@@ -1,17 +1,5 @@
 package com.software.dm.swallow.stormy.security.match.bdia.obtain;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.software.dm.swallow.stormy.security.match.bdia.bean.T_extract_rule;
@@ -19,6 +7,13 @@ import com.software.dm.swallow.stormy.security.match.bdia.bean.T_ip_rule;
 import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_url_rule;
 import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
 import com.software.dm.swallow.stormy.security.match.bdia.common.ApplicationVagueContainer;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author DM
@@ -53,7 +48,7 @@ public final class SerialVagueFactroy {
         InputStream is = new BufferedInputStream(new FileInputStream(serialPath));
         // InputStream is = new BufferedInputStream(new
         // GZIPInputStream(ClassLoader.getSystemResourceAsStream(Constant.REPO_SERIAL)));
-        ApplicationVagueContainer applicationVagueContainer = kryo.readObject(new Input(is, 10240), ApplicationVagueContainer.class);
+        ApplicationVagueContainer applicationVagueContainer = kryo.readObject(new Input(is, 1024), ApplicationVagueContainer.class);
         is.close();
         Map<T_extract_rule, Pattern> extractPatternRuleMap = applicationVagueContainer.getExtractPatternRuleMap();
         // System.out.println(extractPatternRuleMap.entrySet().iterator().next().getKey());
@@ -137,8 +132,6 @@ public final class SerialVagueFactroy {
     }
 
     /**
-     * @param ApplicationVagueContainer
-     * @param url
      * @param fullDomain
      */
     public boolean execute(final String[] fullDomain) {

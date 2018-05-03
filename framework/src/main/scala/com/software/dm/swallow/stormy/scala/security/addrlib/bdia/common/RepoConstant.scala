@@ -1,0 +1,24 @@
+package com.software.dm.swallow.stormy.scala.security.addrlib.bdia.common
+
+/**
+  * @author DM
+  * @version v1.0.0.1
+  *  Description
+  *  date 2017
+  */
+object RepoConstant {
+  val REPO_NAME = "/serial.properties"
+  val REPO_ROOT_PATCH = "REPO_ROOT_PATCH"
+  val REPO_URL_RULE_PATCH = "REPO_URL_RULE_PATCH"
+  val REPO_BASIC_TYPE_REL_PATCH = "REPO_BASIC_TYPE_REL_PATCH"
+  val REPO_THEME_URL_RULE_PATCH = "REPO_THEME_URL_RULE_PATCH"
+  val REPO_THEME_BASIC_TYPE_REL_PATCH = "REPO_THEME_BASIC_TYPE_REL_PATCH"
+  val REPO_EXTRACT_RULE_PATCH = "REPO_EXTRACT_RULE_PATCH"
+  val REPO_IP_RULE_PATCH = "REPO_IP_RULE_PATCH"
+  val REPO_SERIAL_PATCH = "REPO_SERIAL_PATCH"
+  val REPO_SPLIT_FLAG_PLAIN = "\t"
+  val DECODING_RULE_SEPARATOR = ","
+  val DECODING_REPEAT_SEPARATOR = ":"
+  val MULTI_RESULT_SEPARATOR = "|"
+  val MULTI_RESULT_LONLAT_SEPARATOR = "-"
+}

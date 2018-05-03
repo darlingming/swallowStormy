@@ -263,7 +263,7 @@ public abstract class AbstractCommonUtils {
      * char)0
      *
      * @param source
-     * @param sep
+     * @param seps
      * @return
      */
     public final static String convertChar(final String source, final char[] seps) {
@@ -419,9 +419,9 @@ public abstract class AbstractCommonUtils {
     }
 
     /**
-     * @param url
+     * @param character
      * @return
-     * @see toLowerCase
+     * @see
      */
     public static String toLowerCase(String character) {
         char[] characters = character.toCharArray();

@@ -33,6 +33,9 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
     this(null, null, value)
   }
 
+  def this() {
+    this(null, null, '0')
+  }
 
   def this(nextNormalStateMap: Map[Character, VagueState[Character]], nextVagueStateMap: Map[Character, VagueState[Character]]) {
 
@@ -60,7 +63,7 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
         if (isStar) {
           val vaguestateMap: Map[Character, VagueState[Character]] = currentVagueState.getNextVagueStateMap
 
-          if (null != vaguestateMap) newVagueState = vaguestateMap.get(values(i)).getOrElse(null)
+          if (null != vaguestateMap) newVagueState = vaguestateMap.getOrElse(values(i),null)
           if (null == vaguestateMap || null == newVagueState) {
             newVagueState = this.getInstance(values(i))
             currentVagueState.addNextVagueStateMap(values(i), newVagueState)
@@ -71,7 +74,7 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
         }
         else { //
           val normalStateMap = currentVagueState.getNextNormalStateMap
-          if (null != normalStateMap) newVagueState = normalStateMap.get(values(i)).getOrElse(null)
+          if (null != normalStateMap) newVagueState = normalStateMap.getOrElse(values(i),null)
           if (null == normalStateMap || null == newVagueState) {
             newVagueState = this.getInstance(values(i))
             currentVagueState.addNextNormalStateMap(values(i), newVagueState)
@@ -115,12 +118,12 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
     var vs: VagueState[Character] = null
     val normalStateMap: Map[Character, VagueState[Character]] = serachVaguestate.getNextNormalStateMap
     if (null != normalStateMap && !skipVague) {
-      vs = normalStateMap.get(c_patterns(poi)).getOrElse(null)
+      vs = normalStateMap.getOrElse(c_patterns(poi),null)
       if (null != vs) this.serachResult(vs, c_patterns, poi + 1, resultDataSet, false)
     }
     val vagueStateMap = serachVaguestate.getNextVagueStateMap
     if (null != vagueStateMap) {
-      vs = vagueStateMap.get(c_patterns(poi)).getOrElse(null)
+      vs = vagueStateMap.getOrElse(c_patterns(poi),null)
       if (null != vs) this.serachResult(vs, c_patterns, poi + 1, resultDataSet, false)
       this.serachResult(serachVaguestate, c_patterns, poi + 1, resultDataSet, true)
     }

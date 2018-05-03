@@ -17,6 +17,10 @@ public final class VagueResultEntity {
         this.mustEqual = mustEqual;
     }
 
+    public VagueResultEntity() {
+
+    }
+
     // obj
     private Object obj;
     // string is endding

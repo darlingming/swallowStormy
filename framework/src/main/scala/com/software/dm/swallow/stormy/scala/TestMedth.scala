@@ -1,4 +1,6 @@
-package com.software.dm.swallow.stormy.scala
+package com.software.dm.swallow
+package stormy.scala
+
 
 import com.software.dm.swallow.stormy.scala.algoac.inter.VagueState
 import scala.util.control.Breaks._
