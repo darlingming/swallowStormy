@@ -62,7 +62,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
         <!-- 本地MyBatis配置文件位置 -->
         <property name="configLocation" value="classpath:myBatisConfig.xml"/>
         <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
-        <property name="mapperLocations" value="classpath:com/software/dm/swallow/stormy/ssm/*/dto/mapping/*mapping.xml"/>
+        <property name="mapperLocations" value="classpath:com/software/dm/swallow/stormy/ssm/*/dto/mapping/*Mapper.xml"/>
     </bean>
 
     <!--由spring管理dao的实现-->
