@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" 
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	<!-- <http pattern="/initLogin.htm" security="none" /> -->
+	<http 
+	      access-denied-page="/WEB-INF/error/403.jsp" 
+	      pattern="/**/*.monitor*" ><!-- 当访问被拒绝时，会转到403.jsp -->
+		<!-- 登陆设置
+		<form-login login-page="/login.jsp" username-parameter="loginName" password-parameter="password" login-processing-url="/login.monitor"
+				authentication-failure-url="/login.jsp?sign=BadCredentials" default-target-url="/index.monitor" always-use-default-target="true" 
+				authentication-failure-handler-ref="exceptionMappingAuthenticationFailureHandler" /> -->
+		<form-login username-parameter="loginName" password-parameter="password" 
+			login-page="/login.jsp" default-target-url="/index.monitor" 
+			authentication-failure-url="/login.jsp?error=9999"
+			authentication-failure-handler-ref="exceptionMappingAuthenticationFailureHandler"
+			/>
+		
+		<!-- 匿名用户访问控制，这里设置不允许匿名用户登陆 -->
+		<anonymous enabled="false" />
+		
+		<http-basic />
+		<!-- 增加一个filter，位于FILTER_SECURITY_INTERCEPTOR之前 -->
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="customizedFilter" />
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+		<!-- 检测失效的sessionId,超时时定位到另外一个URL-->  
+ 		<session-management invalid-session-url="/logout.monitor"/>
+ 		  <!-- 登出设置 -->
+		<logout invalidate-session="true" logout-success-url="/logout_1.monitor" logout-url="" delete-cookies="JSESSIONID" />
+ 		 <!-- 会话管理 -->  
+	</http>
+	<b:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+	<b:bean class="com.software.dm.swallow.stormy.ssm.framework.LostSessionFilter" id="SessionTest" >
+		<b:property name="sessionRegistry" ref="sessionRegistry" />
+	</b:bean>
+	
+	<!-- 一个自定义的filter，必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性 --> 
+	<b:bean id="customizedFilter" class="cn.com.ultrapower.security.security.CustomizedFilterSecurityInterceptor">
+		<b:property name="authenticationManager" ref="myAuthenticationManager" />
+		<b:property name="accessDecisionManager" ref="accessDecisionManagerBean" />
+		<b:property name="securityMetadataSource" ref="securityMetadataSourceBean" />
+	</b:bean>
+	<!-- <b:bean id="concurrencyFilter"  
+	    class="org.springframework.security.web.session.ConcurrentSessionFilter">  
+	    <b:property name="sessionRegistry" ref="sessionRegistry" />  
+	    <b:property name="expiredUrl" value="/MyJsp.jsp" /> 
+	</b:bean> -->
+	<b:bean id="concurrencyFilter"  
+	    class="com.software.dm.swallow.stormy.ssm.framework.LostSessionFilter">
+	    <b:property name="sessionRegistry" ref="sessionRegistry" />  
+	    <b:property name="expiredUrl" value="/MyJsp.jsp" /> 
+	</b:bean>
+	<!-- 认证管理器.用户登陆认证的入口, 加载用户角色。 -->
+	<authentication-manager alias="myAuthenticationManager">
+		<authentication-provider user-service-ref="cwSysUserDetailsService">
+			<!-- <jdbc-user-service data-source-ref="dataSource" 
+							users-by-username-query="" 
+							authorities-by-username-query="" />-->
+			<password-encoder base64="true" hash="sha-256" /> 
+		</authentication-provider>
+	</authentication-manager>
+	
+	<!-- 
+	 <authentication-manager alias="myAuthenticationManager">
+        <authentication-provider user-service-ref="cwSysUserDetailsService">
+            <password-encoder hash="md5"></password-encoder>
+        </authentication-provider> 
+    </authentication-manager>
+	 
+	 
+	<b:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<b:property name="userDetailsService" ref="userDetailsService" />
+		<b:property name="hideUserNotFoundExceptions" value="false" />
+		<b:property name="passwordEncoder" ref="passwordEncoder" />
+	</b:bean>
+	
+	<b:bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<b:property name="dataSource" ref="dataSource" />
+		<b:property name="usersByUsernameQuery"  value="SELECT T.LOGIN_USER_NAME USERNAME,T.LOGIN_USER_PWD PASSWORD,T.USER_STATUS enabled 
+														FROM T_SYS_USER T 
+														WHERE T.USER_STATUS=1 AND T.LOGIN_USER_NAME=?" />
+		<b:property name="authoritiesByUsernameQuery" value="SELECT U.LOGIN_USER_NAME USERNAME, R.ROLES_NAME ROLENAME
+															FROM T_SYS_USER U, T_SYS_ROLES R, T_USER_ROLES_MID UR
+															WHERE U.LOGIN_USER_NAME=?
+															AND U.ID = UR.USER_ID
+															AND R.ID = UR.ROLES_ID" />
+	</b:bean>
+	-->
+	<!-- 用户的密码加密方式 -->
+	<b:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<b:constructor-arg index="0" value="256" />
+		<b:property name="encodeHashAsBase64" value="true" />
+	</b:bean>
+	
+	
+	<!-- 访问决策器，决定某个用户（具有的角色）是否有足够的权限去访问某个资源 -->
+	<b:bean id="accessDecisionManagerBean" class="cn.com.ultrapower.security.security.CustomizedAccessDecisionManager" >
+		<!-- 没有显式定义的资源都保护起来。该属性默认值为false -->
+		<b:property name="allowIfAllAbstainDecisions" value="false"/>
+	</b:bean>
+
+	<!-- 安全资源定义，即定义某一安全资源可以被哪些角色访问 -->
+	<b:bean id="securityMetadataSourceBean" class="cn.com.ultrapower.security.security.CustomizedInvocationSecurityMetadataSource">
+		<b:constructor-arg index="0" ref="commonDao" />
+		<b:property name="rejectPublicInvocations" value="true" />
+	</b:bean>
+	
+	<!-- 认证异常处理 -->
+	<b:bean id="exceptionMappingAuthenticationFailureHandler" class="cn.com.ultrapower.security.security.util.ExceptionMappingAuthenticationFailureHandler">
+		<b:property name="exceptionMappings">
+			<b:map>
+				<!-- 用户不存在 -->
+				<b:entry key="org.springframework.security.core.userdetails.UsernameNotFoundException"  value="/login.jsp?sign=用户不存在!" />
+				<!-- 凭证错误(密码不正确) -->
+				<b:entry key="org.springframework.security.authentication.BadCredentialsException"  value="/login.jsp?sign=密码不正确!" />
+				<!-- 用户不可用	 -->
+				<b:entry key="org.springframework.security.authentication.DisabledException"  value="/login.jsp?sign=用户已停用!" />
+				<!-- 登陆凭证错误	 -->
+				<b:entry key="org.springframework.security.core.AuthenticationException"  value="/login.jsp?sign=受权错误!" />
+			</b:map>
+		</b:property>
+	</b:bean>
+	
+	<!-- 安全资源白名单(URL) -->
+	<b:bean id="securityMetadataSourceTrustListHolder" class="cn.com.ultrapower.security.security.util.SecurityMetadataSourceTrustListHolder" >
+		<b:property name="trustList">
+			<b:list>
+				<b:value>/login.monitor</b:value>
+				<b:value>/index.monitor</b:value>
+				<b:value>/code/validationCode.monitor</b:value>
+				<b:value>/logout_1.monitor</b:value>
+			</b:list>
+		</b:property>
+	</b:bean>
+	
+	<!-- 安全用户白名单 -->
+	<b:bean id="securityUserTrustListHolder" class="cn.com.ultrapower.security.security.util.SecurityUserTrustListHolder" >
+		<b:property name="trustList">
+			<b:list>
+				<b:value>admin</b:value>
+			</b:list>
+		</b:property>
+	</b:bean>
+	
+	<!-- 开启Spring Security3认证和授权日志 -->
+	<b:bean class="org.springframework.security.authentication.event.LoggerListener"/>
+	<b:bean class="org.springframework.security.access.event.LoggerListener"/>
+</b:beans>
