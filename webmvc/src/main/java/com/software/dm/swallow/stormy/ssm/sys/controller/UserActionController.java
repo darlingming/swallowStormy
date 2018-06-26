@@ -1,7 +1,7 @@
 package com.software.dm.swallow.stormy.ssm.sys.controller;
 
 
-import com.software.dm.swallow.stormy.ssm.sys.entity.User;
+import com.software.dm.swallow.stormy.ssm.sys.entity.SysUser;
 import com.software.dm.swallow.stormy.ssm.sys.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +33,9 @@ public class UserActionController {
     public String showUserList(HttpServletRequest request,
                                HttpServletResponse response) {
         logger.info("======login===========");
-        List<User> userList = this.userService.getUsers(11);
+         List<SysUser> userList = this.userService.queryAllUser();
         logger.info(Arrays.toString(userList.toArray()));
+
         return "/login";
     }
 
@@ -44,7 +45,7 @@ public class UserActionController {
                               HttpServletResponse response) {
         logger.info("======insUserList===========");
         try {
-            this.userService.insertUsers(null);
+            this.userService.queryAllUser();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,11 +58,11 @@ public class UserActionController {
     public ModelAndView getUsers1(@RequestParam Integer userId) {
         ModelAndView modelAndView = new ModelAndView();
         //调用service方法得到用户列表
-        List<User> users = userService.getUsers(userId);
-        //将得到的用户列表内容添加到ModelAndView中
-        modelAndView.addObject("users", users);
-        //设置响应的jsp视图
-        modelAndView.setViewName("getUsers");
+        //List<User> users = userService.getUsers(userId);
+        ////将得到的用户列表内容添加到ModelAndView中
+        //modelAndView.addObject("users", users);
+        ////设置响应的jsp视图
+        //modelAndView.setViewName("getUsers");
         logger.info("===============================成功查询用户列表！");
         return modelAndView;
     }
@@ -69,9 +70,9 @@ public class UserActionController {
     //返回json格式数据，形式1
     @RequestMapping(value = "/getUserJson1", method = RequestMethod.GET)
     @ResponseBody
-    public List getUsers2(@RequestParam Integer userId, HttpServletRequest request, HttpServletResponse response) {
+    public SysUser getUsers2(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response) {
         //调用service方法得到用户列表
-        List<User> users = userService.getUsers(userId);
+        SysUser  users = userService.queryUser(userId);
         logger.info("===============================成功查询用户列表！");
         return users;
     }

@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE generatorConfiguration  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
     <context id="DMTables" targetRuntime="MyBatis3">
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+     一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+  -->
+        <property name="autoDelimitKeywords" value="false"/>
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <!--<property name="beginningDelimiter" value="`"/>-->
+        <!--<property name="endingDelimiter" value="`"/>-->
+
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="false" />
+            <property name="suppressAllComments" value="false"/>
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -15,45 +30,109 @@
                         password="123qwe">
         </jdbcConnection>
         -->
+
         <!--  -->
         <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
-            connectionURL="jdbc:oracle:thin:@10.8.11.8:1521:add"
-            userId="platform"
-            password="platform">
+                        connectionURL="jdbc:oracle:thin:@10.8.11.8:1521:add"
+                        userId="platform"
+                        password="platform">
+
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
-            NUMERIC 类型解析为java.math.BigDecimal -->
-        <javaTypeResolver>
-            <property name="forceBigDecimals" value="true" />
+            NUMERIC 类型解析为java.math.BigDecimal
+             用于处理DB中的类型到Java中的类型，默认使用JavaTypeResolverDefaultImpl；
+        注意一点，默认会先尝试使用Integer，Long，Short等来对应DECIMAL和 NUMERIC数据类型；
+        -->
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+
         </javaTypeResolver>
 
-        <!-- targetProject:生成PO类的位置 -->
-        <javaModelGenerator targetPackage="main.java.com.software.dm.swallow.stormy.ssm.sys.entity"
+        <!-- targetProject:生成PO类的位置 java模型创建器，是必须要的元素
+        负责：1，key类（见context的defaultModelType）；2，java类；3，查询类
+        targetPackage：生成的类要放的包，真实的包受enableSubPackages属性控制；
+        targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，如果目录不存在，MBG不会自动建目录
+        -->
+        <javaModelGenerator targetPackage="com.software.dm.swallow.stormy.ssm.sys.entity"
                             targetProject="src">
+            <!--  for MyBatis3/MyBatis3Simple
+           自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter；
+        -->
+            <property name="constructorBased" value="false"/>
+
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
-            <!-- 从数据库返回的值被清理前后的空格 -->
-            <property name="trimStrings" value="true" />
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="false"/>
         </javaModelGenerator>
         <!-- targetProject:mapper映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="main.java.com.software.dm.swallow.stormy.ssm.sys.dto.mapping"
+        <sqlMapGenerator targetPackage="com.software.dm.swallow.stormy.ssm.sys.dto.mapping"
                          targetProject="src">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
+            <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
         <!-- targetPackage：mapper接口生成的位置 -->
-        <javaClientGenerator type="XMLMAPPER"  targetPackage="main.java.com.software.dm.swallow.stormy.ssm.sys.dto"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.software.dm.swallow.stormy.ssm.sys.dto"
                              targetProject="src">
 
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" value="false" />
+            <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <!-- 指定数据库表 -->
-        <table tableName="dm_user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >
-            <columnOverride column="ID" javaType="java.lang.Integer" />
+
+        <!--
+        选择一个table来生成相关文件，可以有一个或多个table，必须要有table元素
+        选择的table会生成一下文件：
+        1，SQL map文件
+        2，生成一个主键类；
+        3，除了BLOB和主键的其他字段的类；
+        4，包含BLOB的类；
+        5，一个用户生成动态查询的条件类（selectByExample, deleteByExample），可选；
+        6，Mapper接口（可选）
+
+        tableName（必要）：要生成对象的表名；
+        注意：大小写敏感问题。正常情况下，MBG会自动的去识别数据库标识符的大小写敏感度，在一般情况下，MBG会
+            根据设置的schema，catalog或tablename去查询数据表，按照下面的流程：
+            1，如果schema，catalog或tablename中有空格，那么设置的是什么格式，就精确的使用指定的大小写格式去查询；
+            2，否则，如果数据库的标识符使用大写的，那么MBG自动把表名变成大写再查找；
+            3，否则，如果数据库的标识符使用小写的，那么MBG自动把表名变成小写再查找；
+            4，否则，使用指定的大小写格式查询；
+        另外的，如果在创建表的时候，使用的""把数据库对象规定大小写，就算数据库标识符是使用的大写，在这种情况下也会使用给定的大小写来创建表名；
+        这个时候，请设置delimitIdentifiers="true"即可保留大小写格式；
+
+        可选：
+        1，schema：数据库的schema；
+        2，catalog：数据库的catalog；
+        3，alias：为数据表设置的别名，如果设置了alias，那么生成的所有的SELECT SQL语句中，列名会变成：alias_actualColumnName
+        4，domainObjectName：生成的domain类的名字，如果不设置，直接使用表名作为domain类的名字；可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
+        5，enableInsert（默认true）：指定是否生成insert语句；
+        6，enableSelectByPrimaryKey（默认true）：指定是否生成按照主键查询对象的语句（就是getById或get）；
+        7，enableSelectByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询语句；
+        8，enableUpdateByPrimaryKey（默认true）：指定是否生成按照主键修改对象的语句（即update)；
+        9，enableDeleteByPrimaryKey（默认true）：指定是否生成按照主键删除对象的语句（即delete）；
+        10，enableDeleteByExample（默认true）：MyBatis3Simple为false，指定是否生成动态删除语句；
+        11，enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）；
+        12，enableUpdateByExample（默认true）：MyBatis3Simple为false，指定是否生成动态修改语句（只修改对象中不为空的属性）；
+        13，modelType：参考context元素的defaultModelType，相当于覆盖；
+        14，delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
+        15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
+
+        注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
+        指定数据库表 -->
+        <table schema="platform"  tableName="T_SYS_USER"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+
+
+            <domainObjectRenamingRule searchString="^T" replaceString="" />
+
+
+
         </table>
-        <!--<table tableName="orders"></table>-->
+
+        <!--<table tableName="orders" domainObjectName="DmUser" mapperName="DtoMapper" >
+        <columnOverride column="ID" javaType="java.lang.Integer" />
+        </table>-->
         <!--<table tableName="orderdetail"></table>-->
         <!-- <table schema="" tableName="sys_user"></table>
         <table schema="" tableName="sys_role"></table>
@@ -63,7 +142,11 @@
 
         <!-- 有些表的字段需要指定java类型
          <table schema="" tableName="dm_user">
+         <ignoreColumn column="FRED" />//忽略字段
+         <generatedKey column="id" sqlStatement="Oracle" identity="true" />  //自增
             <columnOverride column="ID" javaType="java.lang.Integer" />
+             <columnRenamingRule searchString="^T" replaceString=""/>
+              <property name="selectAllOrderByClause" value="age desc,username asc"/>
         </table>
         -->
     </context>

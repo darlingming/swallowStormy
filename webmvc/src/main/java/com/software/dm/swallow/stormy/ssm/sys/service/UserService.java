@@ -1,11 +1,16 @@
 package com.software.dm.swallow.stormy.ssm.sys.service;
 
-import com.software.dm.swallow.stormy.ssm.sys.entity.User;
+
+import com.software.dm.swallow.stormy.ssm.sys.entity.SysUser;
 
 import java.util.List;
 
-
+/**
+ *
+ */
 public interface UserService {
-    List<User> getUsers(Integer userId);
-    void insertUsers(User user) throws Exception;
+    List<SysUser> queryAllUser();
+
+    SysUser  queryUser(String id);
+    void insertUsers(SysUser user) throws Exception;
 }
