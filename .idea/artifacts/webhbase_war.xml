@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="webhbase:war">
+    <output-path>$PROJECT_DIR$/webhbase/target</output-path>
+    <root id="archive" name="webhbase.war">
+      <element id="artifact" artifact-name="webhbase:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -18,9 +18,9 @@ public class Test {
         try {
             hbaseOpertion = HbaseOpertion.getInstance();
 
-            //HbaseOpertion.createTable(tableName, columnFamilys);
+            hbaseOpertion.createTable(tableName, columnFamilys);
 
-            hbaseOpertion.alterTable(tableName,columnFamilys);
+            //hbaseOpertion.alterTable(tableName,columnFamilys);
             String rowKey = "admin";
             String columnFamily = "user";
             String column = "passwd";
@@ -49,19 +49,19 @@ public class Test {
 
             logger.info(" hbaseOpertion.bathInsert(");
 
-            List<HbaseDataEntity> hbasedataList = hbaseOpertion.scanTableData(tableName);
-            for (HbaseDataEntity hbaseDataEntity : hbasedataList) {
-                for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()  ) {
-
-                    for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()  ) {
-                        logger.info( "行键:" + hbaseDataEntity.getRowKey() + "\t" +
-                                "列族:" + columnFamilyEntity.getColumnFamily() + "\t" +
-                                "列名:" + columnEntity.getColumn() + "\t" +
-                                "值:" + columnEntity.getValue() + "\t" +
-                                "时间戳:" + columnEntity.getTimestamp());
-                    }
-                }
-            }
+            //List<HbaseDataEntity> hbasedataList = hbaseOpertion.scanTableData(tableName);
+            //for (HbaseDataEntity hbaseDataEntity : hbasedataList) {
+            //    for (ColumnFamilyEntity columnFamilyEntity : hbaseDataEntity.getColumnFamilyList()  ) {
+            //
+            //        for (ColumnEntity columnEntity : columnFamilyEntity.getColumnList()  ) {
+            //            logger.info( "行键:" + hbaseDataEntity.getRowKey() + "\t" +
+            //                    "列族:" + columnFamilyEntity.getColumnFamily() + "\t" +
+            //                    "列名:" + columnEntity.getColumn() + "\t" +
+            //                    "值:" + columnEntity.getValue() + "\t" +
+            //                    "时间戳:" + columnEntity.getTimestamp());
+            //        }
+            //    }
+            //}
             column="js";
             long reslong = hbaseOpertion.incrementColumnValue(  tableName,   rowKey,   columnFamily,   column, 1);
             logger.info("计数器值："+reslong);

@@ -7,6 +7,11 @@
     <groupId>com.software.dm.swallow.stormy</groupId>
     <artifactId>flume</artifactId>
     <version>swallow-stormy-1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
 <dependencies>
 
     <!-- https://mvnrepository.com/artifact/org.apache.flume/flume-ng-core -->
@@ -14,9 +19,26 @@
         <groupId>org.apache.flume</groupId>
         <artifactId>flume-ng-core</artifactId>
         <version>1.8.0</version>
-        <scope>provided</scope>
+
     </dependency>
 
+    <!--  <scope>provided</scope>
+    <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5</version>
+    </dependency>
+ 获取文件MD5 -->
+    <!--<dependency>-->
+        <!--<groupId>commons-codec</groupId>-->
+        <!--<artifactId>commons-codec</artifactId>-->
+        <!--<version>1.10</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>com.google.guava</groupId>-->
+        <!--<artifactId>guava</artifactId>-->
+        <!--<version>19.0</version>-->
+    <!--</dependency>-->
 
 
 </dependencies>

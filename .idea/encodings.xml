@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/flume" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/java/com/software/dm/swallow/stormy/algoac/inter/AbstractVagueState.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/java/com/software/dm/swallow/stormy/algoac/pojo/Param.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/java/com/software/dm/swallow/stormy/hadoop/service/scene/factory/analysis/AbstractDtoDoReducer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/java/com/software/dm/swallow/stormy/security/match/bdia/builder/CreateFactroy.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/java/com/software/dm/swallow/stormy/security/match/bdia/obtain/SerialVagueFactroy.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/scala/com/software/dm/swallow/stormy/scala/TestMedth.scala" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/scala/com/software/dm/swallow/stormy/scala/algoac/VagueAnalysisTest.scala" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/framework/src/main/scala/com/software/dm/swallow/stormy/scala/algoac/inter/AbstractVagueState.scala" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/hbase" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jedis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kafka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scala/src/main/scala/com/software/dm/swallow/stormy/scalacode/访问修饰符.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/study" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/study/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/study/src/main/java/C3.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/study/src/main/java/util/MessageGZIP.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webmvc" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

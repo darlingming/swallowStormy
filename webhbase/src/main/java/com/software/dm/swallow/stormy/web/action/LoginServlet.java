@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         //2.通知浏览器，以UTF-8的编码打开
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
+        String action = request.getParameter("controller");
         action = action == null ? "" : action;
         switch (action) {
             case "goLogin":

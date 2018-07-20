@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="flume:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/flume_jar</output-path>
+    <root id="root">
+      <element id="archive" name="swallow-stormy-flume-2.0.0.jar">
+        <element id="module-output" name="flume" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/flume/src/main/manifest/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

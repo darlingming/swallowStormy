@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="scala-sdk-2.11.8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-reflect/2.11.8/scala-reflect-2.11.8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="http://www.scala-lang.org/api/2.11.8/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.8/scala-library-2.11.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

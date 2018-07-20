@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="flume" />
+        <module name="framework" />
+        <module name="hbase" />
+        <module name="jedis" />
+        <module name="kafka" />
+        <module name="scala" />
+        <module name="spark" />
+        <module name="study" />
+        <module name="webhbase" />
+        <module name="webmvc" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="flume" target="1.5" />
+      <module name="framework" target="1.6" />
+      <module name="hbase" target="1.7" />
+      <module name="jedis" target="1.8" />
+      <module name="kafka" target="1.8" />
+      <module name="scala" target="1.5" />
+      <module name="spark" target="1.5" />
+      <module name="study" target="1.8" />
+      <module name="webhbase" target="1.8" />
+      <module name="webmvc" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

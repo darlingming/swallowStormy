@@ -35,7 +35,7 @@ public class HbaseRunnable implements Runnable{
                 List<BasicNameValuePair> list = new ArrayList();
                 list.add(new BasicNameValuePair("username",flag + Thread.currentThread().getName() + ":"+count)) ;
                 list.add(new BasicNameValuePair("passwd","1")) ;
-                list.add(new BasicNameValuePair("action","register")) ;
+                list.add(new BasicNameValuePair("controller","register")) ;
                 HttpConnectionManager.getInstance().httpPost(url,list);
 
                 count--;
