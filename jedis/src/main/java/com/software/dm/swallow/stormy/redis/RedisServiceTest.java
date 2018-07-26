@@ -44,9 +44,11 @@ public class RedisServiceTest {
         Assert.assertEquals("a1", result);
     }
 
+
+
     @Test
-    public void dbsize(){
-        long a=  this.redisService.dbSize();
-        System.out.println(a);
+    public void flushDB(){
+         this.redisService.flushDB();
+
     }
 }

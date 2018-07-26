@@ -150,6 +150,22 @@ public class RedisServiceImpl implements RedisService {
             }
         });
     }
+    /**
+     * @param key
+     * @return
+     */
+    public String getkeys(final String key) {
+        return (String) redisTemplate.execute(new RedisCallback() {
+            public String doInRedis(RedisConnection connection) throws DataAccessException {
+                try {
 
+                    return new String(connection.get(key.getBytes()), redisCode);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                return "";
+            }
+        });
+    }
 
 }
