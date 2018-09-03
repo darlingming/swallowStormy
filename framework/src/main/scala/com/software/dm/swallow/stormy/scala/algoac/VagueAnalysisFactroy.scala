@@ -16,7 +16,7 @@ import scala.collection.mutable._
   *
   *
   */
-final class VagueAnalysisFactroy() {
+final class VagueAnalysisFactroy() extends  Serializable{
   final private val vagueState = new VagueStateCharacter(new HashMap[Character, VagueState[Character]], new HashMap[Character, VagueState[Character]])
 
   /**
@@ -62,7 +62,7 @@ final class VagueAnalysisFactroy() {
     */
   def serachResult(value: String): Set[Any] = {
     resultDataSet.clear()
-    //     this.print(vagueState);
+//     this.print(vagueState);
     this.vagueState.serachVagueResult(value, resultDataSet)
     resultDataSet
   }

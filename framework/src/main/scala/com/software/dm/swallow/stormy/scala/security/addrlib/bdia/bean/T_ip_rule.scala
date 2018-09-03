@@ -1,6 +1,6 @@
 package com.software.dm.swallow.stormy.scala.security.addrlib.bdia.bean
 
-class T_ip_rule {
+class T_ip_rule extends  Serializable{
   val ACTION_IP = 4
 
   private var n_id = 0L

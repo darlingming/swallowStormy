@@ -9,7 +9,7 @@ package pojo
   * 2017
   * @version v1.0.0.1
   */
-final class VagueResultEntity(var obj: Any, var mustEqual: Boolean) {
+final class VagueResultEntity(var obj: Any, var mustEqual: Boolean) extends  Serializable{
 
 
   def getObj: Any = obj

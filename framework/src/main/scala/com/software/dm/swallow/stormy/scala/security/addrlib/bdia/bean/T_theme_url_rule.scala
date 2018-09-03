@@ -3,7 +3,7 @@ package com.software.dm.swallow.stormy.scala.security.addrlib.bdia.bean
 import scala.collection.mutable.ListBuffer
 
 
-class T_theme_url_rule {
+class T_theme_url_rule extends  Serializable{
   val ACTION_THEME = 1
 
 
@@ -31,4 +31,7 @@ class T_theme_url_rule {
   def getRule_type: Int = rule_type
 
   def getThemeTypes:  ListBuffer[T_theme_basic_type_rel] = themeTypes
+
+
+  override def toString = s"T_theme_url_rule($n_id, $domain_comp, $rule, $rule_type, $themeTypes)"
 }

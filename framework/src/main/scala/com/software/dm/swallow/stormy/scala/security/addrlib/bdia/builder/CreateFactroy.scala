@@ -9,8 +9,7 @@ import java.util.{Date, Properties}
 import java.util.regex.Pattern
 
 import bean.{T_basic_type_rel, T_extract_rule, T_ip_rule, T_theme_basic_type_rel, T_theme_url_rule, T_url_rule}
-import com.esotericsoftware.kryo.Kryo
-import com.esotericsoftware.kryo.io.Output
+
 import com.software.dm.swallow.stormy.scala.algoac.pojo.Param
 import com.software.dm.swallow.stormy.scala.hadoop.tools.Constant
 import common.{ApplicationContainer, RepoConstant}
@@ -351,7 +350,7 @@ class CreateFactroy {
     * @param rule
     * @param obj
     */
-  private def loadAfRule(ac: ApplicationContainer,typeid: Int, rule: String, obj: Any): Unit = {
+  private def loadAfRule(ac: ApplicationContainer, typeid: Int, rule: String, obj: Any): Unit = {
     val pRule: Param = new Param(typeid, rule, obj)
     ac.getAfRule.addParam(pRule)
   }
@@ -369,21 +368,21 @@ class CreateFactroy {
       ruleType match {
         case 1 =>
           this.loadDomainEquals(ac, t_url_rule.getDomain_comp, t_url_rule)
-         // break //todo: break is not supported
+        // break //todo: break is not supported
         case 2 =>
           this.loadAfDomain(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp, t_url_rule)
-         // break //todo: break is not supported
+        // break //todo: break is not supported
         case 3 =>
           this.loadAfRule(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getRule, t_url_rule)
-         // break //todo: break is not supported
+        // break //todo: break is not supported
         case 4 =>
           this.loadDomainEquals(ac, t_url_rule.getDomain_comp, t_url_rule)
           this.loadAfRule(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getRule, t_url_rule)
-         // break //todo: break is not supported
+        // break //todo: break is not supported
         case 5 =>
           this.loadAfDomain(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp, t_url_rule)
           this.loadAfRule(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getRule, t_url_rule)
-          //break //todo: break is not supported
+        //break //todo: break is not supported
       }
     }
   }
@@ -396,21 +395,21 @@ class CreateFactroy {
       ruleType match {
         case 1 =>
           this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp, t_theme_url_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 2 =>
           this.loadAfDomain(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp, t_theme_url_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 3 =>
           this.loadAfRule(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule, t_theme_url_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 4 =>
           this.loadDomainEquals(ac, t_theme_url_rule.getDomain_comp, t_theme_url_rule)
           this.loadAfRule(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule, t_theme_url_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 5 =>
           this.loadAfDomain(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp, t_theme_url_rule)
           this.loadAfRule(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule, t_theme_url_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
       }
     }
   }
@@ -452,46 +451,46 @@ class CreateFactroy {
           } catch {
             case e: Exception =>
               e.printStackTrace()
-//              this.println(t_extract_rule.toString)
-//              continue //todo: continue is not supported
+            //              this.println(t_extract_rule.toString)
+            //              continue //todo: continue is not supported
           }
           ac.getExtractPatternRuleMap.put(t_extract_rule, ruleP)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 2 =>
           this.loadAfRule(ac, t_extract_rule.ACTION_EXTRACT, rule, t_extract_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 3 =>
           try {
             ruleP = Pattern.compile(rule)
           } catch {
             case e: Exception =>
               e.printStackTrace()
-//              this.println(t_extract_rule.toString)
-//              continue //todo: continue is not supported
+            //              this.println(t_extract_rule.toString)
+            //              continue //todo: continue is not supported
           }
           this.loadAfDomain(ac, t_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain, t_extract_rule)
           ac.getExtractDoMainPatternRuleMap.put(t_extract_rule, ruleP)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 4 =>
           this.loadAfDomain(ac, t_extract_rule.ACTION_EXTRACT, t_extract_rule.getFullDomain, t_extract_rule)
           this.loadAfRule(ac, t_extract_rule.ACTION_EXTRACT, t_extract_rule.getRule, t_extract_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 5 =>
           try {
             ruleP = Pattern.compile(rule)
           } catch {
             case e: Exception =>
               e.printStackTrace()
-//              this.println(t_extract_rule.toString)
-//              continue //todo: continue is not supported
+            //              this.println(t_extract_rule.toString)
+            //              continue //todo: continue is not supported
           }
           this.loadDomainEquals(ac, t_extract_rule.getFullDomain, t_extract_rule)
           ac.getExtractDoMainPatternRuleMap.put(t_extract_rule, ruleP)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
         case 6 =>
           this.loadDomainEquals(ac, t_extract_rule.getFullDomain, t_extract_rule)
           this.loadAfRule(ac, t_extract_rule.ACTION_EXTRACT, rule, t_extract_rule)
-//          break //todo: break is not supported
+        //          break //todo: break is not supported
       }
     }
   }
@@ -552,7 +551,7 @@ class CreateFactroy {
 
   = {
     val df: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
-    val kryo: Kryo = ApplicationContainer.getKryo
+//    val kryo: Kryo = ApplicationContainer.getKryo
     val serialName1 = if (serialName == null) {
       df.format(new Date) + ".serial"
     } else {
@@ -564,9 +563,9 @@ class CreateFactroy {
       file.createNewFile
     }
     val os: OutputStream = new BufferedOutputStream(new FileOutputStream(file))
-    val out: Output = new Output(os, 10240)
-    kryo.writeObject(out, ac)
-    out.flush()
+//    val out: Output = new Output(os, 10240)
+//    kryo.writeObject(out, ac)
+//    out.flush()
     os.close()
   }
 

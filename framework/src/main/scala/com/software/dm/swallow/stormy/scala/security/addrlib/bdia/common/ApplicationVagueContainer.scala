@@ -3,57 +3,62 @@ package security.addrlib
 package bdia
 package common
 
-//import java.util
-//import java.{ListBuffer, HashMap, List, Map}
-//import java.regex.Pattern
+
 
 import java.util.regex.Pattern
 
-import com.esotericsoftware.kryo.Kryo
+//import com.esotericsoftware.kryo.Kryo
 import algoac.VagueAnalysisFactroy
 import algoac.impl.VagueStateCharacter
 import algoac.pojo.VagueResultEntity
-import bean.{T_url_rule, _}
+import bean._
 import algoac.inter.{AbstractVagueState, VagueState}
 
 import scala.collection.mutable._
 
+/**
+  *
+  */
 object ApplicationVagueContainer {
 
-  def getKryo: Kryo = {
-    val kryo = new Kryo
-    kryo.setRegistrationRequired(true)
-    kryo.register(classOf[ApplicationVagueContainer])
-    kryo.register(classOf[VagueAnalysisFactroy])
-    kryo.register(classOf[VagueStateCharacter])
-    kryo.register(classOf[HashMap[_, _]])
-    kryo.register(classOf[ListBuffer[_]])
-    kryo.register(classOf[HashSet[_]])
-    kryo.register(classOf[VagueResultEntity])
-    kryo.register(classOf[T_extract_rule])
-    kryo.register(classOf[T_basic_type_rel])
-    kryo.register(classOf[T_theme_url_rule])
-    kryo.register(classOf[T_theme_basic_type_rel])
-    kryo.register(classOf[T_basic_type_rel])
-    kryo.register(classOf[T_url_rule])
-    kryo.register(classOf[T_ip_rule])
-    kryo.register(classOf[AbstractVagueState[_]])
-    kryo.register(classOf[VagueState[_]])
-    kryo.register(classOf[Array[String]])
-    kryo.register(classOf[Array[Integer]])
-    kryo.register(classOf[Pattern])
-    kryo.register(classOf[Array[Pattern]])
+//  def getKryo: Kryo = {
+//    val kryo = new Kryo
+//    kryo.setRegistrationRequired(true)
+//
+//    kryo.register(classOf[ApplicationVagueContainer])
+//    kryo.register(classOf[VagueAnalysisFactroy])
+//    kryo.register(classOf[VagueStateCharacter])
+//    kryo.register(classOf[HashMap[_,_]])
+//    kryo.register(classOf[ListBuffer[_]])
+//    kryo.register(classOf[HashSet[_]])
+//    kryo.register(classOf[VagueResultEntity])
+//    kryo.register(classOf[T_extract_rule])
+//    kryo.register(classOf[T_basic_type_rel])
+//    kryo.register(classOf[T_theme_url_rule])
+//    kryo.register(classOf[T_theme_basic_type_rel])
+//    kryo.register(classOf[T_basic_type_rel])
+//    kryo.register(classOf[T_url_rule])
+//    kryo.register(classOf[T_ip_rule])
+//    kryo.register(classOf[AbstractVagueState[_]])
+//    kryo.register(classOf[VagueState[_]])
+//    kryo.register(classOf[Array[String]])
+//    kryo.register(classOf[Array[Integer]])
+//    kryo.register(classOf[Pattern])
+//    kryo.register(classOf[Array[Pattern]])
+//
+//
+//    kryo.register(classOf[scala.collection.immutable.$colon$colon[_]])
+//    kryo.register(scala.collection.immutable.Nil.getClass)
+//    kryo
+//  }
 
 
-    kryo.register(classOf[scala.collection.immutable.$colon$colon[_]])
-    kryo.register(scala.collection.immutable.Nil.getClass)
-    kryo
-  }
+
 }
 
-class ApplicationVagueContainer {
+class ApplicationVagueContainer extends  Serializable {
 
-  private val domainEqualsMap: Map[String, ListBuffer[Any]] = new HashMap[String, ListBuffer[Any]]
+  private val domainEqualsMap: HashMap[String, ListBuffer[Any]] = new HashMap[String, ListBuffer[Any]]
   private val afDomain: VagueAnalysisFactroy = new VagueAnalysisFactroy
   private val afRule: VagueAnalysisFactroy = new VagueAnalysisFactroy
   private val extractPatternRuleMap: HashMap[T_extract_rule, Pattern] = new HashMap[T_extract_rule, Pattern]
@@ -76,7 +81,7 @@ class ApplicationVagueContainer {
   }
 
 
-  def getDomainEqualsMap: Map[String, ListBuffer[Any]] = domainEqualsMap
+  def getDomainEqualsMap: HashMap[String, ListBuffer[Any]] = domainEqualsMap
 
   def getAfDomain: VagueAnalysisFactroy = afDomain
 
@@ -86,15 +91,15 @@ class ApplicationVagueContainer {
   // return extractStringRuleMap;
   // }
 
-  def getExtractPatternRuleMap: Map[T_extract_rule, Pattern] = extractPatternRuleMap
+  def getExtractPatternRuleMap: HashMap[T_extract_rule, Pattern] = extractPatternRuleMap
 
   def getExtractDoMainPatternRuleMap: Map[T_extract_rule, Pattern] = extractDoMainPatternRuleMap
 
-  def getiPMap: Map[String, T_ip_rule] = iPMap
+  def getiPMap: HashMap[String, T_ip_rule] = iPMap
 
-  def getBasicTypeRelMap: Map[Long, ListBuffer[T_basic_type_rel]] = basicTypeRelMap
+  def getBasicTypeRelMap: HashMap[Long, ListBuffer[T_basic_type_rel]] = basicTypeRelMap
 
-  def getThemeBasicTypeRelMap: Map[Long, ListBuffer[T_theme_basic_type_rel]] = themeBasicTypeRelMap
+  def getThemeBasicTypeRelMap: HashMap[Long, ListBuffer[T_theme_basic_type_rel]] = themeBasicTypeRelMap
 
   def getUrlRuleList: ListBuffer[T_url_rule] = urlRuleList
 

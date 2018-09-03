@@ -9,12 +9,11 @@ import com.software.dm.swallow.stormy.hadoop.tools.AbstractCommonUtils
 import com.software.dm.swallow.stormy.scala.security.addrlib.bdia.obtain.SerialVagueFactroy
 
 
-
 /**
   * @author DM
   * @version v1.0.0.1
-  *  Description
-  *  date 2017
+  *          Description
+  *          date 2017
   */
 object MainVagueDeSerial {
   def main(args: Array[String]): Unit = {
@@ -26,20 +25,22 @@ object MainVagueDeSerial {
       // applicationContainer.getAfDomain().serachResult("mp.weixin.qq.comclient.map.baidu.com");
       // System.out.println(pset);
       val url = "http://gdl.sregame-download.com/mobile/immortal_texas/src/common/layer/SubLayer.lua?game_timestamp=1.0.84"
-//      System.out.println(AbstractCommonUtils.toLowerCase(url))
+      //      System.out.println(AbstractCommonUtils.toLowerCase(url))
       val fullDomain = AbstractCommonUtils.getFullDomainWithBareUrl(url.getBytes)
-//      System.out.println(util.Arrays.toString(fullDomain))
+      println("fullDomain=" + fullDomain.mkString(","))
       sf.execute(fullDomain)
       // System.out.println(sf.basicAppResult.getBasicTypes().size());
       // for (T_theme_url_rule ttur : sf.themeResultList) {
       // System.out.println(ttur.getThemeTypes().size());
       // System.out.println(ttur.getN_id());
       // }
-      System.out.println(sf.getBasicAppResult)
-      System.out.println(sf.getThemeResultList)
+
+      System.out.println("BasicApp=" + sf.getBasicAppResult)
+      System.out.println(sf.getThemeResultList.mkString(","))
       System.out.println(sf.getExtractResultList)
       System.out.println(sf.getIpResult)
-//      import scala.collection.JavaConversions._
+
+      //      import scala.collection.JavaConversions._
       for (t_extract_rule <- sf.getExtractResultList) {
         sf.outputExtract(url, t_extract_rule)
       }

@@ -17,7 +17,7 @@ import scala.util.control.Breaks._
   * @version v1.0.0.1
   *
   */
-class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Character]], nextVagueStateMap: Map[Character, VagueState[Character]], value: Char) extends AbstractVagueState[Character](nextNormalStateMap, nextVagueStateMap, value) {
+class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Character]], nextVagueStateMap: Map[Character, VagueState[Character]], value: Char) extends AbstractVagueState[Character](nextNormalStateMap, nextVagueStateMap, value) with  Serializable {
 
 
   //  def this(value: Char) {
@@ -114,7 +114,7 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
     // try output
     if (!skipVague) this.tryOutputResult(serachVaguestate, c_patterns.length, poi, resultDataSet)
     if (poi >= c_patterns.length) return
-    //    println("poi====" + poi + "c_patterns=" + c_patterns(poi))
+//    println("poi====" + poi + "c_patterns=" + c_patterns(poi))
     var vs: VagueState[Character] = null
     val normalStateMap: Map[Character, VagueState[Character]] = serachVaguestate.getNextNormalStateMap
     if (null != normalStateMap && !skipVague) {
@@ -127,6 +127,8 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
       if (null != vs) this.serachResult(vs, c_patterns, poi + 1, resultDataSet, false)
       this.serachResult(serachVaguestate, c_patterns, poi + 1, resultDataSet, true)
     }
+
+//    println(normalStateMap.mkString(",") +"===="+vagueStateMap.mkString(",") )
   }
 
   /**
@@ -140,7 +142,7 @@ class VagueStateCharacter(nextNormalStateMap: Map[Character, VagueState[Characte
     val vagueResultEntityList = vs.getVagueResultEntityList
 
     if (null != vagueResultEntityList) {
-      import scala.collection.JavaConversions._
+   //   import scala.collection.JavaConversions._
       for (vagueResultEntity <- vagueResultEntityList) {
         if (vagueResultEntity.isMustEqual) {
           if (len == poi)

@@ -3,7 +3,7 @@ package com.software.dm.swallow.stormy.scala.security.addrlib.bdia.bean
 /**
   *
   */
-class T_theme_basic_type_rel {
+class T_theme_basic_type_rel extends  Serializable{
 
   private var subject_id: String = null
   private var n_id = 0L

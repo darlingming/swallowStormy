@@ -5,7 +5,7 @@ package security.addrlib.bdia.bean
   *@author darlingming@126.com
   *2018-05-01
   */
-class T_basic_type_rel {
+class T_basic_type_rel extends  Serializable {
   private var n_id = 0L
   private var type_id = ""
   private var all_name = ""

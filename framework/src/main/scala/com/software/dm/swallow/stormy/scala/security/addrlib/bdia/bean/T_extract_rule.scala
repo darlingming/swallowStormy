@@ -4,7 +4,7 @@ package security.addrlib.bdia.bean
 import scala.collection.mutable._
 import java.util.regex.Pattern
 
-class T_extract_rule {
+class T_extract_rule extends  Serializable{
   val ACTION_EXTRACT = 2
 
   private var rid = 0
@@ -75,5 +75,5 @@ class T_extract_rule {
     this.uncodes = uncodes
   }
 
-  override def toString: String = "T_extract_rule [rid=" + rid + ", theme_id=" + theme_id + ", plat_id=" + plat_id + ", prod_id=" + prod_id + ", action_id=" + action_id + ", content_type=" + content_type + ", fullDomain=" + fullDomain + ", rule=" + rule + ", content_rule=" + content_rule + ", uncode=" + uncode + ", spiderType=" + spiderType + ", rule_type=" + rule_type + "]"
+  override def toString = s"T_extract_rule($rid, $theme_id, $plat_id, $prod_id, $action_id, $content_type, $fullDomain, $rule, $content_rule, $uncode, $uncodes, $spiderType, $rule_type, $paramRegexPatternArray)"
 }

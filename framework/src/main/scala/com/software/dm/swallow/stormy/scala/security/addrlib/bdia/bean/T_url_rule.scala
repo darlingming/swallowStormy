@@ -4,7 +4,7 @@ package security.addrlib.bdia.bean
 import scala.collection.mutable.ListBuffer
 
 
-class T_url_rule {
+class T_url_rule extends  Serializable{
   val ACTION_BASIC_APP = 0
 
   private var n_id = 0L
@@ -60,4 +60,7 @@ class T_url_rule {
   def getBqz_name: String = bqz_name
 
   def getBasicTypes: ListBuffer[T_basic_type_rel] = basicTypes
+
+
+  override def toString = s"T_url_rule($n_id, $domain_one, $brand, $domain_comp, $service_name, $rule, $rule_type, $rule_type_level, $is_app_url, $bqz_id, $bqz_name, $basicTypes)"
 }

@@ -9,16 +9,15 @@ import java.util.{Date, Properties}
 import java.util.regex.Pattern
 
 import bean.{T_basic_type_rel, T_extract_rule, T_ip_rule, T_theme_basic_type_rel, T_theme_url_rule, T_url_rule}
-import com.esotericsoftware.kryo.Kryo
-import com.esotericsoftware.kryo.io.Output
-import com.esotericsoftware.kryo.serializers.JavaSerializer
-import com.software.dm.swallow.stormy.scala.hadoop.tools.Constant
+//import com.esotericsoftware.kryo.Kryo
+//import com.esotericsoftware.kryo.io.Output
+import hadoop.tools.Constant
 import common.{ApplicationVagueContainer, RepoConstant}
+import org.nustaq.serialization.FSTConfiguration
 
 import scala.collection.mutable._
 import scala.io.{BufferedSource, Source}
-import scala.util.matching.Regex
-//import scala.collection.JavaConversions._
+
 
 /**
   * @author DM
@@ -26,8 +25,9 @@ import scala.util.matching.Regex
   *          Description
   *          date 2017
   */
-final class CreateVagueFactroy() // TODO Auto-generated constructor stub
-{
+final class CreateVagueFactroy {
+  val conf: FSTConfiguration = FSTConfiguration.createDefaultConfiguration
+
   /**
     * @return
     * @throws IOException
@@ -193,13 +193,12 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
   @throws[IOException]
   private def initIPRule(iPRulePath: String, iPMap: Map[String, T_ip_rule]): Unit = {
     try {
-      var iPRuleSource: BufferedSource = Source.fromFile(iPRulePath, "utf8")
-      var it = iPRuleSource.getLines()
+      val iPRuleSource: BufferedSource = Source.fromFile(iPRulePath, "utf8")
+      val it = iPRuleSource.getLines
       while (it.hasNext) {
         val line = it.next()
         val values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1)
         this.trim(values)
-        val nid: Long = values(0).toLong
         if (!values(1).isEmpty && !values(2).isEmpty) {
           val nid: Long = values(0).toLong
           val tipr: T_ip_rule = new T_ip_rule(nid, values(1), values(2), if (values(3).isEmpty()) -1 else values(3).toInt, values(4), values(5))
@@ -212,7 +211,7 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
       }
     } catch {
       case e: Exception => {
-        //          println(line);
+              println(e.getMessage);
       }
     }
   }
@@ -226,17 +225,17 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
   @throws[IOException]
   private def initExtract(extractPath: String, extractRuleList: ListBuffer[T_extract_rule]): Unit = {
     try {
-      var extractSource: BufferedSource = Source.fromFile(extractPath, "utf8")
-      var it = extractSource.getLines()
-      var values: Array[String] = null
+      val extractSource: BufferedSource = Source.fromFile(extractPath, "utf8")
+      val it = extractSource.getLines()
+
 
       while (it.hasNext) {
         val line = it.next()
         val values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1)
         this.trim(values)
-        val nid: Long = values(0).toLong
+//        val nid: Long = values(0).toLong
 
-        var extract: T_extract_rule = new T_extract_rule(//
+        val extract: T_extract_rule = new T_extract_rule(//
           if (values(0).isEmpty()) -1 else values(0).toInt, //
           if (values(1).isEmpty()) -1 else values(1).toInt, //
           if (values(2).isEmpty()) -1 else values(2).toInt, //
@@ -285,7 +284,7 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
       extractSource.close();
     } catch {
       case xe: Exception => {
-
+        println(xe.getMessage);
       }
       //       println(line);
     }
@@ -356,6 +355,7 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
           this.loadAfDomain(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getDomain_comp, t_url_rule)
           this.loadAfRule(ac, t_url_rule.ACTION_BASIC_APP, t_url_rule.getRule, t_url_rule)
         //break //todo: break is not supported
+        case _ => println("basicAndApp")
       }
     }
   }
@@ -383,7 +383,7 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
           this.loadAfDomain(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getDomain_comp, t_theme_url_rule)
           this.loadAfRule(ac, t_theme_url_rule.ACTION_THEME, t_theme_url_rule.getRule, t_theme_url_rule)
         //          break //todo: break is not supported
-        case _ => println("1")
+        case _ => println("theme")
       }
     }
   }
@@ -504,8 +504,13 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
       println("ExtractDoMainPatternRule size is " + avc.getExtractDoMainPatternRuleMap.size)
 
 
+      println("getDomainEqualsMap size is " + avc.getDomainEqualsMap.size)
+
+      println("getiPMap size is " + avc.getiPMap.size)
+
       avc.clear()
-      this.serial(prop, avc, serialName)
+//      this.serial(prop, avc, serialName)
+      this.writeSerial(prop,avc,serialName)
     } catch {
       case e: Exception =>
         e.printStackTrace()
@@ -521,7 +526,7 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
   @throws[Exception]
   private def serial(prop: Properties, ac: ApplicationVagueContainer, serialName: String): Unit = {
     val df: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
-    val kryo: Kryo = ApplicationVagueContainer.getKryo
+//    val kryo: Kryo = ApplicationVagueContainer.getKryo
     val serialName1 = if (serialName == null) {
       df.format(new Date) + ".serial"
     } else {
@@ -533,10 +538,10 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
       file.createNewFile
     }
     val os: OutputStream = new BufferedOutputStream(new FileOutputStream(file))
-    val out: Output = new Output(os, 10240)
-    kryo.writeObject(out, ac)
-    out.flush()
-    os.close()
+//    val out: Output = new Output(os, 102400)
+//    kryo.writeObject(out, ac)
+//    out.flush()
+//    os.close()
   }
 
   /**
@@ -557,4 +562,37 @@ final class CreateVagueFactroy() // TODO Auto-generated constructor stub
         values(i) = if ((st > 0) || (len < vals.length)) values(i).substring(st, len) else values(i)
       }
   }
+
+
+  @throws[IOException]
+  def writeSerial(prop: Properties, ac: ApplicationVagueContainer, serialName: String): Unit = {
+    val df: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
+
+    val serialName1 = if (serialName == null) {
+      df.format(new Date) + ".serial"
+    } else {
+      serialName
+    }
+    val file: File = new File(prop.getProperty(RepoConstant.REPO_SERIAL_PATCH), serialName1)
+    if (!(file.exists)) {
+      file.getParentFile.mkdirs
+      file.createNewFile
+    }
+    val os: OutputStream = new BufferedOutputStream(new FileOutputStream(file))
+
+    val out = conf.getObjectOutput(os)
+
+
+
+    out.writeObject(ac, classOf[ApplicationVagueContainer])
+    // DON'T out.close() when using factory method;
+    out.flush()
+    out.close();
+  }
 }
+
+object CreateVagueFactroy {
+
+}
+
+

@@ -6,7 +6,7 @@ package common
 
 import java.util.regex.Pattern
 
-import com.esotericsoftware.kryo.Kryo
+//import com.esotericsoftware.kryo.Kryo
 import algoac.AnalysisFactroy
 import algoac.impl.AhoCorasickCharacterTree
 import algoac.impl.CharacterState
@@ -26,31 +26,31 @@ import scala.collection.mutable._
   */
 object ApplicationContainer {
 
-  def getKryo: Kryo = {
-    val kryo = new Kryo
-    kryo.setRegistrationRequired(true)
-    kryo.register(classOf[ApplicationContainer])
-    kryo.register(classOf[AnalysisFactroy])
-    kryo.register(classOf[HashMap[_, _]])
-    kryo.register(classOf[ListBuffer[_]])
-    kryo.register(classOf[HashSet[_]])
-    kryo.register(classOf[Param])
-    kryo.register(classOf[T_extract_rule])
-    kryo.register(classOf[T_basic_type_rel])
-    kryo.register(classOf[T_theme_url_rule])
-    kryo.register(classOf[T_theme_basic_type_rel])
-    kryo.register(classOf[T_basic_type_rel])
-    kryo.register(classOf[T_url_rule])
-    kryo.register(classOf[T_ip_rule])
-    kryo.register(classOf[AhoCorasickCharacterTree])
-    kryo.register(classOf[CharacterState])
-    kryo.register(classOf[ResultSetEntity])
-    kryo.register(classOf[Array[String]])
-    kryo.register(classOf[Array[Integer]])
-    kryo.register(classOf[Pattern])
-    kryo.register(classOf[Array[Pattern]])
-    kryo
-  }
+//  def getKryo: Kryo = {
+//    val kryo = new Kryo
+//    kryo.setRegistrationRequired(true)
+//    kryo.register(classOf[ApplicationContainer])
+//    kryo.register(classOf[AnalysisFactroy])
+//    kryo.register(classOf[HashMap[_, _]])
+//    kryo.register(classOf[ListBuffer[_]])
+//    kryo.register(classOf[HashSet[_]])
+//    kryo.register(classOf[Param])
+//    kryo.register(classOf[T_extract_rule])
+//    kryo.register(classOf[T_basic_type_rel])
+//    kryo.register(classOf[T_theme_url_rule])
+//    kryo.register(classOf[T_theme_basic_type_rel])
+//    kryo.register(classOf[T_basic_type_rel])
+//    kryo.register(classOf[T_url_rule])
+//    kryo.register(classOf[T_ip_rule])
+//    kryo.register(classOf[AhoCorasickCharacterTree])
+//    kryo.register(classOf[CharacterState])
+//    kryo.register(classOf[ResultSetEntity])
+//    kryo.register(classOf[Array[String]])
+//    kryo.register(classOf[Array[Integer]])
+//    kryo.register(classOf[Pattern])
+//    kryo.register(classOf[Array[Pattern]])
+//    kryo
+//  }
 }
 
 final class ApplicationContainer() // TODO Auto-generated constructor stub
