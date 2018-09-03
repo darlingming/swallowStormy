@@ -6,7 +6,7 @@
 
     <groupId>com.software.dm.swallow.stormy</groupId>
     <artifactId>framework</artifactId>
-    <version>dm.v1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
