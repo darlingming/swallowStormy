@@ -8,8 +8,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.regex.Pattern
 
-//import com.esotericsoftware.kryo.Kryo
-//import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
 import bean.{T_extract_rule, T_ip_rule, T_theme_url_rule, T_url_rule}
 import common.ApplicationVagueContainer
 import org.nustaq.serialization.{FSTConfiguration, FSTObjectInput}
@@ -50,25 +50,25 @@ final class SerialVagueFactroy {
     */
   @throws[IOException]
   private def deSerial(serialPath: String): ApplicationVagueContainer = {
-//    println("===============")
-//    val kryo: Kryo = ApplicationVagueContainer.getKryo
-//    val is: InputStream = new BufferedInputStream(new FileInputStream(serialPath))
-//    // InputStream is = new BufferedInputStream(new
-//    // GZIPInputStream(ClassLoader.getSystemResourceAsStream(Constant.REPO_SERIAL)));
-//    val applicationVagueContainer: ApplicationVagueContainer = kryo.readObject(new Input(is, 102400), classOf[ApplicationVagueContainer])
-//    is.close()
+    //    println("===============")
+    //    val kryo: Kryo = ApplicationVagueContainer.getKryo
+    //    val is: InputStream = new BufferedInputStream(new FileInputStream(serialPath))
+    //    // InputStream is = new BufferedInputStream(new
+    //    // GZIPInputStream(ClassLoader.getSystemResourceAsStream(Constant.REPO_SERIAL)));
+    //    val applicationVagueContainer: ApplicationVagueContainer = kryo.readObject(new Input(is, 102400), classOf[ApplicationVagueContainer])
+    //    is.close()
 
 
-    val applicationVagueContainer: ApplicationVagueContainer =  this.readSerial(serialPath);
-//    val extractPatternRuleMap: Map[T_extract_rule, Pattern] = applicationVagueContainer.getExtractPatternRuleMap
+    val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(serialPath)
+    //    val extractPatternRuleMap: Map[T_extract_rule, Pattern] = applicationVagueContainer.getExtractPatternRuleMap
 
-//    for ((k, v) <- extractPatternRuleMap) {
-//      println(k + "==" + v)
-//    }
-    this.avc = applicationVagueContainer
+    //    for ((k, v) <- extractPatternRuleMap) {
+    //      println(k + "==" + v)
+    //    }
+    this.initSerial(applicationVagueContainer)
 
-//    println("===" + applicationVagueContainer.getiPMap.size)
-//    println("===" + applicationVagueContainer.getUrlRuleList.iterator.next().getRule)
+    //    println("===" + applicationVagueContainer.getiPMap.size)
+    //    println("===" + applicationVagueContainer.getUrlRuleList.iterator.next().getRule)
 
     applicationVagueContainer
   }
@@ -84,34 +84,6 @@ final class SerialVagueFactroy {
     in.close
     val applicationVagueContainer: ApplicationVagueContainer = obj.asInstanceOf[ApplicationVagueContainer]
 
-    val extractPatternRuleMap: Map[T_extract_rule, Pattern] = applicationVagueContainer.getExtractPatternRuleMap
-    import scala.collection.JavaConversions._
-    for (elem <- extractPatternRuleMap.entrySet) {
-      val ter: T_extract_rule = elem.getKey
-      val p: Pattern = elem.getValue
-      extractPatternRuleMap.put(ter, Pattern.compile(p.pattern, Pattern.CASE_INSENSITIVE))
-    }
-    val extractDoMainPatternRuleMap: Map[T_extract_rule, Pattern] = applicationVagueContainer.getExtractDoMainPatternRuleMap
-    import scala.collection.JavaConversions._
-    for (elem <- extractDoMainPatternRuleMap.entrySet) {
-      val ter: T_extract_rule = elem.getKey
-      val p: Pattern = elem.getValue
-      extractDoMainPatternRuleMap.put(ter, Pattern.compile(p.pattern, Pattern.CASE_INSENSITIVE))
-    }
-    val extractRuleList: ListBuffer[T_extract_rule] = applicationVagueContainer.getExtractRuleList
-
-    for (t_extract_rule <- extractRuleList) {
-      val ps: Array[Pattern] = t_extract_rule.getParamRegexPatternArray
-      if (null != ps) {
-        var i: Int = 0
-        while (i < ps.length) {
-          if (null != ps(i)) {
-            ps(i) = Pattern.compile(ps(i).pattern, Pattern.CASE_INSENSITIVE)
-          }
-          i += 1
-        }
-      }
-    }
     applicationVagueContainer
   }
 
@@ -127,18 +99,12 @@ final class SerialVagueFactroy {
     applicationVagueContainer
   }
 
-
   /**
-    * @param is
+    *
+    * @param applicationVagueContainer
     * @return
-    * @throws IOException
     */
-  @throws[IOException]
-  private def deSerial(is: InputStream): ApplicationVagueContainer = {
-//    val kryo: Kryo = ApplicationVagueContainer.getKryo
-//    val applicationVagueContainer: ApplicationVagueContainer = kryo.readObject(new Input(is, 10240), classOf[ApplicationVagueContainer])
-//    is.close()
-val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
+  private def initSerial(applicationVagueContainer: ApplicationVagueContainer): ApplicationVagueContainer = {
     val extractPatternRuleMap: Map[T_extract_rule, Pattern] = applicationVagueContainer.getExtractPatternRuleMap
     import scala.collection.JavaConversions._
     for (elem <- extractPatternRuleMap.entrySet) {
@@ -168,7 +134,22 @@ val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
       }
     }
     this.avc = applicationVagueContainer
-    return applicationVagueContainer
+    applicationVagueContainer
+  }
+
+  /**
+    * @param is
+    * @return
+    * @throws IOException
+    */
+  @throws[IOException]
+  private def deSerial(is: InputStream): ApplicationVagueContainer = {
+    //    val kryo: Kryo = ApplicationVagueContainer.getKryo
+    //    val applicationVagueContainer: ApplicationVagueContainer = kryo.readObject(new Input(is, 10240), classOf[ApplicationVagueContainer])
+    //    is.close()
+    val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
+    this.initSerial(applicationVagueContainer)
+    applicationVagueContainer
   }
 
   /**
@@ -223,15 +204,15 @@ val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
     val domain: String = fullDomain(0)
     val url: String = fullDomain(1)
     val domainEqualsMap: Map[String, ListBuffer[Any]] = this.avc.getDomainEqualsMap
-//    System.out.println("domainEqualsMap===" + domainEqualsMap.size)
+    //    System.out.println("domainEqualsMap===" + domainEqualsMap.size)
     //
-//    System.out.println("themeBasicTypeRelMap===" + this.avc.getDomainEqualsMap.size)
+    //    System.out.println("themeBasicTypeRelMap===" + this.avc.getDomainEqualsMap.size)
 
 
     val domainEqualsSet: ListBuffer[Any] = domainEqualsMap.getOrElse(domain, null)
     if (null != domainEqualsSet) {
       for (obj <- domainEqualsSet) {
-//        println("obj==" + obj)
+        //        println("obj==" + obj)
         if (obj.isInstanceOf[T_url_rule]) {
           val tur: T_url_rule = obj.asInstanceOf[T_url_rule]
           if (tur.getRule_type == 1) {
@@ -265,7 +246,7 @@ val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
     var paramSet: Set[Any] = avc.getAfDomain.serachResult(domain)
     if (!(paramSet.isEmpty)) {
       for (obj <- paramSet) {
-//        println("obj==" + obj)
+        //        println("obj==" + obj)
         if (obj.isInstanceOf[T_url_rule]) {
           val tur: T_url_rule = obj.asInstanceOf[T_url_rule]
           if (tur.getRule_type == 2) {
@@ -299,7 +280,7 @@ val applicationVagueContainer: ApplicationVagueContainer = this.readSerial(is)
     paramSet = avc.getAfRule.serachResult(url)
     if (!(paramSet.isEmpty)) {
       for (obj <- paramSet) {
-//        println("obj==" + obj)
+        //        println("obj==" + obj)
         if (obj.isInstanceOf[T_url_rule]) {
           val tur: T_url_rule = obj.asInstanceOf[T_url_rule]
           if (tur.getRule_type == 3) {

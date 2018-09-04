@@ -18,6 +18,7 @@ import com.software.dm.swallow.stormy.scala.security.addrlib.bdia.obtain.SerialV
 object MainVagueDeSerial {
   def main(args: Array[String]): Unit = {
     try {
+
       val df = new SimpleDateFormat("yyyyMMdd")
       val serialPath = "D:/DearM/repo/yun/serial" + File.separatorChar + df.format(new Date) + ".serial"
       val sf = new SerialVagueFactroy(serialPath)

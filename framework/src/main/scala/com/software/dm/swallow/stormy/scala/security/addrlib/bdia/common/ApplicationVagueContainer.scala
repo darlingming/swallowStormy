@@ -7,7 +7,7 @@ package common
 
 import java.util.regex.Pattern
 
-//import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.Kryo
 import algoac.VagueAnalysisFactroy
 import algoac.impl.VagueStateCharacter
 import algoac.pojo.VagueResultEntity
@@ -21,36 +21,38 @@ import scala.collection.mutable._
   */
 object ApplicationVagueContainer {
 
-//  def getKryo: Kryo = {
-//    val kryo = new Kryo
-//    kryo.setRegistrationRequired(true)
-//
-//    kryo.register(classOf[ApplicationVagueContainer])
-//    kryo.register(classOf[VagueAnalysisFactroy])
-//    kryo.register(classOf[VagueStateCharacter])
-//    kryo.register(classOf[HashMap[_,_]])
-//    kryo.register(classOf[ListBuffer[_]])
-//    kryo.register(classOf[HashSet[_]])
-//    kryo.register(classOf[VagueResultEntity])
-//    kryo.register(classOf[T_extract_rule])
-//    kryo.register(classOf[T_basic_type_rel])
-//    kryo.register(classOf[T_theme_url_rule])
-//    kryo.register(classOf[T_theme_basic_type_rel])
-//    kryo.register(classOf[T_basic_type_rel])
-//    kryo.register(classOf[T_url_rule])
-//    kryo.register(classOf[T_ip_rule])
-//    kryo.register(classOf[AbstractVagueState[_]])
-//    kryo.register(classOf[VagueState[_]])
-//    kryo.register(classOf[Array[String]])
-//    kryo.register(classOf[Array[Integer]])
-//    kryo.register(classOf[Pattern])
-//    kryo.register(classOf[Array[Pattern]])
-//
-//
-//    kryo.register(classOf[scala.collection.immutable.$colon$colon[_]])
-//    kryo.register(scala.collection.immutable.Nil.getClass)
-//    kryo
-//  }
+  def getKryo: Kryo = {
+    val kryo = new Kryo
+    kryo.setReferences(true);
+
+    kryo.setRegistrationRequired(true);
+
+    kryo.register(classOf[ApplicationVagueContainer])
+    kryo.register(classOf[VagueAnalysisFactroy])
+    kryo.register(classOf[VagueStateCharacter])
+    kryo.register(classOf[HashMap[_,_]])
+    kryo.register(classOf[ListBuffer[_]])
+    kryo.register(classOf[HashSet[_]])
+    kryo.register(classOf[VagueResultEntity])
+    kryo.register(classOf[T_extract_rule])
+    kryo.register(classOf[T_basic_type_rel])
+    kryo.register(classOf[T_theme_url_rule])
+    kryo.register(classOf[T_theme_basic_type_rel])
+    kryo.register(classOf[T_basic_type_rel])
+    kryo.register(classOf[T_url_rule])
+    kryo.register(classOf[T_ip_rule])
+    kryo.register(classOf[AbstractVagueState[_]])
+    kryo.register(classOf[VagueState[_]])
+    kryo.register(classOf[Array[String]])
+    kryo.register(classOf[Array[Integer]])
+    kryo.register(classOf[Pattern])
+    kryo.register(classOf[Array[Pattern]])
+
+
+    kryo.register(classOf[scala.collection.immutable.$colon$colon[_]])
+    kryo.register(scala.collection.immutable.Nil.getClass)
+    kryo
+  }
 
 
 

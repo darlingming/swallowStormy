@@ -9,8 +9,9 @@ import java.util.{Date, Properties}
 import java.util.regex.Pattern
 
 import bean.{T_basic_type_rel, T_extract_rule, T_ip_rule, T_theme_basic_type_rel, T_theme_url_rule, T_url_rule}
-//import com.esotericsoftware.kryo.Kryo
-//import com.esotericsoftware.kryo.io.Output
+
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Output
 import hadoop.tools.Constant
 import common.{ApplicationVagueContainer, RepoConstant}
 import org.nustaq.serialization.FSTConfiguration
@@ -71,7 +72,7 @@ final class CreateVagueFactroy {
         this.trim(values)
         val nid: Long = values(0).toLong
         val tbtr: T_basic_type_rel = new T_basic_type_rel(nid, values(1), values(2));
-        var btrSet: ListBuffer[T_basic_type_rel] = btrMap.getOrElse(nid,null)
+        var btrSet: ListBuffer[T_basic_type_rel] = btrMap.getOrElse(nid, null)
         if (null == btrSet) {
           btrSet = new ListBuffer[T_basic_type_rel]()
           btrSet.append(tbtr);
@@ -103,7 +104,7 @@ final class CreateVagueFactroy {
             if (values(8).isEmpty()) -1 else values(8).toInt, //
             values(9), //
             values(10), //
-            btrMap.getOrElse(nid,null)
+            btrMap.getOrElse(nid, null)
           )
           urlRuleList.append(tbtr)
         }
@@ -143,7 +144,7 @@ final class CreateVagueFactroy {
         val tbtr: T_theme_basic_type_rel = new T_theme_basic_type_rel(values(0), nid, values(2),
           if (values(3).isEmpty()) -1 else values(3).toInt
           , values(4));
-        var tbtrSet: ListBuffer[T_theme_basic_type_rel] = tbtrMap.getOrElse(nid,null)
+        var tbtrSet: ListBuffer[T_theme_basic_type_rel] = tbtrMap.getOrElse(nid, null)
         if (null == tbtrSet) {
           tbtrSet = new ListBuffer[T_theme_basic_type_rel]();
           tbtrSet.append(tbtr)
@@ -161,7 +162,7 @@ final class CreateVagueFactroy {
 
         this.trim(values);
         val nid: Long = values(0).toLong
-        var tbtrSet: ListBuffer[T_theme_basic_type_rel] = tbtrMap.getOrElse(nid,null)
+        var tbtrSet: ListBuffer[T_theme_basic_type_rel] = tbtrMap.getOrElse(nid, null)
         if (null != tbtrSet && !tbtrSet.isEmpty) {
 
           var ttur: T_theme_url_rule = new T_theme_url_rule(//
@@ -211,7 +212,7 @@ final class CreateVagueFactroy {
       }
     } catch {
       case e: Exception => {
-              println(e.getMessage);
+        println(e.getMessage);
       }
     }
   }
@@ -233,7 +234,7 @@ final class CreateVagueFactroy {
         val line = it.next()
         val values = line.split(RepoConstant.REPO_SPLIT_FLAG_PLAIN, -1)
         this.trim(values)
-//        val nid: Long = values(0).toLong
+        //        val nid: Long = values(0).toLong
 
         val extract: T_extract_rule = new T_extract_rule(//
           if (values(0).isEmpty()) -1 else values(0).toInt, //
@@ -298,7 +299,7 @@ final class CreateVagueFactroy {
     * @param obj
     */
   private def loadDomainEquals(ac: ApplicationVagueContainer, domain: String, obj: Any): Unit = {
-    var setObj: ListBuffer[Any] = ac.getDomainEqualsMap.getOrElse(domain,null)
+    var setObj: ListBuffer[Any] = ac.getDomainEqualsMap.getOrElse(domain, null)
     if (null == setObj) {
       setObj = new ListBuffer[Any]
       setObj.append(obj)
@@ -325,7 +326,7 @@ final class CreateVagueFactroy {
     * @param rule
     * @param obj
     */
-  private def loadAfRule(ac: ApplicationVagueContainer, `type`: Int, rule: String, obj: Any): Unit= {
+  private def loadAfRule(ac: ApplicationVagueContainer, `type`: Int, rule: String, obj: Any): Unit = {
     ac.getAfRule.addData(rule, obj)
   }
 
@@ -468,7 +469,7 @@ final class CreateVagueFactroy {
     }
   }
 
-  private def builder(ac: ApplicationVagueContainer): Unit  = {
+  private def builder(ac: ApplicationVagueContainer): Unit = {
     this.builderBasicAndApp(ac)
     // theme
     this.builderTheme(ac)
@@ -509,8 +510,8 @@ final class CreateVagueFactroy {
       println("getiPMap size is " + avc.getiPMap.size)
 
       avc.clear()
-//      this.serial(prop, avc, serialName)
-      this.writeSerial(prop,avc,serialName)
+      //      this.serial(prop, avc, serialName)
+      this.writeSerial(prop, avc, serialName)
     } catch {
       case e: Exception =>
         e.printStackTrace()
@@ -526,7 +527,7 @@ final class CreateVagueFactroy {
   @throws[Exception]
   private def serial(prop: Properties, ac: ApplicationVagueContainer, serialName: String): Unit = {
     val df: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
-//    val kryo: Kryo = ApplicationVagueContainer.getKryo
+    val kryo: Kryo = ApplicationVagueContainer.getKryo
     val serialName1 = if (serialName == null) {
       df.format(new Date) + ".serial"
     } else {
@@ -538,10 +539,10 @@ final class CreateVagueFactroy {
       file.createNewFile
     }
     val os: OutputStream = new BufferedOutputStream(new FileOutputStream(file))
-//    val out: Output = new Output(os, 102400)
-//    kryo.writeObject(out, ac)
-//    out.flush()
-//    os.close()
+    val out: Output = new Output(os, 102400)
+    kryo.writeObject(out, ac)
+    out.flush()
+    os.close()
   }
 
   /**
@@ -581,7 +582,6 @@ final class CreateVagueFactroy {
     val os: OutputStream = new BufferedOutputStream(new FileOutputStream(file))
 
     val out = conf.getObjectOutput(os)
-
 
 
     out.writeObject(ac, classOf[ApplicationVagueContainer])

@@ -51,7 +51,7 @@
             <version>2.6.0</version>
         </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/com.esotericsoftware/kryo -->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo-shaded</artifactId>
@@ -62,6 +62,9 @@
             <artifactId>reflectasm</artifactId>
             <version>${versions.reflectasm}</version>
         </dependency>
+
+
+
 
         <!-- https://mvnrepository.com/artifact/de.ruedigermoeller/fst -->
         <dependency>
