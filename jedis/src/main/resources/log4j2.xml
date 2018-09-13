@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- status : 指定log4j本身的打印日志的级别.ALL< Trace < DEBUG < INFO < WARN < ERROR
+    < FATAL < OFF。 monitorInterval : 用于指定log4j自动重新配置的监测间隔时间，单位是s,最小是5s. -->
+<Configuration status="warn" monitorInterval="30">
+    <Properties>
+        <!-- 配置日志文件输出目录 ${sys:user.home} -->
+        <Property name="LOG_HOME">/logs</Property>
+        <property name="ERROR_LOG_FILE_NAME">/logs/error</property>
+        <property name="WARN_LOG_FILE_NAME">/logs/warn</property>
 
-<Configuration status="warn">
+        <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss} [%t-%L] %-5level %logger{36} - %msg%n</property>
+    </Properties>
+
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %t %5p %c{2}: %m%n" />
+            <!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) -->
+            <ThresholdFilter level="INFO" onMatch="ACCEPT"  onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <!--
+                %d{yyyy-MM-dd HH:mm:ss, SSS} : 日志生产时间
+                %p : 日志输出格式
+                %c : logger的名称
+                %m : 日志内容，即 logger.info("message")
+                %n : 换行符
+                %C : Java类名
+                %L : 日志输出所在行数
+                %M : 日志输出所在方法名
+                hostName : 本地机器名
+                hostAddress : 本地ip地址 -->
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %t %5p %c{2}: %m%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="INFO">
-            <AppenderRef ref="Console" />
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <logger name="org.springframework" level="debug"></logger>
+        <!-- 第三方日志系统 -->
+        <logger name="org.springframework.core" level="info"/>
+        <logger name="org.springframework.beans" level="info"/>
+        <logger name="org.springframework.context" level="info"/>
+        <logger name="org.springframework.web" level="info"/>
+
+        <logger name="org.apache.http" level="warn"/>
+        <Root level="all">
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -1,8 +1,8 @@
 package com.software.dm.swallow.stormy.redis.service.impl;
 
 import com.software.dm.swallow.stormy.redis.service.RedisSpringService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Circle;
@@ -33,7 +33,7 @@ public class RedisSpringServiceImpl implements RedisSpringService {
     /**
      * 日志记录
      */
-    private static final Logger logger = LoggerFactory.getLogger(RedisSpringServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(RedisSpringServiceImpl.class);
 
     public RedisTemplate<String, String> redisTemplate;
 
@@ -66,6 +66,7 @@ public class RedisSpringServiceImpl implements RedisSpringService {
     public boolean cacheValue(String k, String v, long time) {
         String key = KEY_PREFIX_VALUE + k;
         try {
+
             BoundValueOperations<String, String> valueOps = redisTemplate.boundValueOps(key);
 
             if (time > 0) {

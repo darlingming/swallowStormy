@@ -15,11 +15,11 @@ public interface RedisSpringService {
     /**
      * 前缀
      */
-    String KEY_PREFIX_VALUE = "dm:value:";
-    String KEY_PREFIX_SET = "dm:set:";
-    String KEY_PREFIX_LIST = "dm:list:";
-    String KEY_PREFIX_HASH = "dm:hash:";
-    String KEY_PREFIX_GEO = "dm:geo:";
+    String KEY_PREFIX_VALUE = "DM:VALUE:";
+    String KEY_PREFIX_SET = "DM:SET:";
+    String KEY_PREFIX_LIST = "DM:LIST:";
+    String KEY_PREFIX_HASH = "DM:HASH:";
+    String KEY_PREFIX_GEO = "DM:GEO:";
 
     /**
      * @param k
