@@ -8,10 +8,7 @@ import com.software.dm.swallow.stormy.security.match.bdia.bean.T_theme_url_rule;
 import com.software.dm.swallow.stormy.security.match.bdia.bean.T_url_rule;
 import com.software.dm.swallow.stormy.security.match.bdia.common.ApplicationVagueContainer;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -21,7 +18,7 @@ import java.util.regex.Pattern;
  * @Description
  * @date 2017
  */
-public final class SerialVagueFactroy {
+public final class SerialVagueFactroy implements Serializable {
 
     private T_url_rule basicAppResult = null;
     private final List<T_theme_url_rule> themeResultList = new ArrayList<T_theme_url_rule>();
@@ -327,9 +324,10 @@ public final class SerialVagueFactroy {
      * @param url
      * @param t_extract_rule
      */
-    public void outputExtract(String url, T_extract_rule t_extract_rule) {
+    public String outputExtract(String url, T_extract_rule t_extract_rule) {
         String result = ExtractUtils.extractResult(url, t_extract_rule);
-        System.out.println("===========" + Arrays.toString(t_extract_rule.getParamRegexPatternArray()));
+        //System.out.println("===========" + Arrays.toString(t_extract_rule.getParamRegexPatternArray()));
+        return result;
     }
 
     public void writer() {

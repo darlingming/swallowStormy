@@ -24,7 +24,7 @@ import scala.io.{BufferedSource, Source}
   *          Description
   *          date 2017
   */
-final class SerialVagueFactroy {
+final class SerialVagueFactroy extends Serializable {
   private var basicAppResult: T_url_rule = null
   final private val themeResultList: ListBuffer[T_theme_url_rule] = new ListBuffer[T_theme_url_rule]
   final private val extractResultList: ListBuffer[T_extract_rule] = new ListBuffer[T_extract_rule]

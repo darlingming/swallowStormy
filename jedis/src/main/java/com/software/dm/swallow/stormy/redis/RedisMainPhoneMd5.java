@@ -59,6 +59,7 @@ public class RedisMainPhoneMd5 {
             logger.error("RedisMainPhoneMd5 Task:", e);
         } finally {
             System.exit(0);
+            logger.info("RedisMainPhoneMd5 end----------");
         }
 
     }

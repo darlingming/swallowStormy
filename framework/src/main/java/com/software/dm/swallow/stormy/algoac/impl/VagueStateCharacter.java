@@ -4,6 +4,7 @@ import com.software.dm.swallow.stormy.algoac.inter.AbstractVagueState;
 import com.software.dm.swallow.stormy.algoac.inter.VagueState;
 import com.software.dm.swallow.stormy.algoac.pojo.VagueResultEntity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
  * @date 2017
  *
  */
-public class VagueStateCharacter extends AbstractVagueState<Character> {
+public class VagueStateCharacter extends AbstractVagueState<Character> implements Serializable {
 
     /**
      * @param nextNormalStateMap

@@ -1,7 +1,6 @@
 package com.software.dm.swallow.stormy.spark.kafka
 
 
-
 import java.util
 import java.util.Properties
 import java.util.Properties
@@ -11,8 +10,6 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, Produce
 //import kafka.producer.{KeyedMessage, Producer, ProducerConfig}
 
 import scala.util.Random
-
-
 
 
 object KafkaWordCountProducer {
@@ -38,7 +35,7 @@ object KafkaWordCountProducer {
     val producer = new KafkaProducer[String, String](props)
 
     // Send some messages
-    while(true) {
+    while (true) {
       (1 to messagesPerSec.toInt).foreach { messageNum =>
         val str = (1 to wordsPerMessage.toInt).map(x => scala.util.Random.nextInt(10).toString)
           .mkString(" ")

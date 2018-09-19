@@ -1,14 +1,11 @@
 package com.software.dm.swallow.stormy.algoac;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import com.software.dm.swallow.stormy.algoac.impl.VagueStateCharacter;
 import com.software.dm.swallow.stormy.algoac.inter.VagueState;
 import com.software.dm.swallow.stormy.algoac.pojo.VagueResultEntity;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author DM
@@ -18,7 +15,7 @@ import com.software.dm.swallow.stormy.algoac.pojo.VagueResultEntity;
  * @preserve public
  */
 
-public final class VagueAnalysisFactroy {
+public final class VagueAnalysisFactroy implements Serializable {
 
     /**
      *
