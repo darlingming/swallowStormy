@@ -1,12 +1,14 @@
 package com.software.dm.swallow.stormy.security.match.bdia.bean;
 
+import java.io.Serializable;
+
 /**
  * @author DM
  * @version v1.0.0.1
  * @Description
  * @date 2017
  */
-public final class T_basic_type_rel {
+public final class T_basic_type_rel implements Serializable {
 
     private long n_id;
     private String type_id;

@@ -1,5 +1,6 @@
 package com.software.dm.swallow.stormy.security.match.bdia.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @Description
  * @date 2017
  */
-public final class T_theme_url_rule {
+public final class T_theme_url_rule implements Serializable {
 
     public static final int ACTION_THEME = 1;
 

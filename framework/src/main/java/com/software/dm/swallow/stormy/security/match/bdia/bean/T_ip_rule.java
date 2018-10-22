@@ -1,12 +1,14 @@
 package com.software.dm.swallow.stormy.security.match.bdia.bean;
 
+import java.io.Serializable;
+
 /**
  * @author DM
  * @version v1.0.0.1
  * @Description
  * @date 2017
  */
-public final class T_ip_rule {
+public final class T_ip_rule implements Serializable {
     public static final int ACTION_IP = 4;
 
     private long n_id;

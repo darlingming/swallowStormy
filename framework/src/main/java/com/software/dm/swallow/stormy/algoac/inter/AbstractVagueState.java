@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public abstract class AbstractVagueState<T> implements VagueState<T> {
 
+    public AbstractVagueState(){}
     /**
      * @param value
      */

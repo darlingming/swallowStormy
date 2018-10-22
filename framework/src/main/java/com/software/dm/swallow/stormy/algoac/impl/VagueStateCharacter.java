@@ -30,6 +30,9 @@ public class VagueStateCharacter extends AbstractVagueState<Character> implement
         super(value);
     }
 
+    public VagueStateCharacter(){
+
+    }
     /**
      * @param pattern
      * @param vagueResultEntity

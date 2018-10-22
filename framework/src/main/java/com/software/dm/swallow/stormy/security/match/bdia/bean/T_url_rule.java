@@ -1,8 +1,9 @@
 package com.software.dm.swallow.stormy.security.match.bdia.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public final class T_url_rule {
+public final class T_url_rule implements Serializable {
 
     public static final int ACTION_BASIC_APP = 0;
 

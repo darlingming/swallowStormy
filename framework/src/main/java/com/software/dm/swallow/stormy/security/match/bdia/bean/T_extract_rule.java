@@ -1,5 +1,6 @@
 package com.software.dm.swallow.stormy.security.match.bdia.bean;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
  * @Description
  * @date 2017
  */
-public final class T_extract_rule {
+public final class T_extract_rule implements Serializable {
 
     public static final int ACTION_EXTRACT = 2;
 
