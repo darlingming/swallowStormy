@@ -44,16 +44,16 @@ public class SparkReadHdfs {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         //conf.registerKryoClasses( Array(classOf[ StructField],classOf[FSTConfiguration],classOf[SerialVagueFactroy]))
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-        String serialPath = "D:/DearM/repo/yun/serial" + File.separatorChar + df.format(new Date()) + ".serial";
-        PortableDataStream pds = sc.binaryFiles(serialPath, 1).first()._2();
+                   SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+            String serialPath = "D:/DearM/repo/yun/serial" + File.separatorChar + df.format(new Date()) + ".serial";
+            PortableDataStream pds = sc.binaryFiles(serialPath, 1).first()._2();
 
-        try {
-            InputStream is = pds.open();
-            //MainVagueSerial.main(null);
+            try {
+                InputStream is = pds.open();
+                //MainVagueSerial.main(null);
 
 
-            SerialVagueFactroy sf = new SerialVagueFactroy(is);
+                SerialVagueFactroy sf = new SerialVagueFactroy(is);
 
 
             Broadcast<SerialVagueFactroy> bc = sc.broadcast(sf);
