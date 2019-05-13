@@ -145,6 +145,8 @@ public class ConversionUtil {
         return sb.toString();
     }
 
+
+
     /**
      * @param args
      */
@@ -152,7 +154,7 @@ public class ConversionUtil {
         System.out.println("62进制：" + encode(19999999999l, 11));
         System.out.println("10进制：" + decode("96rherj"));
 
-        String val = encodeString("15846391");
+        String val = encodeString("我是王文博");
         String val1 = encodeString(val);
         String val_1 = decodeString(val);
         System.out.println(val + "===" + val_1 + "=="+val1+"=" + (19 >> 1));
