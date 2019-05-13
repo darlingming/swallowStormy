@@ -76,9 +76,7 @@ public class ConversionUtil {
      * @return
      */
     public static String reverseString(String str) {
-
-        String nStr = StringUtils.reverse(str);
-        return nStr;
+        return str == null ? null : (new StringBuffer(str)).reverse().toString();
     }
 
     /**
@@ -88,9 +86,10 @@ public class ConversionUtil {
     private static String encodeString(String value) {
 //        System.out.println("encodeString===" + value);
         if (value.length() <= 2) {
-            return value;
+            return reverseString(value);
         }
         StringBuffer odd = new StringBuffer(1024);
+
         StringBuffer even = new StringBuffer(1024);
         for (int i = 0; i < value.length(); i++) {
             if ((i & 1) == 0) {
@@ -110,7 +109,7 @@ public class ConversionUtil {
 //        System.out.println("decodeString >>>>" + value + "========");
         int len = value.length();
         if (len <= 2) {
-            return value;
+            return reverseString(value);
         }
         String leftStr = null;
         String rightStr = null;
@@ -153,9 +152,10 @@ public class ConversionUtil {
         System.out.println("62进制：" + encode(19999999999l, 11));
         System.out.println("10进制：" + decode("96rherj"));
 
-        String val = encodeString("新华社北京5月9日电（记者施雨岑）针对近期有机构发布“全国百强中学”“2018中国最具影响力中小学百强榜”等榜单，教育部9日发布声明称，从未授权任何组织或机构开展面向全国中小学校的此类评选排名活动。声明称，教育评价具有重要导向作用，科学规范公正的教育评价是提升教育教学质量的有效途径。但是，当前社会上出现了一些粗制滥造、弄虚作假的教育评价，标准不科学、操作不规范、过程不公开，不客观公正地反映学校真实状况，严重干扰了学校正常的教育教学秩序。教育部在声明中提醒全国各中小学校，切勿参与此类评选排名活动。针对此类评选排名活动，教育部将进一步加大工作力度，依法依规予以处理。");
+        String val = encodeString("15846391");
+        String val1 = encodeString(val);
         String val_1 = decodeString(val);
-        System.out.println(val + "===" + val_1 + "===" + (19 >> 1));
+        System.out.println(val + "===" + val_1 + "=="+val1+"=" + (19 >> 1));
     }
 
 }
